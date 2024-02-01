@@ -1,0 +1,20 @@
+# Vscode
+.Vscode
+
+# txt
+.txt
+
+# Prerequisites (Dependencies)
+*.d
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
