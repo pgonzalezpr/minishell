@@ -65,6 +65,6 @@ void							export_cmd(t_minishell *minishell);
 void							cd_cmd(t_minishell *minishell);
 void							unset_cmd(t_minishell *minishell);
 void							env_cmd(t_minishell *minishell);
-void							pwd_cmd(t_minishell *minishell);
+void							pwd_cmd();
 
 #endif
