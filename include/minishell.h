@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/* INCLUDES */
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -9,8 +10,7 @@
 # include <string.h>
 # include <unistd.h>
 
-# define EXIT_CMD_NOT_FOUND 127
-
+/* STRUCTS */
 typedef struct s_command_node	t_command_node;
 typedef struct s_token_node		t_token_node;
 
@@ -36,11 +36,34 @@ typedef struct s_minishell
 
 }								t_minishell;
 
-void							tokenize_cmd_line(t_minishell *minishell);
-void							process_tokens(t_minishell *minishell);
-void							remove_quotes(t_token_node *token_node);
-void							replace_env_vars(t_token_node *token_node,
-									t_minishell *minishell);
+typedef struct s_command_node
+{
+	t_command_node				*next;
+}								t_command_node;
+
+/* COLORS */
+# define GREEN				"\033[0;92m"
+# define DEF_COLOR 			"\033[0;39m"
+
+/* SPECIAL SYMBOLS */
+# define DOUBLE_QUOTE		34
+# define SINGLE_QUOTE		39
+# define EMPTY				' '
+# define LINE_BREAK			'\n'
+
+/* BUILT INS (COMMANDS) */
+# define EXIT_CMD_NOT_FOUND 127
+# define EXIT_CMD			"exit"
+# define ECHO_CMD			"echo"
+# define CD_CMD				"cd"
+# define PWD_CMD			"pwd"
+# define EXPORT_CMD			"export"
+# define UNSET_CMD			"unset"
+# define ENV_CMD			"env"
+# define FLAG_N				"-n"
+
+/* PROTOTYPES */	
+void							parse_cmd_line(t_minishell *minishell);
 void							build_pipeline(t_minishell *minishell);
 void							exec_pipeline(t_minishell *minishell);
 void							clean_minishell(t_minishell *minishell);
@@ -49,5 +72,14 @@ void							exit_minishell(t_minishell *minishell,
 void							free_tokens(t_token_node *tokens);
 void							free_pipeline(t_command_node *pipeline);
 void							free_pipe_arr(int **arr, size_t size);
+
+/* BUILT-INS */
+void							select_builtint(t_minishell *minishell);
+void							echo_cmd(char **cmd);
+void							export_cmd(t_minishell *minishell);
+void							cd_cmd(t_minishell *minishell);
+void							unset_cmd(t_minishell *minishell);
+void							env_cmd(t_minishell *minishell);
+void							pwd_cmd(t_minishell *minishell);
 
 #endif
