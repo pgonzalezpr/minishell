@@ -1,5 +1,13 @@
 #include "../include/minishell.h"
 
+void	exit_minishell(t_minishell *minishell, char *msg, int status)
+{
+	clean_minishell(minishell);
+	if (msg)
+		printf("%s\n", msg);
+	exit(status);
+}
+
 int	main(void)
 {
 	t_minishell	minishell;
@@ -21,7 +29,7 @@ int	main(void)
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
 		}
 		add_history(minishell.cmd_line);
-		parse_cmd_line(&minishell);
+		tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);

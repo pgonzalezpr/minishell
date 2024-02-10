@@ -1,7 +1,7 @@
 NAME = minishell
 
-SRCS = ./srcs/minishell.c ./srcs/parse.c ./srcs/build.c ./srcs/exec.c \
-		./srcs/exit.c
+SRCS = ./srcs/minishell.c ./srcs/tokenize_utils.c ./srcs/build.c ./srcs/exec.c \
+		./srcs/exit.c ./srcs/tokenize.c
 			
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
