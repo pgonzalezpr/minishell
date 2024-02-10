@@ -29,9 +29,17 @@ typedef struct s_command_node
 	t_command_node				*next;
 }								t_command_node;
 
-/* CONSTANTS */
+/* COLORS */
 # define GREEN				"\033[0;92m"
 # define DEF_COLOR 			"\033[0;39m"
+
+/* SPECIAL SYMBOLS */
+# define DOUBLE_QUOTE		34
+# define SINGLE_QUOTE		39
+# define EMPTY				' '
+# define LINE_BREAK			'\n'
+
+/* BUILT INS (COMMANDS) */
 # define EXIT_CMD_NOT_FOUND 127
 # define EXIT_CMD			"exit"
 # define ECHO_CMD			"echo"
@@ -40,6 +48,7 @@ typedef struct s_command_node
 # define EXPORT_CMD			"export"
 # define UNSET_CMD			"unset"
 # define ENV_CMD			"env"
+# define FLAG_N				"-n"
 
 /* PROTOTYPES */	
 void							parse_cmd_line(t_minishell *minishell);
@@ -51,7 +60,7 @@ void							exit_minishell(t_minishell *minishell,
 
 /* BUILT-INS */
 void							select_builtint(t_minishell *minishell);
-void							echo_cmd(t_minishell *minishell);
+void							echo_cmd(char **cmd);
 void							export_cmd(t_minishell *minishell);
 void							cd_cmd(t_minishell *minishell);
 void							unset_cmd(t_minishell *minishell);
