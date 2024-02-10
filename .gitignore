@@ -4,6 +4,9 @@
 # txt
 .txt
 
+# DS Store
+.DS Store
+
 # Prerequisites (Dependencies)
 *.d
 
@@ -18,6 +21,3 @@
 # Executables
 *.exe
 *.out
-
-# DS Store
-.DS Store
