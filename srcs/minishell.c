@@ -23,7 +23,7 @@ int	main(void)
 			free(minishell.cmd_line);
 			continue ;
 		}
-		select_builtint(&minishell);
+		//select_builtint(&minishell);
 		add_history(minishell.cmd_line);
 		tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);
