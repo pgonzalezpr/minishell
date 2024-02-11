@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/10 04:40:34 by brayan           ###   ########.fr       */
+/*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
+/*   Updated: 2024/02/11 23:09:55 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 * PRE: minishell != NULL
-* POST: Muestra en terminal el cwd (Current Working Directory).
+* POST: 
 */
-void	pwd_cmd()
+void	cd_cmd(t_minishell *minishell)
 {
-  	char *cwd = getcwd(NULL, 0);
-  	if (cwd == NULL) 
-	{
-    	perror("getcwd fails");
-    	exit(EXIT_FAILURE);
-  	}
-	printf("%s\n", cwd);
+	(void)minishell;
+	printf("CD \n");
 }

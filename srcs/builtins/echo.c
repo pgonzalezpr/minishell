@@ -6,11 +6,11 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/10 03:50:31 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/11 23:10:05 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 * PRE: -
@@ -26,7 +26,7 @@ static void	print_case(char c)
 * PRE: CMD != NULL
 * POST: Mostrara un mensaje por el standar output.
 */
-void	echo_cmd(char **cmd)
+int	echo_cmd(char **cmd)
 {
 	int	i;
 	int	j;
@@ -35,7 +35,7 @@ void	echo_cmd(char **cmd)
 	if (!cmd[1])
 	{
 		printf("%c", LINE_BREAK);
-		return ;
+		return (SUCCESS);
 	}
 	else if (ft_strncmp(cmd[1], FLAG_N, 2) == 0)
 		i = 1;
@@ -49,4 +49,5 @@ void	echo_cmd(char **cmd)
 	}
 	if (ft_strncmp(cmd[1], FLAG_N, 2) != 0)
 		printf("%c", LINE_BREAK);
+	return (SUCCESS);
 }

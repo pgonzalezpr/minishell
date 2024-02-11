@@ -6,11 +6,11 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/10 04:37:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/11 23:09:51 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 * PRE: minishell != NULL
@@ -20,12 +20,11 @@ void	select_builtint(t_minishell *minishell)
 {
 	char	**cmd;
 
-	cmd = ft_split(minishell->cmd_line, ' ');
-	if (!cmd || !*cmd)
-	{
-		// Handle memory fails
-		return ;
-	}
+	cmd = ft_split(minishell->cmd_line, EMPTY);
+	/*
+	if (!cmd)
+		// PROTEGER CMD.
+	*/
 	if (ft_strncmp(minishell->cmd_line, EXIT_CMD, 4) == 0)
 	{
 		rl_clear_history();
@@ -40,7 +39,7 @@ void	select_builtint(t_minishell *minishell)
 	else if (ft_strncmp(cmd[0], EXPORT_CMD, 6) == 0)
 		export_cmd(minishell);
 	else if (ft_strncmp(cmd[0], PWD_CMD, 3) == 0)
-		pwd_cmd();
+		pwd_cmd(&minishell->cwd);
 	else if (ft_strncmp(cmd[0], UNSET_CMD, 5) == 0)
 		unset_cmd(minishell);
 }

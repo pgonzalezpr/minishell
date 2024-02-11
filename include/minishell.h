@@ -16,7 +16,9 @@ typedef struct s_command_node	t_command_node;
 typedef struct s_minishell
 {
 	char						*cmd_line;
+	char						*cwd;
 	char						**tokens;
+	char						**env;
 	t_command_node				*pipeline;
 	size_t						cmd_count;
 	int							**pipes;
@@ -32,6 +34,9 @@ typedef struct s_command_node
 /* COLORS */
 # define GREEN				"\033[0;92m"
 # define DEF_COLOR 			"\033[0;39m"
+
+/* STATUS */
+# define SUCCESS			0
 
 /* SPECIAL SYMBOLS */
 # define DOUBLE_QUOTE		34
@@ -60,11 +65,18 @@ void							exit_minishell(t_minishell *minishell,
 
 /* BUILT-INS */
 void							select_builtint(t_minishell *minishell);
-void							echo_cmd(char **cmd);
 void							export_cmd(t_minishell *minishell);
 void							cd_cmd(t_minishell *minishell);
 void							unset_cmd(t_minishell *minishell);
-void							env_cmd(t_minishell *minishell);
-void							pwd_cmd();
+int								env_cmd(t_minishell *minishell);
+int								pwd_cmd(char **cwd);
+int								echo_cmd(char **cmd);
+
+/* INIT */
+int								init_env(char **env, t_minishell *minishell);
+
+
+/* UTILS */
+int								get_total_commands(char *cmd_line);
 
 #endif
