@@ -1,5 +1,8 @@
 #include "../include/minishell.h"
 
+<<<<<<< HEAD
+int	main(int argc, char **argv, char **env)
+=======
 void	exit_minishell(t_minishell *minishell, char *msg, int status)
 {
 	clean_minishell(minishell);
@@ -9,12 +12,19 @@ void	exit_minishell(t_minishell *minishell, char *msg, int status)
 }
 
 int	main(void)
+>>>>>>> main
 {
 	t_minishell	minishell;
 
+	(void)argc;
+	(void)argv;
+	
+	ft_memset(&minishell, 0, sizeof(minishell));
+	if (init_env(env, &minishell) != SUCCESS)
+		return (EXIT_FAILURE);
 	while (1)
 	{
-		ft_memset(&minishell, 0, sizeof(minishell));
+		
 		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
 		if (!minishell.cmd_line)
 			continue ;
