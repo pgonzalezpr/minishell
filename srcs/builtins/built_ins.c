@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/11 23:09:51 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/12 02:07:49 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	select_builtint(t_minishell *minishell)
 	else if (ft_strncmp(cmd[0], PWD_CMD, 3) == 0)
 		pwd_cmd(&minishell->cwd);
 	else if (ft_strncmp(cmd[0], UNSET_CMD, 5) == 0)
-		unset_cmd(minishell);
+		unset_cmd(minishell, cmd);
 }
