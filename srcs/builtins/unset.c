@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 
 /*
-* PRE: minishell != NULL
+* PRE: -
 * POST: Devuelve la longitud de la variable
 */
 static int	get_len_variable(char *variable)
