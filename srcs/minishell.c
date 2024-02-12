@@ -1,6 +1,18 @@
 #include "../include/minishell.h"
 
+<<<<<<< HEAD
 int	main(int argc, char **argv, char **env)
+=======
+void	exit_minishell(t_minishell *minishell, char *msg, int status)
+{
+	clean_minishell(minishell);
+	if (msg)
+		printf("%s\n", msg);
+	exit(status);
+}
+
+int	main(void)
+>>>>>>> main
 {
 	t_minishell	minishell;
 
@@ -21,9 +33,9 @@ int	main(int argc, char **argv, char **env)
 			free(minishell.cmd_line);
 			continue ;
 		}
-		select_builtint(&minishell);
+		//select_builtint(&minishell);
 		add_history(minishell.cmd_line);
-		//parse_cmd_line(&minishell);
+		tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);

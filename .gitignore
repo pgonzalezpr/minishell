@@ -1,5 +1,6 @@
 # Vscode
 .vscode
+.vscode
 
 # txt
 .txt
@@ -21,3 +22,6 @@
 # Executables
 *.exe
 *.out
+
+# DS Store
+.DS Store

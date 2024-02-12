@@ -12,13 +12,29 @@
 
 /* STRUCTS */
 typedef struct s_command_node	t_command_node;
+typedef struct s_token_node		t_token_node;
+
+typedef struct s_command_node
+{
+	t_command_node				*next;
+}								t_command_node;
+
+typedef struct s_token_node
+{
+	char						*token;
+	t_token_node				*next;
+}								t_token_node;
 
 typedef struct s_minishell
 {
 	char						*cmd_line;
+<<<<<<< HEAD
 	char						*cwd;
 	char						**tokens;
 	char						**env;
+=======
+	t_token_node				*tokens;
+>>>>>>> main
 	t_command_node				*pipeline;
 	size_t						cmd_count;
 	int							**pipes;
@@ -67,6 +83,9 @@ void							exec_pipeline(t_minishell *minishell);
 void							clean_minishell(t_minishell *minishell);
 void							exit_minishell(t_minishell *minishell,
 									char *msg, int status);
+void							free_tokens(t_token_node *tokens);
+void							free_pipeline(t_command_node *pipeline);
+void							free_pipe_arr(int **arr, size_t size);
 
 /* BUILT-INS */
 void							select_builtint(t_minishell *minishell);
