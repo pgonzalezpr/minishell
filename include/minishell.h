@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
+/*   Updated: 2024/02/12 05:44:27 by brayan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -28,24 +40,15 @@ typedef struct s_token_node
 typedef struct s_minishell
 {
 	char						*cmd_line;
-<<<<<<< HEAD
 	char						*cwd;
-	char						**tokens;
 	char						**env;
-=======
 	t_token_node				*tokens;
->>>>>>> main
 	t_command_node				*pipeline;
 	size_t						cmd_count;
 	int							**pipes;
 	int							**here_doc_pipes;
 
 }								t_minishell;
-
-typedef struct s_command_node
-{
-	t_command_node				*next;
-}								t_command_node;
 
 /* COLORS */
 # define GREEN				"\033[0;92m"
@@ -76,8 +79,7 @@ typedef struct s_command_node
 /* ERROR MESSAGES */
 # define ERROR_MALLOC		"Malloc Fails\n"
 
-/* PROTOTYPES */	
-void							parse_cmd_line(t_minishell *minishell);
+/* PROTOTYPES */
 void							build_pipeline(t_minishell *minishell);
 void							exec_pipeline(t_minishell *minishell);
 void							clean_minishell(t_minishell *minishell);
@@ -86,6 +88,10 @@ void							exit_minishell(t_minishell *minishell,
 void							free_tokens(t_token_node *tokens);
 void							free_pipeline(t_command_node *pipeline);
 void							free_pipe_arr(int **arr, size_t size);
+void							tokenize_cmd_line(t_minishell *minishell);
+void							remove_quotes(t_token_node *token_node);
+void							replace_env_vars(t_token_node *token_node,
+									t_minishell *minishell);
 
 /* BUILT-INS */
 void							select_builtint(t_minishell *minishell);

@@ -1,8 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
+/*   Updated: 2024/02/12 05:46:08 by brayan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-<<<<<<< HEAD
-int	main(int argc, char **argv, char **env)
-=======
 void	exit_minishell(t_minishell *minishell, char *msg, int status)
 {
 	clean_minishell(minishell);
@@ -11,20 +20,17 @@ void	exit_minishell(t_minishell *minishell, char *msg, int status)
 	exit(status);
 }
 
-int	main(void)
->>>>>>> main
+int	main(int argc, char **argv, char **env)
 {
 	t_minishell	minishell;
 
 	(void)argc;
 	(void)argv;
-	
 	ft_memset(&minishell, 0, sizeof(minishell));
 	if (init_env(env, &minishell) != SUCCESS)
 		return (EXIT_FAILURE);
 	while (1)
 	{
-		
 		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
 		if (!minishell.cmd_line)
 			continue ;
@@ -33,9 +39,9 @@ int	main(void)
 			free(minishell.cmd_line);
 			continue ;
 		}
-		//select_builtint(&minishell);
+		select_builtint(&minishell);
 		add_history(minishell.cmd_line);
-		tokenize_cmd_line(&minishell);
+		//tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
