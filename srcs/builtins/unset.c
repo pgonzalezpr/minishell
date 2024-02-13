@@ -6,44 +6,11 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 04:54:53 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/13 01:42:52 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/*
-* PRE: -
-* POST: Devuelve la longitud de la variable
-*/
-static int	get_len_variable(char *variable)
-{
-	int	len;
-
-	len = 0;
-	while (variable[len] && variable[len] != EQUAL)
-		len++;
-	return (len);
-}
-
-/*
-* PRE: minishell != NULL
-* POST: Devuelve true si las variables son iguales, false en caso contrario.
-*/
-static int	are_equal_variables(char *variable_1, char *variable_2)
-{
-	int	len_1;
-	int	len_2;
-
-	len_1 = get_len_variable(variable_1);
-	len_2 = get_len_variable(variable_2);
-	if (len_1 >= len_2 && strncmp(variable_1, variable_2, len_2) == 0) 
-	{
-		if (len_1 == len_2 || variable_1[len_2] == '=')
-			return (1);
-	}
-	return (0);
-}
 
 /*
 * PRE: minishell != NULL

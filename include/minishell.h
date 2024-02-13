@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 05:44:27 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/12 23:30:19 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ typedef struct s_minishell
 
 /* STATUS */
 # define SUCCESS			0
+# define POS_NOT_FOUNDED	-4
 
 /* SPECIAL SYMBOLS */
 # define DOUBLE_QUOTE		34
 # define SINGLE_QUOTE		39
+# define NULL_STR			'\0'
 # define EMPTY				' '
 # define LINE_BREAK			'\n'
 # define EQUAL				'='
+# define DOLLAR_SIGN		'$'
 
 /* BUILT INS (COMMANDS) */
 # define EXIT_CMD_NOT_FOUND 127
@@ -100,7 +103,7 @@ void							cd_cmd(t_minishell *minishell);
 void							unset_cmd(t_minishell *minishell, char **cmd);
 int								env_cmd(t_minishell *minishell);
 int								pwd_cmd(char **cwd);
-int								echo_cmd(char **cmd);
+int								echo_cmd(char **cmd, char **env);
 
 /* INIT */
 int								init_env(char **env, t_minishell *minishell);
@@ -108,8 +111,15 @@ int								init_env(char **env, t_minishell *minishell);
 /* UTILS */
 int								get_total_commands(char *cmd_line);
 int								get_len_matrix(char **matrix);
+void							free_matrix(char **mat, int i);
+
+/* UTILS_ENV */
 int								get_cpy_env(t_minishell *minishell,
 									char **matrix_ori);
-void							free_matrix(char **mat, int i);
+int								are_equal_variables(char *variable_1,
+									char *variable_2);
+int								get_len_variable(char *variable);
+int								get_pos_var_env(char **env,
+									char *searched_var);
 
 #endif

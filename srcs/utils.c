@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:33:35 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 02:50:30 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/12 22:27:26 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,36 +61,4 @@ int	get_total_commands(char *cmd_line)
 			in_command = 0;
 	}
 	return (total);
-}
-
-/*
-* PRE: minishell != NULL && matrix_ori != NULL
-* POST: Genera una copia de la matrix original, devolviendo el estado
-*       del proceso.
-*/
-int	get_cpy_env(t_minishell *minishell, char **matrix_ori)
-{
-	int	size;
-	int	i;
-
-	size = get_len_matrix(matrix_ori);
-	minishell->env = (char **)malloc((size + 1) * sizeof(char *));
-	if (!minishell->env)
-	{
-		perror(RED ERROR_MALLOC DEF_COLOR);
-		exit(EXIT_FAILURE);
-	}
-	i = -1;
-	while (++i < size)
-	{
-		minishell->env[i] = ft_strdup(matrix_ori[i]);
-		if (!minishell->env[i])
-		{
-			perror(RED ERROR_MALLOC DEF_COLOR);
-			free_matrix(minishell->env, i);
-			exit(EXIT_FAILURE);
-		}
-	}
-	minishell->env[size] = NULL;
-	return (SUCCESS);
 }
