@@ -6,11 +6,16 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/13 01:29:21 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/13 02:05:54 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static	int is_valid_cmd()
+{
+	if
+}
 
 /*
 * PRE: minishell != NULL
@@ -30,7 +35,7 @@ void	select_builtint(t_minishell *minishell)
 		rl_clear_history();
 		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	}
-	else if (ft_strnstr(minishell->cmd_line, ECHO_CMD, 5) != NULL) //"echo" || echo
+	else if (ft_strnstr(minishell->cmd_line, ECHO_CMD, 5) != NULL)
 		echo_cmd(cmd, minishell->env);
 	else if (ft_strncmp(cmd[0], CD_CMD, 2) == 0)
 		cd_cmd(minishell);
