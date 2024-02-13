@@ -9,3 +9,12 @@ PARA CADA BUILT-INT
 * Controlar los casos en que el comando sea invalido (Arrojar un mensaje)
 * Liberar la memoria si falla el split
 * Ver cuales son los comandos validos.
+* Investigar si hay que implementar ls
+* Investigar los atajos de escape de bash
+* Investigar cuales son los caracteres especiales de bash
+* Investigar cual es la diferencia entre argumento y opcion
+* TERMINAR EXPORT
+* TERMINAR CD
+* TERMINAR echo
+* TERMINAR unset
+* TERMINAR env
