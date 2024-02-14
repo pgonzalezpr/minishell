@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 22:21:05 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 23:37:02 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void							replace_env_vars(t_token_node *token_node,
 
 /* BUILT-INS */
 void							select_builtin(t_minishell *minishell);
-void							builtin_export(t_minishell *minishell);
+void							builtin_export(t_minishell *minishell,
+									char **cmd);
 void							builtin_cd(t_minishell *minishell, char **cmd);
 void							builtin_unset(t_minishell *minishell,
 									char **cmd);
