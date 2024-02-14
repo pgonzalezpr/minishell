@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 03:16:07 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 03:39:33 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void							exit_minishell(t_minishell *minishell,
 void							free_tokens(t_token_node *tokens);
 void							free_pipeline(t_command_node *pipeline);
 void							free_pipe_arr(int **arr, size_t size);
-void							tokenize_builtin_line(t_minishell *minishell);
+void							tokenize_cmd_line(t_minishell *minishell);
 void							remove_quotes(t_token_node *token_node);
 void							replace_env_vars(t_token_node *token_node,
 									t_minishell *minishell);
