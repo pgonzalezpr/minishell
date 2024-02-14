@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 03:18:42 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 04:02:51 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	select_builtin(t_minishell *minishell)
 			ECHO_BUILTIN_3))
 		builtin_echo(cmd, minishell->env);
 	else if (is_valid_format(cmd[0], CD_BUILTIN, CD_BUILTIN_2, CD_BUILTIN_3))
-		builtin_cd(minishell);
+		builtin_cd(minishell, cmd);
 	else if (is_valid_format(cmd[0], ENV_BUILTIN, ENV_BUILTIN_2, ENV_BUILTIN_3))
 		builtin_env(minishell);
 	else if (is_valid_format(cmd[0], EXP_BUILTIN, EXP_BUILTIN_2, EXP_BUILTIN_3))
