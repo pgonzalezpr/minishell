@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 23:53:31 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 00:40:33 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,15 @@ int	get_cpy_env(t_minishell *minishell, char **matrix_ori)
 */
 int	get_pos_var_env(char **env, char *searched_var)
 {
-	int	i;
+	int		i;
 
 	i = -1;
+	if (!env || !searched_var)
+		return (POS_NOT_FOUNDED);
 	while (env[++i])
 	{
 		if (are_equal_variables(env[i], searched_var))
 			return (i);
 	}
-    return (POS_NOT_FOUNDED);
+	return (POS_NOT_FOUNDED);
 }

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 05:46:08 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 03:17:09 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 			free(minishell.cmd_line);
 			continue ;
 		}
-		select_builtint(&minishell);
+		select_builtin(&minishell);
 		add_history(minishell.cmd_line);
 		//tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/11 23:10:25 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 02:59:33 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 * PRE: minishell != NULL
 * POST: 
 */
-void	export_cmd(t_minishell *minishell)
+void	builtin_export(t_minishell *minishell)
 {
 	(void)minishell;
 	printf("EXPORT\n");

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/13 01:42:52 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 03:20:18 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	get_new_env(t_minishell *minishell, char **cmd,
 * POST: Elimina las variables de entorno recibidas de cmd
 *		en el env de la minishell
 */
-void	unset_cmd(t_minishell *minishell, char **cmd)
+void	builtin_unset(t_minishell *minishell, char **cmd)
 {
 	char	**new_env;
 	int		len_env;

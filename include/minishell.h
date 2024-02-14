@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 23:30:19 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 03:16:07 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,29 @@ typedef struct s_minishell
 # define DOLLAR_SIGN		'$'
 
 /* BUILT INS (COMMANDS) */
-# define EXIT_CMD_NOT_FOUND 127
-# define EXIT_CMD			"exit"
-# define ECHO_CMD			"echo"
-# define CD_CMD				"cd"
-# define PWD_CMD			"pwd"
-# define EXPORT_CMD			"export"
-# define UNSET_CMD			"unset"
-# define ENV_CMD			"env"
-# define FLAG_N				"-n"
+# define EXIT_COMMAND_NOT_FOUND 127
+# define EXIT_BUILTIN			"exit"
+# define EXIT_BUILTIN_2 		"'exit'"
+# define EXIT_BUILTIN_3			"\"exit\""
+# define ECHO_BUILTIN			"echo"
+# define ECHO_BUILTIN_2 		"'echo'"
+# define ECHO_BUILTIN_3			"\"echo\""
+# define CD_BUILTIN				"cd"
+# define CD_BUILTIN_2 			"'cd'"
+# define CD_BUILTIN_3			"\"cd\""
+# define PWD_BUILTIN			"pwd"
+# define PWD_BUILTIN_2 			"'pwd'"
+# define PWD_BUILTIN_3			"\"pwd\""
+# define EXP_BUILTIN			"export"
+# define EXP_BUILTIN_2 			"'export'"
+# define EXP_BUILTIN_3			"\"export\""
+# define UNSET_BUILTIN			"unset"
+# define UNSET_BUILTIN_2 		"'unset'"
+# define UNSET_BUILTIN_3		"\"unset\""
+# define ENV_BUILTIN			"env"
+# define ENV_BUILTIN_2 			"'env'"
+# define ENV_BUILTIN_3			"\"env\""
+# define FLAG_N					"-n"
 
 /* ERROR MESSAGES */
 # define ERROR_MALLOC		"Malloc Fails\n"
@@ -91,19 +105,20 @@ void							exit_minishell(t_minishell *minishell,
 void							free_tokens(t_token_node *tokens);
 void							free_pipeline(t_command_node *pipeline);
 void							free_pipe_arr(int **arr, size_t size);
-void							tokenize_cmd_line(t_minishell *minishell);
+void							tokenize_builtin_line(t_minishell *minishell);
 void							remove_quotes(t_token_node *token_node);
 void							replace_env_vars(t_token_node *token_node,
 									t_minishell *minishell);
 
 /* BUILT-INS */
-void							select_builtint(t_minishell *minishell);
-void							export_cmd(t_minishell *minishell);
-void							cd_cmd(t_minishell *minishell);
-void							unset_cmd(t_minishell *minishell, char **cmd);
-int								env_cmd(t_minishell *minishell);
-int								pwd_cmd(char **cwd);
-int								echo_cmd(char **cmd, char **env);
+void							select_builtin(t_minishell *minishell);
+void							builtin_export(t_minishell *minishell);
+void							builtin_cd(t_minishell *minishell);
+void							builtin_unset(t_minishell *minishell,
+									char **cmd);
+int								builtin_env(t_minishell *minishell);
+int								builtin_pwd(char **cwd);
+int								builtin_echo(char **cmd, char **env);
 
 /* INIT */
 int								init_env(char **env, t_minishell *minishell);
