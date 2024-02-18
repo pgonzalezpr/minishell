@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 00:30:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 06:58:56 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ void	select_builtin(t_minishell *minishell)
 	char	**cmd;
 
 	cmd = ft_split(minishell->cmd_line, EMPTY);
-	/*
 	if (!cmd)
-		// PROTEGER CMD.
-	*/
+		return (clean_minishell(minishell), printf(RED ERROR_MALLOC DEF_COLOR),
+			exit(EXIT_FAILURE));
 	if (is_valid_format(cmd[0], EXIT_BUILTIN, EXIT_BUILTIN_2, EXIT_BUILTIN_3))
 	{
 		rl_clear_history();

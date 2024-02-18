@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 00:21:54 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 07:18:03 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	get_ncpy_env(t_minishell *minishell, char **matrix_ori, int size)
 			free_matrix(minishell->env, i);
 			exit(EXIT_FAILURE);
 		}
+		//free(matrix_ori[i]);
 	}
 	minishell->env[size] = NULL;
-	//free_matrix(matrix_ori, get_len_matrix(matrix_ori));
 	return (SUCCESS);
 }
 
@@ -121,6 +121,6 @@ void	print_env(char **env, char mode)
 			printf("declare -x ");
 		if (mode == MODE_EXPORT || mode == MODE_ENV)
 			printf("%s", env[i]);
-		printf("%c", LINE_BREAK);
+		printf("\n");
 	}
 }

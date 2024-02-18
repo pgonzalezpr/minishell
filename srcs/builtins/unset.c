@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 03:20:18 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 07:23:22 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	builtin_unset(t_minishell *minishell, char **cmd)
 	char	**new_env;
 	int		len_env;
 
+	if (!cmd[1])
+		return ;
 	len_env = get_len_new_env(cmd, minishell->env);
 	new_env = (char **)malloc((len_env + 1) * sizeof(char *));
 	if (!new_env)

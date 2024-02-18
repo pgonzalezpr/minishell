@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 04:33:15 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 06:58:30 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 		//tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);
 		exec_pipeline(&minishell);
-		clean_minishell(&minishell);
+		//clean_minishell(&minishell);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 03:31:43 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 06:39:22 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_minishell
 # define FLAG_N						"-n"
 # define MODE_EXPORT				'X'
 # define MODE_ENV					'E'
-# define MAX_PATH					420000
+# define MAX_PATH					4200
 
 /* ERROR MESSAGES */
 # define ERROR_MALLOC				"Malloc Fails\n"

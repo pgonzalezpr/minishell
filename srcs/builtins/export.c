@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 00:21:07 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 07:16:39 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ static int	get_len_env_without_repeats(t_minishell *minishell, char **cmd)
 				len_new_env--;
 				break ;
 			}
+			free(var_name_env);
 		}
+		free(var_name_cmd);
 	}
 	return (len_new_env);
 }
@@ -76,6 +78,7 @@ static char	*get_old_var_modified(char **var, char **cmd)
 			new_var = ft_strdup(cmd[i]);
 			break ;
 		}
+		free(name_var_cmd);
 	}
 	return (new_var);
 }
@@ -94,12 +97,13 @@ static int	variable_exists(char *var, char **env)
 	i = 0;
 	name_var = get_name_var(var, EQUAL);
 	if (!name_var)
-		return (0);
+		return (free(name_var), 0);
 	while (env[i])
 	{
 		name_env = get_name_var(env[i], EQUAL);
 		if (name_env && are_equal_variables(name_var, name_env))
-			return (1);
+			return (free(name_env), 1);
+		free(name_env);
 		i++;
 	}
 	return (0);
@@ -114,6 +118,7 @@ char	**get_new_env_with_new_vars(t_minishell *minishell, char **cmd,
 {
 	int		i;
 	int		j;
+	char	*var;
 
 	i = -1;
 	j = 0;
@@ -128,13 +133,15 @@ char	**get_new_env_with_new_vars(t_minishell *minishell, char **cmd,
 	i = 0;
 	while (cmd[++i])
 	{
-		if (!variable_exists(cmd[i], new_env) && get_name_var(cmd[i], EQUAL))
+		var = get_name_var(cmd[i], EQUAL);
+		if (!variable_exists(cmd[i], new_env) && var)
 		{
 			new_env[j] = ft_strdup(cmd[i]);
 			if (!new_env[j])
 				return (NULL);
 			j++;
 		}
+		free(var);
 	}
 	return (new_env);
 }
