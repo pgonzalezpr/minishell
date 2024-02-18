@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 19:03:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 23:10:24 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 05:22:34 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,15 @@ void	update_vars_path_and_old_path(t_minishell *minishell,
 	if (index_new_path != POS_NOT_FOUNDED)
 	{
 		free(minishell->env[index_new_path]);
-		var = (char *)malloc(ft_strlen(new_path) + 5);
+		var = (char *)malloc(4 + ft_strlen(new_path) + 1);
 		if (!var)
 		{
-			//PROTEGER
 		}
-		var[0] = NULL_STR;
-		ft_strlcat(var, (const char *)VAR_PWD_WITH_EQUAL, 5);
-		ft_strlcat(var, new_path, ft_strlen(new_path) + 5);
+		ft_strlcpy(var, VAR_PWD_WITH_EQUAL, 4 + ft_strlen(new_path) + 1);
+		ft_strlcat(var, new_path, 4 + ft_strlen(new_path) + 1);
 		minishell->env[index_new_path] = var;
 		if (!minishell->env[index_new_path])
 		{
-			//PROTEGER
 		}
 	}
 	else
@@ -56,18 +53,17 @@ void	update_vars_path_and_old_path(t_minishell *minishell,
 	if (index_old_path != POS_NOT_FOUNDED)
 	{
 		free(minishell->env[index_old_path]);
-		var = (char *)malloc(ft_strlen(old_path) + 8);
+		var = (char *)malloc(7 + ft_strlen(old_path) + 1);
 		if (!var)
 		{
-			//PROTEGER
+			// Handle error
 		}
-		var[0] = NULL_STR;
-		ft_strlcat(var, (const char *)VAR_OLDPWD_WITH_EQUAL, 8);
-		ft_strlcat(var, old_path, ft_strlen(old_path) + 8);
+		ft_strlcpy(var, VAR_OLDPWD_WITH_EQUAL, 7 + ft_strlen(old_path) + 1);
+		ft_strlcat(var, old_path, 7 + ft_strlen(old_path) + 1);
 		minishell->env[index_old_path] = var;
 		if (!minishell->env[index_old_path])
 		{
-			//PROTEGER
+			// Handle error
 		}
 	}
 	else
@@ -85,4 +81,7 @@ void	update_vars_path_and_old_path(t_minishell *minishell,
 		}
 		free_matrix(aux_old_env, get_len_matrix(aux_old_env));
 	}
+	minishell->cwd = old_path;
+	printf("OLDPWD: %s\n", minishell->env[index_old_path]);
+	printf("NEWPWD: %s\n", minishell->env[index_new_path]);
 }

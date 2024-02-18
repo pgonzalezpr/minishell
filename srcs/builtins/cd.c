@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 23:27:23 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 05:40:11 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@
 * PRE: cmd != NULL && path != NULL
 * POST: Gestiona el caso para un path de ruta relativa.
 */
-static void	case_relative_path(t_minishell *minishell, char **cmd, char *path)
+void	case_relative_path(t_minishell *minishell, char **cmd)
 {
+	char	path[MAX_PATH];
+
+	minishell->cwd = getcwd(NULL, 0);
 	if (!minishell->cwd)
 	{
-		minishell->cwd = getcwd(NULL, 0);
-		if (!minishell->cwd)
-		{
-			perror(RED MSG_GET_CWD DEF_COLOR);
-			return ;
-		}
+		perror(RED MSG_GET_CWD DEF_COLOR);
+		return ;
 	}
 	ft_strlcpy(path, minishell->cwd, sizeof(path));
-	ft_strlcat(path, (const char *)FOWARD_SLAH, sizeof(path));
+	ft_strlcat(path, FOWARD_SLAH_STR, sizeof(path));
 	ft_strlcat(path, cmd[1], sizeof(path));
 	if (chdir(path) != 0)
-		perror(RED MSG_CD_FAILS DEF_COLOR);
+		printf("bash: cd: %s: No such file or directory\n", cmd[1]);
 	else
-		update_vars_path_and_old_path(minishell, getenv(VAR_PWD), path);
+		update_vars_path_and_old_path(minishell, minishell->cwd, path);
 }
 
 /*
@@ -42,10 +41,16 @@ static void	case_relative_path(t_minishell *minishell, char **cmd, char *path)
 */
 static void	case_absolute_path(t_minishell *minishell, char **cmd)
 {
+	minishell->cwd = getcwd(NULL, 0);
+	if (!minishell->cwd)
+	{
+		perror(RED MSG_GET_CWD DEF_COLOR);
+		return ;
+	}
 	if (chdir(cmd[1]) != 0)
-		perror(RED MSG_CD_FAILS DEF_COLOR);
+		printf("bash: cd: %s: No such file or directory\n", cmd[1]);
 	else
-		update_vars_path_and_old_path(minishell, getenv(VAR_PWD), cmd[1]);
+		update_vars_path_and_old_path(minishell, minishell->cwd, cmd[1]);
 }
 
 /*
@@ -54,12 +59,17 @@ static void	case_absolute_path(t_minishell *minishell, char **cmd)
 */
 static void	case_go_back(t_minishell *minishell)
 {
+	minishell->cwd = getcwd(NULL, 0);
+	if (!minishell->cwd)
+	{
+		perror(RED MSG_GET_CWD DEF_COLOR);
+		return ;
+	}
 	if (chdir(BACK_CD) != 0)
 		perror(RED MSG_CD_FAILS DEF_COLOR);
 	else
-		update_vars_path_and_old_path(minishell, getenv(VAR_PWD),
+		update_vars_path_and_old_path(minishell, minishell->cwd,
 			getcwd(NULL, 0));
-	minishell->cwd = getenv(VAR_PWD);
 }
 
 /*
@@ -69,8 +79,6 @@ static void	case_go_back(t_minishell *minishell)
 */
 void	builtin_cd(t_minishell *minishell, char **cmd)
 {
-	char	path[1024];
-
 	if (!cmd || !*cmd || !cmd[1])
 	{
 		fprintf(stderr, RED MSG_CD_MISSING_ARGS DEF_COLOR);
@@ -86,5 +94,5 @@ void	builtin_cd(t_minishell *minishell, char **cmd)
 	else if (cmd[1][0] == FOWARD_SLAH)
 		case_absolute_path(minishell, cmd);
 	else
-		case_relative_path(minishell, cmd, path);
+		case_relative_path(minishell, cmd);
 }
