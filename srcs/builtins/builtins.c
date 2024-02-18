@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 04:02:51 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 00:30:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	select_builtin(t_minishell *minishell)
 	else if (is_valid_format(cmd[0], ENV_BUILTIN, ENV_BUILTIN_2, ENV_BUILTIN_3))
 		builtin_env(minishell);
 	else if (is_valid_format(cmd[0], EXP_BUILTIN, EXP_BUILTIN_2, EXP_BUILTIN_3))
-		builtin_export(minishell);
-	else if (is_valid_format(cmd[0], PWD_BUILTIN, PWD_BUILTIN, PWD_BUILTIN_3))
+		builtin_export(minishell, cmd);
+	else if (is_valid_format(cmd[0], PWD_BUILTIN, PWD_BUILTIN_2, PWD_BUILTIN_3))
 		builtin_pwd(&minishell->cwd);
 	else if (is_valid_format(cmd[0], UNSET_BUILTIN, UNSET_BUILTIN_2,
 			UNSET_BUILTIN_3))

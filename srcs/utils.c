@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:33:35 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 22:27:26 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/17 18:20:57 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,31 @@ int	get_total_commands(char *cmd_line)
 			in_command = 0;
 	}
 	return (total);
+}
+
+/*
+* PRE: -
+* POST: Devuelve el nombre de la variable de entorno
+*/
+char	*get_name_var(const char *s, int c)
+{
+	int		len;
+	char	*var_name;
+
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	var_name = NULL;
+	while (len >= 0)
+	{
+		if (*(s + len) == (char)c)
+		{
+			var_name = ft_substr(s, 0, len);
+			if (!var_name)
+				return (NULL);
+			break ;
+		}
+		len--;
+	}
+	return (var_name);
 }

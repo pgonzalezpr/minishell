@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 23:37:02 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 00:16:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_minishell
 # define VAR_OLDPWD_WITH_EQUAL		"OLDPWD="
 # define VAR_PWD_WITH_EQUAL			"PWD="
 # define FLAG_N						"-n"
+# define MODE_EXPORT				'X'
+# define MODE_ENV					'E'
 
 /* ERROR MESSAGES */
 # define ERROR_MALLOC				"Malloc Fails\n"
@@ -141,8 +143,10 @@ int								init_env(char **env, t_minishell *minishell);
 int								get_total_commands(char *cmd_line);
 int								get_len_matrix(char **matrix);
 void							free_matrix(char **mat, int i);
+char							*get_name_var(const char *s, int c);
 
 /* UTILS_ENV */
+void							print_env(char **env, char mode);
 int								are_equal_variables(char *variable_1,
 									char *variable_2);
 int								get_len_variable(char *variable);

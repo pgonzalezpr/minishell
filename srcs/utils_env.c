@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 20:54:26 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/18 00:21:54 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	are_equal_variables(char *variable_1, char *variable_2)
 	int	len_1;
 	int	len_2;
 
+	if (!variable_1 || !variable_2)
+		return (0);
 	len_1 = get_len_variable(variable_1);
 	len_2 = get_len_variable(variable_2);
 	if (len_1 >= len_2 && strncmp(variable_1, variable_2, len_2) == 0) 
@@ -101,4 +103,24 @@ int	get_pos_var_env(char **env, char *searched_var)
 			return (i);
 	}
 	return (POS_NOT_FOUNDED);
+}
+
+/*
+* PRE: env != NULL
+* POST: Imprime por consola las variables de entorno del minishell
+*		segun el modo (MODE_ENV, MODE_EXPORT)
+*/
+void	print_env(char **env, char mode)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (mode == MODE_EXPORT)
+			printf("declare -x ");
+		if (mode == MODE_EXPORT || mode == MODE_ENV)
+			printf("%s", env[i]);
+		printf("%c", LINE_BREAK);
+	}
 }
