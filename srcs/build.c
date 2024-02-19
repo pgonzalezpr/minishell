@@ -1,7 +1,8 @@
 #include "../include/minishell.h"
 
-void	build_pipeline(t_minishell *minishell)
+int	build_pipeline(t_minishell *minishell)
 {
 	if (!minishell)
-		return ;
+		return (-1);
+	return (1);
 }

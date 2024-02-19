@@ -33,38 +33,41 @@ typedef struct s_minishell
 	size_t						cmd_count;
 	int							**pipes;
 	int							**here_doc_pipes;
+	int							last_exit_code;
 
 }								t_minishell;
 
-typedef struct s_command_node
-{
-	t_command_node				*next;
-}								t_command_node;
-
 /* COLORS */
-# define GREEN				"\033[0;92m"
-# define DEF_COLOR 			"\033[0;39m"
+# define GREEN "\033[0;92m"
+# define DEF_COLOR "\033[0;39m"
 
 /* SPECIAL SYMBOLS */
-# define DOUBLE_QUOTE		34
-# define SINGLE_QUOTE		39
-# define EMPTY				' '
-# define LINE_BREAK			'\n'
+# define DOUBLE_QUOTE 34
+# define SINGLE_QUOTE 39
+# define EMPTY ' '
+# define LINE_BREAK '\n'
 
 /* BUILT INS (COMMANDS) */
 # define EXIT_CMD_NOT_FOUND 127
-# define EXIT_CMD			"exit"
-# define ECHO_CMD			"echo"
-# define CD_CMD				"cd"
-# define PWD_CMD			"pwd"
-# define EXPORT_CMD			"export"
-# define UNSET_CMD			"unset"
-# define ENV_CMD			"env"
-# define FLAG_N				"-n"
+# define MALLOC_ERR_MSG "Allocation error"
+# define UNCLOSED_QUOTE_MSG "Error. Unclosed quote"
+# define EXIT_CMD "exit"
+# define ECHO_CMD "echo"
+# define CD_CMD "cd"
+# define PWD_CMD "pwd"
+# define EXPORT_CMD "export"
+# define UNSET_CMD "unset"
+# define ENV_CMD "env"
+# define FLAG_N "-n"
 
-/* PROTOTYPES */	
-void							parse_cmd_line(t_minishell *minishell);
-void							build_pipeline(t_minishell *minishell);
+/* PROTOTYPES */
+int								tokenize_cmd_line(t_minishell *minishell);
+int								process_tokens(t_minishell *minishell);
+void							remove_quotes(char *token);
+char							*substring(char *start, char *end);
+int								ft_strequals(char *s1, char *s2);
+char							*expand_token(char *token);
+int								build_pipeline(t_minishell *minishell);
 void							exec_pipeline(t_minishell *minishell);
 void							clean_minishell(t_minishell *minishell);
 void							exit_minishell(t_minishell *minishell,

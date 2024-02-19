@@ -1,20 +1,15 @@
 #include "../include/minishell.h"
 
-t_token_node	*get_token_node(char *begin, char *end)
+t_token_node	*get_token_node(char *token)
 {
-	char			*token;
 	t_token_node	*token_node;
-	size_t			len;
 
-	len = (size_t)(end - begin);
-	token = malloc((len + 1) * sizeof(char));
 	if (!token)
 		return (NULL);
-	ft_strlcpy(token, begin, len + 1);
 	token_node = malloc(sizeof(t_token_node));
 	if (!token_node)
 	{
-		free(token);
+		printf("%s\n", MALLOC_ERR_MSG);
 		return (NULL);
 	}
 	token_node->token = token;
@@ -22,16 +17,17 @@ t_token_node	*get_token_node(char *begin, char *end)
 	return (token_node);
 }
 
-void	add_token(char *begin, char *end, t_minishell *minishell)
+int	add_token(char *token, t_minishell *minishell)
 {
 	t_token_node	*token_node;
 	t_token_node	*current;
 
-	if (begin == end)
-		return ;
-	token_node = get_token_node(begin, end);
+	token_node = get_token_node(token);
 	if (!token_node)
-		exit_minishell(minishell, "Tokenize error\n", EXIT_FAILURE);
+	{
+		free(token);
+		return (-1);
+	}
 	if (minishell->tokens == NULL)
 		minishell->tokens = token_node;
 	else
@@ -41,66 +37,74 @@ void	add_token(char *begin, char *end, t_minishell *minishell)
 			current = current->next;
 		current->next = token_node;
 	}
+	return (1);
 }
 
-size_t	get_token_len(char *current, t_minishell *minishell)
+char	*get_token_end(char *start)
 {
-	char	quote;
-	size_t	offset;
+	char	*current;
 
-	offset = 0;
-	while (current[offset] && current[offset] != ' ' && current[offset] != '|')
+	current = start;
+	if (*current == '|')
+		return (current + 1);
+	while (*current && *current != ' ' && *current != '|')
 	{
-		if (current[offset] == '"' || current[offset] == '\'')
+		if (*current == '"' || *current == '\'')
 		{
-			quote = current[offset];
-			offset++;
-			while (current[offset] && current[offset] != quote)
-				offset++;
-			if (!current[offset])
-				exit_minishell(minishell, "Error. Unclosed quote\n",
-					EXIT_FAILURE);
+			current = ft_strchr(current + 1, *current);
+			if (!current)
+			{
+				printf("%s\n", UNCLOSED_QUOTE_MSG);
+				break ;
+			}
 		}
-		offset++;
+		current++;
 	}
-	return (offset);
+	return (current);
 }
 
-void	process_tokens(t_minishell *minishell)
+int	process_tokens(t_minishell *minishell)
 {
 	t_token_node	*current;
+	char			*expanded_token;
 
 	current = minishell->tokens;
 	while (current)
 	{
-		replace_env_vars(current, minishell);
-		remove_quotes(current);
+		expanded_token = expand_token(current->token);
+		if (!expanded_token)
+			return (-1);
+		remove_quotes(expanded_token);
+		free(current->token);
+		current->token = expanded_token;
 		printf("%s\n", current->token);
 		current = current->next;
 	}
+	return (1);
 }
 
-void	tokenize_cmd_line(t_minishell *minishell)
+int	tokenize_cmd_line(t_minishell *minishell)
 {
-	char	*begin;
-	char	*current;
+	char	*start;
+	char	*end;
+	char	*token;
 
-	current = minishell->cmd_line;
-	while (*current)
+	start = minishell->cmd_line;
+	while (*start)
 	{
-		while (*current == ' ')
-			current++;
-		begin = current;
-		current += get_token_len(current, minishell);
-		add_token(begin, current, minishell);
-		if (!*current)
+		while (*start == ' ')
+			start++;
+		if (!*start)
 			break ;
-		if (*current == '|')
-		{
-			begin = current;
-			current++;
-			add_token(begin, current, minishell);
-		}
+		end = get_token_end(start);
+		if (!end)
+			return (-1);
+		token = substring(start, end);
+		if (!token)
+			return (-1);
+		if (add_token(token, minishell) == -1)
+			return (-1);
+		start = end;
 	}
-	process_tokens(minishell);
+	return (1);
 }

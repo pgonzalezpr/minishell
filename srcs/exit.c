@@ -68,4 +68,5 @@ void	clean_minishell(t_minishell *minishell)
 		free_pipe_arr(minishell->pipes, minishell->cmd_count - 1);
 	if (minishell->here_doc_pipes)
 		free_pipe_arr(minishell->here_doc_pipes, minishell->cmd_count);
+	ft_memset(minishell, 0, sizeof(t_minishell));
 }
