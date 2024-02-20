@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 07:23:22 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 04:29:35 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ static int	get_len_new_env(char **cmd, char **env)
 /*
 * PRE: minishell != NULL
 * POST: Genera un new env que contenga las variables de
-*		entorno que no estan en el cmd.
+*		entorno que no estan en el cmd, devolviendo
+*		el status de la operacion.	
 */
-void	get_new_env(t_minishell *minishell, char **cmd,
+int	get_new_env(t_minishell *minishell, char **cmd,
 							char **new_env)
 {
 	int		i;
@@ -65,33 +66,37 @@ void	get_new_env(t_minishell *minishell, char **cmd,
 			{
 				perror(RED ERROR_MALLOC DEF_COLOR);
 				free_matrix(new_env, w);
-				exit(EXIT_FAILURE);
+				return (ERROR);
 			}
 		}
 	}
+	return (SUCCESS);
 }
 
 /*
 * PRE: minishell != NULL
 * POST: Elimina las variables de entorno recibidas de cmd
-*		en el env de la minishell
+*		en el env de la minishell, devolviendo el status
+*		de la operacion.
 */
-void	builtin_unset(t_minishell *minishell, char **cmd)
+int	builtin_unset(t_minishell *minishell, char **cmd)
 {
 	char	**new_env;
+	int		status;
 	int		len_env;
 
 	if (!cmd[1])
-		return ;
+		return (EXIT_FAILURE);
 	len_env = get_len_new_env(cmd, minishell->env);
 	new_env = (char **)malloc((len_env + 1) * sizeof(char *));
 	if (!new_env)
+		return (perror(RED ERROR_MALLOC DEF_COLOR), ERROR);
+	status = get_new_env(minishell, cmd, new_env);
+	if (new_env)
 	{
-		perror(RED ERROR_MALLOC DEF_COLOR);
-		exit(EXIT_FAILURE);
+		free_matrix(minishell->env, get_len_matrix(minishell->env));
+		new_env[len_env] = NULL;
+		minishell->env = new_env;
 	}
-	get_new_env(minishell, cmd, new_env);
-	free_matrix(minishell->env, get_len_matrix(minishell->env));
-	new_env[len_env] = NULL;
-	minishell->env = new_env;
+	return (status);
 }

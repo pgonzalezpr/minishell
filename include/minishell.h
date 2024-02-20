@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 06:39:22 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 04:16:11 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_minishell
 
 /* STATUS */
 # define SUCCESS					0
+# define ERROR						-1
 # define POS_NOT_FOUNDED			-4
 
 /* SPECIAL SYMBOLS */
@@ -73,27 +74,27 @@ typedef struct s_minishell
 
 /* BUILT INS (COMMANDS) */
 # define EXIT_COMMAND_NOT_FOUND 	127
-# define EXIT_BUILTIN				"exit"
-# define EXIT_BUILTIN_2 			"'exit'"
-# define EXIT_BUILTIN_3				"\"exit\""
-# define ECHO_BUILTIN				"echo"
-# define ECHO_BUILTIN_2 			"'echo'"
-# define ECHO_BUILTIN_3				"\"echo\""
-# define CD_BUILTIN					"cd"
-# define CD_BUILTIN_2 				"'cd'"
-# define CD_BUILTIN_3				"\"cd\""
-# define PWD_BUILTIN				"pwd"
-# define PWD_BUILTIN_2 				"'pwd'"
-# define PWD_BUILTIN_3				"\"pwd\""
-# define EXP_BUILTIN				"export"
-# define EXP_BUILTIN_2 				"'export'"
-# define EXP_BUILTIN_3				"\"export\""
-# define UNSET_BUILTIN				"unset"
-# define UNSET_BUILTIN_2 			"'unset'"
-# define UNSET_BUILTIN_3			"\"unset\""
-# define ENV_BUILTIN				"env"
-# define ENV_BUILTIN_2 				"'env'"
-# define ENV_BUILTIN_3				"\"env\""
+# define EXIT_CMD					"exit"
+# define EXIT_CMD_2 				"'exit'"
+# define EXIT_CMD_3					"\"exit\""
+# define ECHO_CMD					"echo"
+# define ECHO_CMD_2					"'echo'"
+# define ECHO_CMD_3					"\"echo\""
+# define CD_CMD						"cd"
+# define CD_CMD_2					"'cd'"
+# define CD_CMD_3					"\"cd\""
+# define PWD_CMD					"pwd"
+# define PWD_CMD_2					"'pwd'"
+# define PWD_CMD_3					"\"pwd\""
+# define EXP_CMD					"export"
+# define EXP_CMD_2 					"'export'"
+# define EXP_CMD_3					"\"export\""
+# define UNSET_CMD					"unset"
+# define UNSET_CMD_2 				"'unset'"
+# define UNSET_CMD_3				"\"unset\""
+# define ENV_CMD					"env"
+# define ENV_CMD_2 					"'env'"
+# define ENV_CMD_3					"\"env\""
 # define VAR_OLDPWD					"OLDPWD"
 # define VAR_PWD					"PWD"
 # define VAR_OLDPWD_WITH_EQUAL		"OLDPWD="
@@ -112,49 +113,42 @@ typedef struct s_minishell
 # define MSG_GET_CWD				"cd: get_cwd fails\n"
 
 /* PROTOTYPES */
-void							build_pipeline(t_minishell *minishell);
-void							exec_pipeline(t_minishell *minishell);
-void							clean_minishell(t_minishell *minishell);
-void							exit_minishell(t_minishell *minishell,
-									char *msg, int status);
-void							free_tokens(t_token_node *tokens);
-void							free_pipeline(t_command_node *pipeline);
-void							free_pipe_arr(int **arr, size_t size);
-void							tokenize_cmd_line(t_minishell *minishell);
-void							remove_quotes(t_token_node *token_node);
-void							replace_env_vars(t_token_node *token_node,
-									t_minishell *minishell);
+void	build_pipeline(t_minishell *minishell);
+void	exec_pipeline(t_minishell *minishell);
+void	clean_minishell(t_minishell *minishell);
+void	exit_minishell(t_minishell *minishell, char *msg, int status);
+void	free_tokens(t_token_node *tokens);
+void	free_pipeline(t_command_node *pipeline);
+void	free_pipe_arr(int **arr, size_t size);
+void	tokenize_cmd_line(t_minishell *minishell);
+void	remove_quotes(t_token_node *token_node);
+void	replace_env_vars(t_token_node *token_node, t_minishell *minishell);
 
 /* BUILT-INS */
-void							select_builtin(t_minishell *minishell);
-void							builtin_export(t_minishell *minishell,
-									char **cmd);
-void							builtin_cd(t_minishell *minishell, char **cmd);
-void							builtin_unset(t_minishell *minishell,
-									char **cmd);
-int								builtin_env(t_minishell *minishell);
-int								builtin_pwd(char **cwd);
-int								builtin_echo(char **cmd, char **env);
-void 							update_vars_path_and_old_path(t_minishell *minishell,
-								char *old_path, char *new_path);
+int		select_builtin(t_minishell *minishell);
+int		builtin_export(t_minishell *minishell, char **cmd);
+int		builtin_cd(t_minishell *minishell, char **cmd);
+int		builtin_unset(t_minishell *minishell, char **cmd);
+int		builtin_env(t_minishell *minishell);
+int		builtin_pwd(char **cwd);
+int		builtin_echo(char **cmd, char **env);
+int		update_vars_path_and_old_path(t_minishell *minishell, char *old_path, \
+		char *new_path);
 
 /* INIT */
-int								init_env(char **env, t_minishell *minishell);
+int		init_env(char **env, t_minishell *minishell);
 
 /* UTILS */
-int								get_total_commands(char *cmd_line);
-int								get_len_matrix(char **matrix);
-void							free_matrix(char **mat, int i);
-char							*get_name_var(const char *s, int c);
+int		get_total_commands(char *cmd_line);
+int		get_len_matrix(char **matrix);
+void	free_matrix(char **mat, int i);
+char	*get_name_var(const char *s, int c);
 
 /* UTILS_ENV */
-void							print_env(char **env, char mode);
-int								are_equal_variables(char *variable_1,
-									char *variable_2);
-int								get_len_variable(char *variable);
-int								get_pos_var_env(char **env,
-									char *searched_var);
-int								get_ncpy_env(t_minishell *minishell,
-									char **matrix_ori, int size);
+void	print_env(char **env, char mode);
+int		are_equal_variables(char *variable_1, char *variable_2);
+int		get_len_variable(char *variable);
+int		get_pos_var_env(char **env, char *searched_var);
+int		get_ncpy_env(t_minishell *minishell, char **matrix_ori, int size);
 
 #endif

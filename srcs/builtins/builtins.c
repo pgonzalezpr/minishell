@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 06:58:56 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 04:58:02 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,34 @@ static int	is_valid_format(char *cmd_line, char *option_1,
 
 /*
 * PRE: minishell != NULL
-* POST: Seleccionara el comando.
+* POST: Seleccionara el builtin correspondiente devolviendo el estado
+*		de la operacion (EXIT_FAILURE O EXIT_SUCCESS)
 */
-void	select_builtin(t_minishell *minishell)
+int	select_builtin(t_minishell *minishell)
 {
 	char	**cmd;
+	int		status;
 
 	cmd = ft_split(minishell->cmd_line, EMPTY);
+	status = SUCCESS;
 	if (!cmd)
-		return (clean_minishell(minishell), printf(RED ERROR_MALLOC DEF_COLOR),
-			exit(EXIT_FAILURE));
-	if (is_valid_format(cmd[0], EXIT_BUILTIN, EXIT_BUILTIN_2, EXIT_BUILTIN_3))
+		return (printf(RED ERROR_MALLOC DEF_COLOR), EXIT_FAILURE);
+	if (is_valid_format(cmd[0], EXIT_CMD, EXIT_CMD_2, EXIT_CMD_3))
 	{
 		rl_clear_history();
 		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	}
-	else if (is_valid_format(cmd[0], ECHO_BUILTIN, ECHO_BUILTIN_2,
-			ECHO_BUILTIN_3))
-		builtin_echo(cmd, minishell->env);
-	else if (is_valid_format(cmd[0], CD_BUILTIN, CD_BUILTIN_2, CD_BUILTIN_3))
-		builtin_cd(minishell, cmd);
-	else if (is_valid_format(cmd[0], ENV_BUILTIN, ENV_BUILTIN_2, ENV_BUILTIN_3))
-		builtin_env(minishell);
-	else if (is_valid_format(cmd[0], EXP_BUILTIN, EXP_BUILTIN_2, EXP_BUILTIN_3))
-		builtin_export(minishell, cmd);
-	else if (is_valid_format(cmd[0], PWD_BUILTIN, PWD_BUILTIN_2, PWD_BUILTIN_3))
-		builtin_pwd(&minishell->cwd);
-	else if (is_valid_format(cmd[0], UNSET_BUILTIN, UNSET_BUILTIN_2,
-			UNSET_BUILTIN_3))
-		builtin_unset(minishell, cmd);
+	else if (is_valid_format(cmd[0], ECHO_CMD, ECHO_CMD_2, ECHO_CMD_3))
+		status = builtin_echo(cmd, minishell->env);
+	else if (is_valid_format(cmd[0], CD_CMD, CD_CMD_2, CD_CMD_3))
+		status = builtin_cd(minishell, cmd);
+	else if (is_valid_format(cmd[0], ENV_CMD, ENV_CMD_2, ENV_CMD_3))
+		status = builtin_env(minishell);
+	else if (is_valid_format(cmd[0], EXP_CMD, EXP_CMD_2, EXP_CMD_3))
+		status = builtin_export(minishell, cmd);
+	else if (is_valid_format(cmd[0], PWD_CMD, PWD_CMD_2, PWD_CMD_3))
+		status = builtin_pwd(&minishell->cwd);
+	else if (is_valid_format(cmd[0], UNSET_CMD, UNSET_CMD_2, UNSET_CMD_3))
+		status = builtin_unset(minishell, cmd);
+	return (free_matrix(cmd, get_len_matrix(cmd)), status);
 }

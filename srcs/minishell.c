@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 06:58:30 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 04:28:04 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	ft_memset(&minishell, 0, sizeof(minishell));
 	if (init_env(env, &minishell) != SUCCESS)
-		return (EXIT_FAILURE);
+		return (clean_minishell(&minishell), EXIT_FAILURE);
 	while (1)
 	{
 		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
@@ -39,7 +39,8 @@ int	main(int argc, char **argv, char **env)
 			free(minishell.cmd_line);
 			continue ;
 		}
-		select_builtin(&minishell);
+		if (select_builtin(&minishell) != SUCCESS)
+			return (clean_minishell(&minishell), EXIT_FAILURE);
 		add_history(minishell.cmd_line);
 		//tokenize_cmd_line(&minishell);
 		build_pipeline(&minishell);

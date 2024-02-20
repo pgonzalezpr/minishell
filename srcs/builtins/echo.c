@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 02:59:59 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 03:40:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ static int	get_filter_var(const char *var, char **filter_var)
 	int		len_var_filtered;
 
 	if (!var)
-		return (0);
+		return (ERROR);
 	len_var_filtered = get_len_filtered_var(var);
 	(*filter_var) = (char *)malloc(len_var_filtered + 1);
 	if (!*filter_var)
 	{
 		perror(RED ERROR_MALLOC DEF_COLOR);
-		exit(EXIT_FAILURE);
+		return (ERROR);
 	}
 	i = 0;
 	j = -1;
@@ -70,38 +70,41 @@ static int	get_filter_var(const char *var, char **filter_var)
 * POST: Imprimira el valor de la variable de entorno por consola,
 *		Si la misma existe
 */
-static void	print_dollar_case(char **cmd, char **env, int i, int j)
+static int	print_dollar_case(char **cmd, char **env, int i, int j)
 {
 	int		pos_var_env;
 	int		total_simbols_filtered;
 	char	*filter_var;
 	char	*value_var;
 
-	if (cmd[i][j] == DOLLAR_SIGN)
+	total_simbols_filtered = get_filter_var(cmd[i], &filter_var);
+	if (total_simbols_filtered == ERROR)
+		return (ERROR);
+	if (cmd[i][j + 1] == NULL_STR)
+		printf("%c", DOLLAR_SIGN);
+	else if (ft_strlen(cmd[i]) > 0 && ((cmd[i][0] == DOUBLE_QUOTE && \
+		cmd[i][ft_strlen(cmd[i]) - 1] == DOUBLE_QUOTE) || \
+		(cmd[i][0] == DOLLAR_SIGN && total_simbols_filtered == 1)))
 	{
-		total_simbols_filtered = get_filter_var(cmd[i], &filter_var);
-		if (cmd[i][j + 1] == NULL_STR)
-			printf("%c", DOLLAR_SIGN);
-		else if (ft_strlen(cmd[i]) > 0 && ((cmd[i][0] == DOUBLE_QUOTE && \
-			cmd[i][ft_strlen(cmd[i]) - 1] == DOUBLE_QUOTE) || \
-			(cmd[i][0] == DOLLAR_SIGN && total_simbols_filtered == 1)))
+		pos_var_env = get_pos_var_env(env, filter_var);
+		if (pos_var_env != POS_NOT_FOUNDED)
 		{
-			pos_var_env = get_pos_var_env(env, filter_var);
-			if (pos_var_env != POS_NOT_FOUNDED)
-			{
-				value_var = ft_strchr(env[pos_var_env], EQUAL);
-				printf("%s", ++value_var);
-			}
+			value_var = ft_strchr(env[pos_var_env], EQUAL);
+			if (!value_var)
+				return (free(filter_var), ERROR);
+			printf("%s", ++value_var);
 		}
-		free(filter_var);
 	}
+	free(filter_var);
+	return (SUCCESS);
 }
 
 /*
 * PRE: -
-* POST: Imprimira un caracter por la terminal.
-*/
-static void	print_case(char **cmd, char **env, int i)
+* POST: Imprimira un caracter por la terminal, 
+*		devolviendo el estado de la operacion.
+*/	
+static int	print_case(char **cmd, char **env, int i)
 {
 	int		j;
 
@@ -115,33 +118,38 @@ static void	print_case(char **cmd, char **env, int i)
 				printf("%c", cmd[i][j]);
 			else if (cmd[i][j] == DOLLAR_SIGN)
 			{
-				print_dollar_case(cmd, env, i, j);
+				if (print_dollar_case(cmd, env, i, j) == ERROR)
+					return (ERROR);
 				break ;
 			}
 		}
 		if (cmd[i + 1])
 			printf("%c", EMPTY);
 	}
+	return (SUCCESS);
 }
 
 /*
 * PRE: cmd != NULL && env != NULL
-* POST: Mostrara un mensaje por el standar output.
+* POST: Mostrara un mensaje por el standar output, y devolvera
+*		el estado de la operacion (SUCCESS o ERROR)
 */
 int	builtin_echo(char **cmd, char **env)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = SUCCESS;
 	if (!cmd[1])
 	{
 		printf("%c", LINE_BREAK);
-		return (SUCCESS);
+		return (status);
 	}
 	else if (ft_strncmp(cmd[1], FLAG_N, 2) == 0)
 		i = 1;
-	print_case(cmd, env, i);
+	status = print_case(cmd, env, i);
 	if (ft_strncmp(cmd[1], FLAG_N, 2) != 0)
 		printf("%c", LINE_BREAK);
-	return (SUCCESS);
+	return (status);
 }

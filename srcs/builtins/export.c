@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/18 07:16:39 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/20 04:32:28 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,15 @@ char	**get_new_env_with_new_vars(t_minishell *minishell, char **cmd,
 /*
 * PRE: minishell != NULL && cmd != NULL
 * POST: Ejecuta el builtin export de la minishell.
+*		Devolviendo el status de la operacion.
 */
-void	builtin_export(t_minishell *minishell, char **cmd)
+int	builtin_export(t_minishell *minishell, char **cmd)
 {
 	int		len_env;
+	int		status;
 	char	**new_env;
 
+	status = SUCCESS;
 	if (!cmd[1])
 		print_env(minishell->env, MODE_EXPORT);
 	else
@@ -162,18 +165,13 @@ void	builtin_export(t_minishell *minishell, char **cmd)
 		len_env = get_len_env_without_repeats(minishell, cmd);
 		new_env = (char **)malloc((len_env + 1) * sizeof(char *));
 		if (!new_env)
-		{
-			perror(RED ERROR_MALLOC DEF_COLOR);
-			exit(EXIT_FAILURE);
-		}
+			return (perror(RED ERROR_MALLOC DEF_COLOR), ERROR);
 		new_env = get_new_env_with_new_vars(minishell, cmd, new_env);
 		if (!new_env)
-		{
-			perror(RED ERROR_MALLOC DEF_COLOR);
-			exit(EXIT_FAILURE);
-		}
+			return (perror(RED ERROR_MALLOC DEF_COLOR), ERROR);
 		free_matrix(minishell->env, get_len_matrix(minishell->env));
 		new_env[len_env] = NULL;
 		minishell->env = new_env;
 	}
+	return (status);
 }
