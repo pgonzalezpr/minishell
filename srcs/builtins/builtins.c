@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 04:58:02 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:51:30 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ int	select_builtin(t_minishell *minishell)
 		return (printf(RED ERROR_MALLOC DEF_COLOR), EXIT_FAILURE);
 	if (is_valid_format(cmd[0], EXIT_CMD, EXIT_CMD_2, EXIT_CMD_3))
 	{
-		rl_clear_history();
+		//rl_clear_history();
+		clear_history();
 		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	}
 	else if (is_valid_format(cmd[0], ECHO_CMD, ECHO_CMD_2, ECHO_CMD_3))
-		status = builtin_echo(cmd, minishell->env);
+		status = builtin_echo(minishell->env, cmd);
 	else if (is_valid_format(cmd[0], CD_CMD, CD_CMD_2, CD_CMD_3))
 		status = builtin_cd(minishell, cmd);
 	else if (is_valid_format(cmd[0], ENV_CMD, ENV_CMD_2, ENV_CMD_3))

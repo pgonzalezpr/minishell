@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:32:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 04:17:39 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:08:08 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 int	builtin_env(t_minishell *minishell)
 {
-	if (get_total_commands(minishell->cmd_line) == 1)
+	if (get_len_env(minishell->env) == 1)
 		print_env(minishell->env, MODE_ENV);
 	else
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 04:28:04 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:23:33 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_memset(&minishell, 0, sizeof(minishell));
-	if (init_env(env, &minishell) != SUCCESS)
+	if (init_env(&minishell, env) != SUCCESS)
 		return (clean_minishell(&minishell), EXIT_FAILURE);
 	while (1)
 	{

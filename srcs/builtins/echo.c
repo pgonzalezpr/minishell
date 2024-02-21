@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 03:40:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:07:19 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,34 @@ static int	get_len_filtered_var(const char	*var)
 
 /*
 * PRE: -
-* POST: Devolvera la cantidad de caracteres filtrados eliminados de var,
+* POST: Devolvera la cantidad de caracteres filtrados de var,
 *		Ademas modificara el parametro filter_var, dejandolo con el 
 *		contenido de var filtrado.
 */
-static int	get_filter_var(const char *var, char **filter_var)
+static char	*get_filter_key(const char *key_var, int *total_simbols_filtered)
 {
 	int		i;
 	int		j;
 	int		len_var_filtered;
+	char	*filter_var;
 
-	if (!var)
-		return (ERROR);
-	len_var_filtered = get_len_filtered_var(var);
-	(*filter_var) = (char *)malloc(len_var_filtered + 1);
-	if (!*filter_var)
-	{
-		perror(RED ERROR_MALLOC DEF_COLOR);
-		return (ERROR);
-	}
+	if (!key_var)
+		return (NULL);
+	len_var_filtered = get_len_filtered_var(key_var);
+	filter_var = (char *)malloc(len_var_filtered + 1);
+	if (!filter_var)
+		return (perror(RED ERROR_MALLOC DEF_COLOR), NULL);
 	i = 0;
 	j = -1;
-	while (var[++j])
+	while (key_var[++j])
 	{
-		if (var[j] != DOUBLE_QUOTE && var[j] != DOLLAR_SIGN \
-		&& var[j] != SINGLE_QUOTE)
-			(*filter_var)[i++] = var[j];
+		if (key_var[j] != DOUBLE_QUOTE && key_var[j] != DOLLAR_SIGN \
+		&& key_var[j] != SINGLE_QUOTE)
+			filter_var[i++] = key_var[j];
 	}
-	(*filter_var)[i++] = NULL_STR;
-	return (ft_strlen(var) - len_var_filtered);
+	filter_var[i++] = NULL_STR;
+	(*total_simbols_filtered) = ft_strlen(key_var) - len_var_filtered;
+	return (filter_var);
 }
 
 /*
@@ -70,15 +69,14 @@ static int	get_filter_var(const char *var, char **filter_var)
 * POST: Imprimira el valor de la variable de entorno por consola,
 *		Si la misma existe
 */
-static int	print_dollar_case(char **cmd, char **env, int i, int j)
+static int	print_dollar_case(char **cmd, t_env *env, int i, int j)
 {
-	int		pos_var_env;
+	t_env	*node;
 	int		total_simbols_filtered;
-	char	*filter_var;
-	char	*value_var;
+	char	*searched_name;
 
-	total_simbols_filtered = get_filter_var(cmd[i], &filter_var);
-	if (total_simbols_filtered == ERROR)
+	searched_name = get_filter_key(cmd[i], &total_simbols_filtered);
+	if (!searched_name)
 		return (ERROR);
 	if (cmd[i][j + 1] == NULL_STR)
 		printf("%c", DOLLAR_SIGN);
@@ -86,16 +84,11 @@ static int	print_dollar_case(char **cmd, char **env, int i, int j)
 		cmd[i][ft_strlen(cmd[i]) - 1] == DOUBLE_QUOTE) || \
 		(cmd[i][0] == DOLLAR_SIGN && total_simbols_filtered == 1)))
 	{
-		pos_var_env = get_pos_var_env(env, filter_var);
-		if (pos_var_env != POS_NOT_FOUNDED)
-		{
-			value_var = ft_strchr(env[pos_var_env], EQUAL);
-			if (!value_var)
-				return (free(filter_var), ERROR);
-			printf("%s", ++value_var);
-		}
+		node = get_var_env(env, searched_name);
+		if (node)
+			printf("%s", node->value);
 	}
-	free(filter_var);
+	free(searched_name);
 	return (SUCCESS);
 }
 
@@ -104,7 +97,7 @@ static int	print_dollar_case(char **cmd, char **env, int i, int j)
 * POST: Imprimira un caracter por la terminal, 
 *		devolviendo el estado de la operacion.
 */	
-static int	print_case(char **cmd, char **env, int i)
+static int	print_case(char **cmd, t_env *env, int i)
 {
 	int		j;
 
@@ -134,14 +127,14 @@ static int	print_case(char **cmd, char **env, int i)
 * POST: Mostrara un mensaje por el standar output, y devolvera
 *		el estado de la operacion (SUCCESS o ERROR)
 */
-int	builtin_echo(char **cmd, char **env)
+int	builtin_echo(t_env *env, char **cmd)
 {
 	int	i;
 	int	status;
 
 	i = 0;
 	status = SUCCESS;
-	if (!cmd[1])
+	if (!env->next)
 	{
 		printf("%c", LINE_BREAK);
 		return (status);

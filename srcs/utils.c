@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:33:35 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/17 18:20:57 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:29:40 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-* PRE: -
-* POST: Libera la memoria de la matrix.
-*/
-void	free_matrix(char **mat, int i)
-{
-	while (i-- > 0)
-		free(mat[i]);
-	free(mat);
-}
 
 /*
 * PRE: -
@@ -35,6 +24,17 @@ int	get_len_matrix(char **matrix)
 	while (matrix[size])
 		size++;
 	return (size);
+}
+
+/*
+* PRE: -
+* POST: Libera la memoria de la matrix.
+*/
+void	free_matrix(char **mat, int i)
+{
+	while (i-- > 0)
+		free(mat[i]);
+	free(mat);
 }
 
 /*
@@ -65,27 +65,15 @@ int	get_total_commands(char *cmd_line)
 
 /*
 * PRE: -
-* POST: Devuelve el nombre de la variable de entorno
+* POST: Devuelve 0 si son iguales s1 y s2, negativo si s2 > s1 
+*		y positivo en caso contrario.
 */
-char	*get_name_var(const char *s, int c)
+int	ft_strcmp(char *s1, char  *s2)
 {
-	int		len;
-	char	*var_name;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	var_name = NULL;
-	while (len >= 0)
-	{
-		if (*(s + len) == (char)c)
-		{
-			var_name = ft_substr(s, 0, len);
-			if (!var_name)
-				return (NULL);
-			break ;
-		}
-		len--;
-	}
-	return (var_name);
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 04:16:11 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:30:27 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 /* STRUCTS */
 typedef struct s_command_node	t_command_node;
 typedef struct s_token_node		t_token_node;
+typedef struct s_env			t_env;
 
 typedef struct s_command_node
 {
@@ -37,17 +38,23 @@ typedef struct s_token_node
 	t_token_node				*next;
 }								t_token_node;
 
+typedef struct s_env
+{
+	char						*key;
+	char						*value;
+	t_env						*next;
+}								t_env;
+
 typedef struct s_minishell
 {
 	char						*cmd_line;
 	char						*cwd;
-	char						**env;
+	t_env						*env;
 	t_token_node				*tokens;
 	t_command_node				*pipeline;
 	size_t						cmd_count;
 	int							**pipes;
 	int							**here_doc_pipes;
-
 }								t_minishell;
 
 /* COLORS */
@@ -131,24 +138,23 @@ int		builtin_cd(t_minishell *minishell, char **cmd);
 int		builtin_unset(t_minishell *minishell, char **cmd);
 int		builtin_env(t_minishell *minishell);
 int		builtin_pwd(char **cwd);
-int		builtin_echo(char **cmd, char **env);
+int		builtin_echo(t_env *env, char **cmd);
 int		update_vars_path_and_old_path(t_minishell *minishell, char *old_path, \
 		char *new_path);
 
 /* INIT */
-int		init_env(char **env, t_minishell *minishell);
+int		init_env(t_minishell *minishell, char **env);
 
-/* UTILS */
+/* UTILS */ 
 int		get_total_commands(char *cmd_line);
 int		get_len_matrix(char **matrix);
+int		ft_strcmp(char *s1, char  *s2);
 void	free_matrix(char **mat, int i);
-char	*get_name_var(const char *s, int c);
 
 /* UTILS_ENV */
-void	print_env(char **env, char mode);
-int		are_equal_variables(char *variable_1, char *variable_2);
-int		get_len_variable(char *variable);
-int		get_pos_var_env(char **env, char *searched_var);
-int		get_ncpy_env(t_minishell *minishell, char **matrix_ori, int size);
+void	print_env(t_env *env, char mode);
+void	free_env(t_env **env);
+t_env	*get_var_env(t_env *env, char *content);
+int		get_len_env(t_env *env);
 
 #endif
