@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 14:24:14 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:18:16 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,14 @@ int	get_len_env(t_env *env)
 void	print_env(t_env *env, char mode)
 {
 	t_env	*tmp;
-	int		i;
 
-	i = -1;
 	tmp = env;
 	while (tmp)
 	{
 		if (mode == MODE_EXPORT)
 			printf("declare -x ");
 		if (mode == MODE_EXPORT || mode == MODE_ENV)
-			printf("%s = %s", tmp->key, tmp->value);
+			printf("%s=%s", tmp->key, tmp->value);
 		printf("\n");
 		tmp = tmp->next;
 	}
@@ -63,13 +61,11 @@ void	print_env(t_env *env, char mode)
 */
 t_env	*get_var_env(t_env *env, char *content)
 {
-	int		len_content;
 	t_env	*tmp;
 
 	if (!env || !content)
 		return (NULL);
 	tmp = env;
-	len_content = ft_strlen(content);
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, content) == 0
@@ -104,4 +100,21 @@ void	free_env(t_env **env)
 		current = next;
 	}
 	*env = NULL;
+}
+
+/*
+* PRE: -
+* POST: Devuelve un nodo nuevo del env.
+*/
+t_env	*get_new_node_env(char *key, char *value)
+{
+	t_env	*node;
+
+	node = (t_env *)malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->key = key;
+	node->value = value;
+	node->next = NULL;
+	return (node);
 }

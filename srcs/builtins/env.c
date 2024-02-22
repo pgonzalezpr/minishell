@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:32:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 14:08:08 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:23:14 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@
 */
 int	builtin_env(t_minishell *minishell)
 {
-	if (get_len_env(minishell->env) == 1)
+	if (get_total_commands(minishell->cmd_line) == 1)
 		print_env(minishell->env, MODE_ENV);
 	else
-	{
 		fprintf(stderr, RED MSG_MORE_THAN_TWO_ARGS_ENV DEF_COLOR);
-		return (ERROR);
-	}
 	return (SUCCESS);
 }

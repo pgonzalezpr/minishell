@@ -6,10 +6,11 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:44:13 by pedro-go          #+#    #+#             */
-/*   Updated: 2024/02/09 22:05:01 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/22 14:34:47 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

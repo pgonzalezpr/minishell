@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 14:32:55 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:19:33 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 // 		return (ERROR);
 // 	}
 // 	else
-// 		return (update_vars_path_and_old_path(minishell, \
+// 		return (update_vars_path_and_old_path(minishell, 
 // 		minishell->cwd, cmd[1]));
 // }
 

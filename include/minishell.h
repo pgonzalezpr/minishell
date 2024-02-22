@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 14:30:27 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:20:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,11 @@ void	print_env(t_env *env, char mode);
 void	free_env(t_env **env);
 t_env	*get_var_env(t_env *env, char *content);
 int		get_len_env(t_env *env);
+t_env	*get_new_node_env(char *key, char *value);
+
+/* UTILS_ENV 2 */
+t_env	*get_last_node_env(t_env *env);
+void	add_back_to_env(t_env **env, t_env *new);
+int		set_node_content(char *content, t_env **node);
 
 #endif

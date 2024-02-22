@@ -1,11 +1,11 @@
 NAME = minishell
 
-SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
-		./srcs/exit.c ./srcs/builtins/builtins.c ./srcs/builtins/echo.c 				\
-		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     			\
-		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/builtins/init_env.c		\
-		./srcs/utils.c ./srcs/tokenize.c ./srcs/tokenize_utils.c						\
-		./srcs/builtins/utils_env.c #./srcs/builtins/cd_utils.c
+SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c											\
+		./srcs/exit.c ./srcs/builtins/builtins.c ./srcs/builtins/echo.c 						\
+		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     					\
+		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/builtins/init_env.c				\
+		./srcs/utils.c ./srcs/tokenize.c ./srcs/tokenize_utils.c								\
+		./srcs/builtins/utils_env_2.c ./srcs/builtins/utils_env.c #./srcs/builtins/cd_utils.c
 			
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
