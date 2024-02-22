@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 16:20:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/22 18:00:34 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ t_env	*get_new_node_env(char *key, char *value);
 t_env	*get_last_node_env(t_env *env);
 void	add_back_to_env(t_env **env, t_env *new);
 int		set_node_content(char *content, t_env **node);
+int		get_len_key_var(char *key);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 14:07:19 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:31:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	builtin_echo(t_env *env, char **cmd)
 
 	i = 0;
 	status = SUCCESS;
-	if (!env->next)
+	if (!cmd[1])
 	{
 		printf("%c", LINE_BREAK);
 		return (status);
