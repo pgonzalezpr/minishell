@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 18:39:13 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:25:55 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,6 @@ static int	is_valid_var_format(char *var)
 	if (count_equals == 0 || count_equals > 1)
 		status = 0;
 	return (status);
-}
-
-/*
-* PRE: var != NULL
-* POST: Devuelve la key del cmd.
-*/
-static char	*get_key_var_cmd(char *cmd)
-{
-	char	*key_var_cmd;
-	int		i;
-
-	i = 0;
-	key_var_cmd = (char *)malloc(get_len_key_var(cmd) + 1);
-	if (!key_var_cmd)
-		return (NULL);
-	while (cmd[i] && cmd[i] != EQUAL)
-	{
-		key_var_cmd[i] = cmd[i];
-		i++;
-	}
-	key_var_cmd[i++] = NULL_STR;
-	return (key_var_cmd);
 }
 
 /*
@@ -105,7 +83,7 @@ int	builtin_export(t_minishell *minishell, char **cmd)
 	{
 		if (is_valid_var_format(*cmd))
 		{
-			key_var_cmd = get_key_var_cmd(*cmd);
+			key_var_cmd = ft_substr(*cmd, 0, get_len_key_var(*cmd));
 			if (!key_var_cmd)
 				return (ERROR);
 			tmp = get_var_env(minishell->env, key_var_cmd);

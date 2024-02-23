@@ -5,7 +5,7 @@ SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c											\
 		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     					\
 		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/builtins/init_env.c				\
 		./srcs/utils.c ./srcs/tokenize.c ./srcs/tokenize_utils.c								\
-		./srcs/builtins/utils_env_2.c ./srcs/builtins/utils_env.c #./srcs/builtins/cd_utils.c
+		./srcs/builtins/utils_env_2.c ./srcs/builtins/utils_env.c ./srcs/builtins/cd_utils.c
 			
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
@@ -13,7 +13,7 @@ LIBFT_DIR = libft
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD -g
 
 DEL_LINE =		\033[2K
 ITALIC =		\033[3m

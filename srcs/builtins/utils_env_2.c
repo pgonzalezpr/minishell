@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 17:59:11 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/23 01:44:32 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,44 @@ void	add_back_to_env(t_env **env, t_env *new)
 
 /*
 * PRE: -
+* POST: Elimina el node del env que tenga la misma key,
+*		retornando el estado de la operacion.
+*/
+int	del_node_env(t_env *env, t_env *node)
+{
+	t_env	*current;
+
+	if (!env || !node)
+		return (ERROR);
+	current = env;
+	while (current->next && ft_strcmp(current->next->key, node->key) != 0)
+		current = current->next;
+	if (!current->next)
+		return (ERROR);
+	current->next = node->next;
+	free(node->key);
+	free(node->value);
+	free(node);
+	return (SUCCESS);
+}
+
+/*
+* PRE: -
 * POST: Agrega el new_content al node, cambiando su valor
 *		y clave por dicho contenido.
 */
 int	set_node_content(char *content, t_env **node)
 {
-	int		i;
 	int		len_key;
 	int		len_value;	
 
-	i = 0;
 	len_key = get_len_key_var(content);
-	(*node)->key = (char *)malloc(len_key);
+	(*node)->key = ft_substr(content, 0, len_key);
 	if (!((*node)->key))
 		return (ERROR);
-	len_value = ft_strlen(content) - len_key;
-	(*node)->value = (char *)malloc(len_value);
-	if (!((*node)->value))
-		return (ERROR);
-	while (content[i] && content[i] != EQUAL)
-	{
-		(*node)->key[i] = content[i];
-		i++;
-	}
-	(*node)->key[i] = NULL_STR;
-	(*node)->value = ft_strdup(&content[len_key]);
+	len_value = ft_strlen(content) - len_key - 1;
+	(*node)->value = ft_substr(content, len_key + 1, len_value);
 	if (!(*node)->value)
 		return (ERROR);
-	(*node)->value++;
 	return (SUCCESS);
 }

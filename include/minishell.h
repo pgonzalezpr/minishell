@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 18:00:34 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/23 01:44:19 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_minishell
 # define MSG_MORE_THAN_TWO_ARGS_CD 	"cd: more than two args\n"
 # define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
 # define MSG_GET_CWD				"cd: get_cwd fails\n"
+# define MSG_COMMAND_NOT_FOUND		": command not found\n"
 
 /* PROTOTYPES */
 void	build_pipeline(t_minishell *minishell);
@@ -133,35 +134,49 @@ void	replace_env_vars(t_token_node *token_node, t_minishell *minishell);
 
 /* BUILT-INS */
 int		select_builtin(t_minishell *minishell);
-int		builtin_export(t_minishell *minishell, char **cmd);
-int		builtin_cd(t_minishell *minishell, char **cmd);
-int		builtin_unset(t_minishell *minishell, char **cmd);
-int		builtin_env(t_minishell *minishell);
-int		builtin_pwd(char **cwd);
-int		builtin_echo(t_env *env, char **cmd);
-int		update_vars_path_and_old_path(t_minishell *minishell, char *old_path, \
-		char *new_path);
 
-/* INIT */
+/* PWD.C */
+int		builtin_pwd(char **cwd);
+
+/* EXPORT.C */
+int		builtin_export(t_minishell *minishell, char **cmd);
+
+/* UNSET.C */
+int		builtin_unset(t_minishell *minishell, char **cmd);
+
+/* CD.C */
+int		builtin_cd(t_minishell *minishell, char **cmd);
+
+/* ENV.C */
+int		builtin_env(t_minishell *minishell);
+
+/* CD_UTILS.C*/
+int		update_cd_vars(t_minishell *minishell);
+
+/* ECHO.C */
+int		builtin_echo(t_env *env, char **cmd);
+
+/* INIT.C */
 int		init_env(t_minishell *minishell, char **env);
 
-/* UTILS */ 
+/* UTILS.C */ 
 int		get_total_commands(char *cmd_line);
 int		get_len_matrix(char **matrix);
 int		ft_strcmp(char *s1, char  *s2);
 void	free_matrix(char **mat, int i);
 
-/* UTILS_ENV */
+/* UTILS_ENV.C */
 void	print_env(t_env *env, char mode);
-void	free_env(t_env **env);
+void	free_env(t_env *env);
 t_env	*get_var_env(t_env *env, char *content);
 int		get_len_env(t_env *env);
 t_env	*get_new_node_env(char *key, char *value);
 
-/* UTILS_ENV 2 */
+/* UTILS_ENV 2.C */
 t_env	*get_last_node_env(t_env *env);
 void	add_back_to_env(t_env **env, t_env *new);
 int		set_node_content(char *content, t_env **node);
 int		get_len_key_var(char *key);
+int		del_node_env(t_env *env, t_env *node);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 16:18:16 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:55:03 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,6 @@ t_env	*get_var_env(t_env *env, char *content)
 
 /*
 * PRE: -
-* POST: Libera la memoria de la lista
-*/
-void	free_env(t_env **env)
-{
-	t_env	*current;
-	t_env	*next;
-
-	current = *env;
-	while (current)
-	{
-		next = current->next;
-		if (current)
-		{
-			if (current->value)
-				free(current->value);
-			if (current->key)
-				free(current->key);
-			free(current);
-		}
-		current = next;
-	}
-	*env = NULL;
-}
-
-/*
-* PRE: -
 * POST: Devuelve un nodo nuevo del env.
 */
 t_env	*get_new_node_env(char *key, char *value)
@@ -117,4 +91,28 @@ t_env	*get_new_node_env(char *key, char *value)
 	node->value = value;
 	node->next = NULL;
 	return (node);
+}
+
+/*
+* PRE: -
+* POST: Libera la memoria de la lista
+*/
+void	free_env(t_env *env)
+{
+	t_env	*current;
+	t_env	*next;
+
+	if (!env)
+		return ;
+	current = env;
+	while (current)
+	{
+		next = current->next;
+		if (current->value)
+			free(current->value);
+		if (current->key)
+			free(current->key);
+		free(current);
+		current = next;
+	}
 }

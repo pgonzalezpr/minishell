@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/21 13:51:30 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/02/22 19:10:08 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ static int	is_valid_format(char *cmd_line, char *option_1,
 }
 
 /*
+* PRE: -
+* POST: Ejecuta el exit builtin
+*/
+static void	exit_builtin(t_minishell *minishell)
+{
+	rl_clear_history();
+	clear_history();
+	exit_minishell(minishell, "exit\n", EXIT_SUCCESS);
+}
+
+/*
 * PRE: minishell != NULL
 * POST: Seleccionara el builtin correspondiente devolviendo el estado
 *		de la operacion (EXIT_FAILURE O EXIT_SUCCESS)
@@ -54,11 +65,7 @@ int	select_builtin(t_minishell *minishell)
 	if (!cmd)
 		return (printf(RED ERROR_MALLOC DEF_COLOR), EXIT_FAILURE);
 	if (is_valid_format(cmd[0], EXIT_CMD, EXIT_CMD_2, EXIT_CMD_3))
-	{
-		//rl_clear_history();
-		clear_history();
-		exit_minishell(minishell, NULL, EXIT_SUCCESS);
-	}
+		exit_builtin(minishell);
 	else if (is_valid_format(cmd[0], ECHO_CMD, ECHO_CMD_2, ECHO_CMD_3))
 		status = builtin_echo(minishell->env, cmd);
 	else if (is_valid_format(cmd[0], CD_CMD, CD_CMD_2, CD_CMD_3))
@@ -71,5 +78,7 @@ int	select_builtin(t_minishell *minishell)
 		status = builtin_pwd(&minishell->cwd);
 	else if (is_valid_format(cmd[0], UNSET_CMD, UNSET_CMD_2, UNSET_CMD_3))
 		status = builtin_unset(minishell, cmd);
+	else
+		printf("%s %s", cmd[0], MSG_COMMAND_NOT_FOUND);
 	return (free_matrix(cmd, get_len_matrix(cmd)), status);
 }
