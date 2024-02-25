@@ -6,18 +6,21 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/10 03:54:10 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/14 05:05:37 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 * PRE: minishell != NULL
-* POST: 
+* POST: Muestra en terminal el cwd (Current Working Directory).
 */
-void	pwd_cmd(t_minishell *minishell)
+int	builtin_pwd(char **cwd)
 {
-	(void)minishell;
-	printf("PWD\n");
+	(*cwd) = getcwd(NULL, 0);
+	if (!(*cwd) || !cwd)
+		return (EXIT_FAILURE);
+	printf("%s\n", (*cwd));
+	return (SUCCESS);
 }

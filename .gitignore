@@ -1,8 +1,11 @@
 # Vscode
-.Vscode
+.vscode
 
 # txt
 .txt
+
+# DS Store
+.DS Store
 
 # Prerequisites (Dependencies)
 *.d

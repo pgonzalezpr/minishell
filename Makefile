@@ -1,10 +1,12 @@
 NAME = minishell
 
-SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c	./srcs/tokenize.c \
-		./srcs/str_utils.c ./srcs/expand.c \
-		./srcs/exit.c ./srcs/built_ins.c ./srcs/echo.c ./srcs/env.c \
-		./srcs/cd.c ./srcs/pwd.c ./srcs/unset.c ./srcs/export.c \
-			
+SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
+		./srcs/exit.c ./srcs/builtins/builtins.c ./srcs/builtins/echo.c 				\
+		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     			\
+		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/init.c					\
+		./srcs/utils.c ./srcs/tokenize.c ./srcs/tokenize_utils.c						\
+		./srcs/utils_env.c
+
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
 LIBFT_DIR = libft
