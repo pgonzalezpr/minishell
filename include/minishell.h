@@ -66,7 +66,8 @@ int								process_tokens(t_minishell *minishell);
 void							remove_quotes(char *token);
 char							*substring(char *start, char *end);
 int								ft_strequals(char *s1, char *s2);
-char							*expand_token(char *token);
+char							*expand_token(char *token,
+									t_minishell *minishell);
 int								build_pipeline(t_minishell *minishell);
 void							exec_pipeline(t_minishell *minishell);
 void							clean_minishell(t_minishell *minishell);

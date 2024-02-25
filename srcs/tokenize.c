@@ -71,7 +71,7 @@ int	process_tokens(t_minishell *minishell)
 	current = minishell->tokens;
 	while (current)
 	{
-		expanded_token = expand_token(current->token);
+		expanded_token = expand_token(current->token, minishell);
 		if (!expanded_token)
 			return (-1);
 		remove_quotes(expanded_token);

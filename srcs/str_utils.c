@@ -6,7 +6,10 @@ char	*substring(char *start, char *end)
 
 	str = malloc((end - start + 1) * sizeof(char));
 	if (!str)
+	{
+		printf("%s\n", MALLOC_ERR_MSG);
 		return (NULL);
+	}
 	ft_strlcpy(str, start, end - start + 1);
 	return (str);
 }

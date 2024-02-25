@@ -18,7 +18,7 @@ int	main(void)
 		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
 		if (!minishell.cmd_line)
 			continue ;
-		if (ft_strequals(minishell.cmd_line, "exit"))
+		if (ft_strequals(minishell.cmd_line, "EXIT"))
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
 		//select_builtint(&minishell);
 		add_history(minishell.cmd_line);
