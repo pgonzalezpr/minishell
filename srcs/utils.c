@@ -12,8 +12,6 @@
 
 #include "../include/minishell.h"
 
-#include "../include/minishell.h"
-
 /*
 * PRE: -
 * POST: Devuelve la longitud de la matrix
