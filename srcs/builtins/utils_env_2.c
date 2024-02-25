@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 04:24:48 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:24:43 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
  * PRE: -
  * POST: Devuelve la longitud de la clave del env.
  */
-int get_len_key_var(char *key)
+int	get_len_key_var(char *key)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (*key && *key != EQUAL)
@@ -33,9 +33,9 @@ int get_len_key_var(char *key)
  * PRE: -
  * POST:	Devuelve el ultimo node del env.
  */
-t_env *get_last_node_env(t_env *env)
+t_env	*get_last_node_env(t_env *env)
 {
-	t_env *current;
+	t_env	*current;
 
 	if (!env)
 		return (NULL);

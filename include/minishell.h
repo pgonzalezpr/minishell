@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 21:31:49 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:27:55 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,10 @@ int		builtin_echo(t_env *env, char **cmd);
 /* INIT.C */
 int		init_env(t_minishell *minishell, char **env);
 
-/* UTILS.C */ 
+/* UTILS.C */
 int		get_total_commands(char *cmd_line);
 int		get_len_matrix(char **matrix);
-int		ft_strcmp(char *s1, char  *s2);
+int		ft_strcmp(char *s1, char *s2);
 void	free_matrix(char **mat, int i);
 
 /* UTILS_ENV.C */

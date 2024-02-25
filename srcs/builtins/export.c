@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 23:25:55 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:25:30 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	is_valid_var_format(char *var)
 	int	count_equals;
 
 	if (!var)
-		return (0);	
+		return (0);
 	len_var = ft_strlen(var);
 	status = 1;
 	if (len_var < 2)

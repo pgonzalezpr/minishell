@@ -6,20 +6,20 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 22:40:43 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:23:19 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-* PRE: cmd != NULL && path != NULL
+* PRE: -
 * POST: Gestiona el caso para un path de ruta relativa, devolviendo
 *		el estado de la operacion.
 */
-static int	case_relative_path(t_env *env, char **cmd)
+static int	case_relative_path(t_env *env, char **cmd, \
+char path[MAX_PATH])
 {
-	char	path[MAX_PATH];
 	t_env	*pwd;
 	t_env	*oldpwd;
 
@@ -145,7 +145,8 @@ static int	case_go_home(t_env *env)
 */
 int	builtin_cd(t_minishell *minishell, char **cmd)
 {
-	int	status;
+	int		status;
+	char	path[MAX_PATH];
 
 	if (!cmd || !*cmd)
 		return (ERROR);
@@ -161,6 +162,6 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 	else if (cmd[1][0] == FOWARD_SLAH)
 		status = case_absolute_path(minishell->env, cmd);
 	else
-		status = case_relative_path(minishell->env, cmd);
+		status = case_relative_path(minishell->env, cmd, path);
 	return (status);
 }
