@@ -36,7 +36,6 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		if (ft_strequals(minishell.cmd_line, "EXIT"))
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
-		//select_builtint(&minishell);
 		add_history(minishell.cmd_line);
 		if (tokenize_cmd_line(&minishell) == -1 || process_tokens(&minishell)
 			== -1 || build_pipeline(&minishell) == -1)
@@ -47,5 +46,4 @@ int	main(int argc, char **argv, char **env)
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
 	}
-	return (0);
 }

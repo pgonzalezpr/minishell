@@ -37,14 +37,13 @@ int	are_equal_variables(char *variable_1, char *variable_2)
 
 	len_1 = get_len_variable(variable_1);
 	len_2 = get_len_variable(variable_2);
-	if (len_1 >= len_2 && strncmp(variable_1, variable_2, len_2) == 0) 
+	if (len_1 >= len_2 && strncmp(variable_1, variable_2, len_2) == 0)
 	{
 		if (len_1 == len_2 || variable_1[len_2] == EQUAL)
 			return (1);
 	}
 	return (0);
 }
-
 
 /*
 * PRE: minishell != NULL && matrix_ori != NULL
