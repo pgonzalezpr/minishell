@@ -60,8 +60,6 @@ void	clean_minishell(t_minishell *minishell)
 {
 	if (minishell->env)
 		free_env(minishell->env);
-	if (minishell->cwd)
-		free(minishell->cwd);
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
 	if (minishell->tokens)

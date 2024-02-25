@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/20 04:18:47 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 06:52:49 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 * POST: Muestra en terminal el cwd (Current Working Directory),
 *		Devolviendo el status de la operacion.
 */
-int	builtin_pwd(char **cwd)
+int	builtin_pwd(void)
 {
-	(*cwd) = getcwd(NULL, 0);
-	if (!(*cwd) || !cwd)
-		return (ERROR);
-	printf("%s\n", (*cwd));
+	char	path[MAX_PATH];
+
+	printf("%s\n", getcwd(path, sizeof(path)));
 	return (SUCCESS);
 }

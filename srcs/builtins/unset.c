@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/23 01:45:37 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 01:40:59 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	builtin_unset(t_minishell *minishell, char **cmd)
 			tmp = get_var_env(minishell->env, *cmd);
 			if (tmp)
 			{
-				if (del_node_env(minishell->env, tmp) != SUCCESS)
+				if (del_node_env(&minishell->env, tmp) != SUCCESS)
 					return (ERROR);
 			}
 		}

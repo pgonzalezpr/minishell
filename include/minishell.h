@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/23 01:44:19 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 21:31:49 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_env
 typedef struct s_minishell
 {
 	char						*cmd_line;
-	char						*cwd;
 	t_env						*env;
 	t_token_node				*tokens;
 	t_command_node				*pipeline;
@@ -104,6 +103,7 @@ typedef struct s_minishell
 # define ENV_CMD_3					"\"env\""
 # define VAR_OLDPWD					"OLDPWD"
 # define VAR_PWD					"PWD"
+# define VAR_HOME					"HOME"
 # define VAR_OLDPWD_WITH_EQUAL		"OLDPWD="
 # define VAR_PWD_WITH_EQUAL			"PWD="
 # define FLAG_N						"-n"
@@ -116,6 +116,8 @@ typedef struct s_minishell
 # define MSG_CD_MISSING_ARGS		"cd: missing argument\n"
 # define MSG_CD_FAILS				"cd fails!\n"
 # define MSG_MORE_THAN_TWO_ARGS_CD 	"cd: more than two args\n"
+# define MSG_PWD_UNSET				"minishell: cd does not work \
+if PWD is unset\n"
 # define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
 # define MSG_GET_CWD				"cd: get_cwd fails\n"
 # define MSG_COMMAND_NOT_FOUND		": command not found\n"
@@ -136,7 +138,7 @@ void	replace_env_vars(t_token_node *token_node, t_minishell *minishell);
 int		select_builtin(t_minishell *minishell);
 
 /* PWD.C */
-int		builtin_pwd(char **cwd);
+int		builtin_pwd(void);
 
 /* EXPORT.C */
 int		builtin_export(t_minishell *minishell, char **cmd);
@@ -149,9 +151,6 @@ int		builtin_cd(t_minishell *minishell, char **cmd);
 
 /* ENV.C */
 int		builtin_env(t_minishell *minishell);
-
-/* CD_UTILS.C*/
-int		update_cd_vars(t_minishell *minishell);
 
 /* ECHO.C */
 int		builtin_echo(t_env *env, char **cmd);
@@ -177,6 +176,6 @@ t_env	*get_last_node_env(t_env *env);
 void	add_back_to_env(t_env **env, t_env *new);
 int		set_node_content(char *content, t_env **node);
 int		get_len_key_var(char *key);
-int		del_node_env(t_env *env, t_env *node);
+int		del_node_env(t_env **env, t_env *node);
 
 #endif

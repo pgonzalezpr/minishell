@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/23 01:38:25 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 22:40:43 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,34 @@
 * POST: Gestiona el caso para un path de ruta relativa, devolviendo
 *		el estado de la operacion.
 */
-static int	case_relative_path(t_minishell *minishell, char **cmd)
+static int	case_relative_path(t_env *env, char **cmd)
 {
 	char	path[MAX_PATH];
+	t_env	*pwd;
+	t_env	*oldpwd;
 
-	ft_strlcpy(path, minishell->cwd, sizeof(path));
-	if (cmd[1][1])
+	ft_strlcpy(path, getcwd(path, sizeof(path)), sizeof(path));
+	if (cmd[1][1] && (getcwd(path, sizeof(path))[0] == FOWARD_SLAH \
+		&& getcwd(path, sizeof(path))[1]))
 		ft_strlcat(path, FOWARD_SLAH_STR, sizeof(path));
 	ft_strlcat(path, cmd[1], sizeof(path));
 	if (chdir(path) != 0)
-	{
-		printf("bash: cd: %s: No such file or directory\n", cmd[1]);
+		return (printf("bash: cd: %s: No such file or directory\n", cmd[1]), 0);
+	pwd = get_var_env(env, VAR_PWD);
+	if (!pwd)
+		return (printf(MSG_PWD_UNSET), SUCCESS);
+	oldpwd = get_var_env(env, VAR_OLDPWD);
+	if (!oldpwd)
 		return (SUCCESS);
-	}
-	return (update_cd_vars(minishell));
+	free(oldpwd->value);
+	oldpwd->value = ft_strdup(pwd->value);
+	if (!oldpwd->value)
+		return (ERROR);
+	free(pwd->value);
+	pwd->value = ft_strdup(path);
+	if (!pwd->value)
+		return (ERROR);
+	return (SUCCESS);
 }
 
 /*
@@ -38,15 +52,28 @@ static int	case_relative_path(t_minishell *minishell, char **cmd)
 * POST: Gestiona el caso para un path de ruta absoluta,
 *		devolviendo el estado de la operacion.
 */
-static int	case_absolute_path(t_minishell *minishell, char **cmd)
+static int	case_absolute_path(t_env *env, char **cmd)
 {
-	if (chdir(cmd[1]) != 0)
-	{
-		printf("bash: cd: %s: No such file or directory\n", cmd[1]);
+	t_env	*pwd;
+	t_env	*oldpwd;
+
+	pwd = get_var_env(env, VAR_PWD);
+	if (!pwd)
+		return (printf(MSG_PWD_UNSET), SUCCESS);
+	oldpwd = get_var_env(env, VAR_OLDPWD);
+	if (!oldpwd)
 		return (SUCCESS);
-	}
-	else
-		return (update_cd_vars(minishell));
+	if (chdir(cmd[1]) != 0)
+		return (perror(RED MSG_CD_FAILS DEF_COLOR), SUCCESS);
+	free(oldpwd->value);
+	oldpwd->value = ft_strdup(pwd->value);
+	if (!oldpwd->value)
+		return (ERROR);
+	free(pwd->value);
+	pwd->value = ft_strdup(cmd[1]);
+	if (!pwd->value)
+		return (perror(RED MSG_CD_FAILS DEF_COLOR), ERROR);
+	return (SUCCESS);
 }
 
 /*
@@ -54,11 +81,60 @@ static int	case_absolute_path(t_minishell *minishell, char **cmd)
 * POST: Gestiona el caso para cd .. y devuelve el estado 
 *		de la operacion
 */
-static int	case_go_back(t_minishell *minishell)
+static int	case_go_back(t_env *env)
 {
+	t_env	*pwd;
+	t_env	*oldpwd;
+
+	pwd = get_var_env(env, VAR_PWD);
+	if (!pwd)
+		return (printf(MSG_PWD_UNSET), SUCCESS);
+	oldpwd = get_var_env(env, VAR_OLDPWD);
+	if (!oldpwd)
+		return (SUCCESS);
 	if (chdir(BACK_CD) != 0)
 		return (perror(RED MSG_CD_FAILS DEF_COLOR), SUCCESS);
-	return (update_cd_vars(minishell));
+	free(oldpwd->value);
+	oldpwd->value = ft_strdup(pwd->value);
+	if (!oldpwd->value)
+		return (ERROR);
+	free(pwd->value);
+	pwd->value = getcwd(NULL, 0);
+	if (!pwd->value)
+		return (perror(RED MSG_CD_FAILS DEF_COLOR), ERROR);
+	return (SUCCESS);
+}
+
+/*
+* PRE: -
+* POST: Gestiona el caso para cd sin parametros.
+*/
+static int	case_go_home(t_env *env)
+{
+	t_env	*pwd;
+	t_env	*oldpwd;
+	t_env	*home;
+
+	pwd = get_var_env(env, VAR_PWD);
+	if (!pwd)
+		return (printf(MSG_PWD_UNSET), SUCCESS);
+	home = get_var_env(env, VAR_HOME);
+	if (!home)
+		return (SUCCESS);
+	if (chdir(home->value) != 0)
+		return (perror(RED MSG_CD_FAILS DEF_COLOR), SUCCESS);
+	oldpwd = get_var_env(env, VAR_OLDPWD);
+	if (!oldpwd)
+		return (SUCCESS);
+	free(oldpwd->value);
+	oldpwd->value = ft_strdup(pwd->value);
+	if (!oldpwd->value)
+		return (ERROR);
+	free(pwd->value);
+	pwd->value = ft_strdup(home->value);
+	if (!pwd->value)
+		return (ERROR);
+	return (SUCCESS);
 }
 
 /*
@@ -73,21 +149,18 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 
 	if (!cmd || !*cmd)
 		return (ERROR);
-	if (!cmd[1])
-		return (fprintf(stderr, RED MSG_CD_MISSING_ARGS DEF_COLOR), SUCCESS);
 	if (get_total_commands(minishell->cmd_line) > 2)
 	{
 		fprintf(stderr, RED MSG_MORE_THAN_TWO_ARGS_CD DEF_COLOR);
 		return (SUCCESS);
 	}
-	minishell->cwd = getcwd(NULL, 0);
-	if (!minishell->cwd)
-		return (perror(RED MSG_GET_CWD DEF_COLOR), ERROR);
-	if (ft_strncmp(cmd[1], BACK_CD, 2) == 0)
-		status = case_go_back(minishell);
+	if (!cmd[1])
+		status = case_go_home(minishell->env);
+	else if (ft_strncmp(cmd[1], BACK_CD, 2) == 0)
+		status = case_go_back(minishell->env);
 	else if (cmd[1][0] == FOWARD_SLAH)
-		status = case_absolute_path(minishell, cmd);
+		status = case_absolute_path(minishell->env, cmd);
 	else
-		status = case_relative_path(minishell, cmd);
+		status = case_relative_path(minishell->env, cmd);
 	return (status);
 }

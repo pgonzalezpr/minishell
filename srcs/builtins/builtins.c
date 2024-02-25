@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/22 19:10:08 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 06:41:07 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	select_builtin(t_minishell *minishell)
 	else if (is_valid_format(cmd[0], EXP_CMD, EXP_CMD_2, EXP_CMD_3))
 		status = builtin_export(minishell, cmd);
 	else if (is_valid_format(cmd[0], PWD_CMD, PWD_CMD_2, PWD_CMD_3))
-		status = builtin_pwd(&minishell->cwd);
+		status = builtin_pwd();
 	else if (is_valid_format(cmd[0], UNSET_CMD, UNSET_CMD_2, UNSET_CMD_3))
 		status = builtin_unset(minishell, cmd);
 	else
