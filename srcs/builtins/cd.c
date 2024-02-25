@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 23:23:19 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:34:35 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char path[MAX_PATH])
 	t_env	*pwd;
 	t_env	*oldpwd;
 
-	ft_strlcpy(path, getcwd(path, sizeof(path)), sizeof(path));
-	if (cmd[1][1] && (getcwd(path, sizeof(path))[0] == FOWARD_SLAH \
-		&& getcwd(path, sizeof(path))[1]))
-		ft_strlcat(path, FOWARD_SLAH_STR, sizeof(path));
-	ft_strlcat(path, cmd[1], sizeof(path));
+	ft_strlcpy(path, getcwd(path, MAX_PATH), MAX_PATH);
+	if (cmd[1][1] && (getcwd(path, MAX_PATH)[0] == FOWARD_SLAH \
+		&& getcwd(path, MAX_PATH)[1]))
+		ft_strlcat(path, FOWARD_SLAH_STR, MAX_PATH);
+	ft_strlcat(path, cmd[1], MAX_PATH);
 	if (chdir(path) != 0)
 		return (printf("bash: cd: %s: No such file or directory\n", cmd[1]), 0);
 	pwd = get_var_env(env, VAR_PWD);
