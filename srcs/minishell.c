@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/26 00:40:13 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:25:02 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		if (select_builtin(&minishell) != SUCCESS)
-			return (clean_minishell(&minishell), EXIT_FAILURE);
+			return (clean_minishell(&minishell), ERROR);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
 	}

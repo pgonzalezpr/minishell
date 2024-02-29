@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/26 00:35:53 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:10:43 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_minishell
 # define DEF_COLOR 			"\033[0;39m"
 
 /* STATUS */
-# define SUCCESS					0
+# define SUCCESS					1
 # define ERROR						-1
 # define POS_NOT_FOUNDED			-4
 # define EXIT_CMD_NOT_FOUND         127

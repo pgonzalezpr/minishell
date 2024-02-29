@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:06:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 23:53:54 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:23:55 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	select_builtin(t_minishell *minishell)
 	cmd = ft_split(minishell->cmd_line, EMPTY);
 	status = SUCCESS;
 	if (!cmd)
-		return (printf(RED ERROR_MALLOC DEF_COLOR), EXIT_FAILURE);
+		return (printf(RED ERROR_MALLOC DEF_COLOR), ERROR);
 	if (is_valid_format(cmd[0], EXIT_CMD, EXIT_CMD_2, EXIT_CMD_3))
 		exit_builtin(minishell);
 	else if (is_valid_format(cmd[0], ECHO_CMD, ECHO_CMD_2, ECHO_CMD_3))
