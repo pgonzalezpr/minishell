@@ -1,43 +1,53 @@
 #include "../include/minishell.h"
 
-int exec_here_docs(t_minishell *minishell)
+int	exec_here_docs(t_minishell *minishell)
 {
-    if (minishell)
-        return (1);
-    return (-1);
+	if (minishell)
+		return (1);
+	return (-1);
 }
 
-int close_pipes(t_minishell *minishell)
+int	close_pipes(t_minishell *minishell)
 {
-    if (minishell)
-        return (1);
-    return (-1);
+	if (minishell)
+		return (1);
+	return (-1);
 }
 
-int init_pipes(t_minishell *minishell)
+int	init_pipes(t_minishell *minishell)
 {
-    if (minishell)
-        return (1);
-    return (-1);
+	if (minishell)
+		return (1);
+	return (-1);
 }
 
-void    exec_cmd(t_command *cmd, t_minishell *minishell)
+void	exec_cmd(t_command *cmd, t_minishell *minishell)
 {
-    char    **argv;
-    char    *name;
+	char	**argv;
+	char	*name;
 
-    argv = build_str_arr_from_lst(cmd->args);
-    if (!argv)
-        exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
-    name = argv[0];
-    check_builtin(name, argv, minishell);
+	argv = build_str_arr_from_lst(cmd->args);
+	if (!argv)
+		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
+	name = argv[0];
+	check_builtin(name, argv, minishell);
 }
 
-pid_t   create_child(t_command *cmd, t_minishell *minishell)
+pid_t	create_child(t_command *cmd, t_minishell *minishell)
 {
-    if (cmd && minishell)
-        return (1);
-    return (0);
+	pid_t	p_id;
+
+	p_id = fork();
+	if (p_id < 0)
+	{
+		printf("%s", FORK_ERR_MSG);
+		return (0);
+	}
+	else if (p_id > 0)
+		return (p_id);
+	else
+		exec_cmd(cmd, minishell);
+	return (0);
 }
 
 int	exec_pipeline(t_minishell *minishell)

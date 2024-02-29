@@ -52,7 +52,7 @@ typedef struct s_minishell
 {
 	char				*cmd_line;
 	char				*cwd;
-	t_env 				*env;
+	t_env				*env;
 	t_list				*tokens;
 	t_list				*commands;
 	int					cmd_count;
@@ -143,6 +143,7 @@ typedef struct s_minishell
 # define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
 # define MSG_PWD_UNSET "minishell: cd does not work \
 if PWD is unset\n"
+# define FORK_ERR_MSG "Fork error\n"
 
 /* PROTOTYPES */
 int						tokenize_cmdline(t_minishell *minishell);
@@ -155,11 +156,11 @@ int						is_redirection(char *str);
 int						is_operator(char *str);
 char					*expand_token(char *token, t_minishell *minishell);
 int						build_pipeline(t_minishell *minishell);
-void                    check_builtin(char *name, char **argv,
-                                      t_minishell *minishell);
+void					check_builtin(char *name, char **argv,
+							t_minishell *minishell);
 void					print_minishell(t_minishell *minishell);
 int						exec_pipeline(t_minishell *minishell);
-char                    **build_str_arr_from_lst(t_list *lst);
+char					**build_str_arr_from_lst(t_list *lst);
 void					clean_minishell(t_minishell *minishell);
 void					free_str_arr(char **arr);
 void					del_str(char *str);
