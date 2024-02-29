@@ -24,9 +24,9 @@ char path[MAX_PATH])
 	t_env	*oldpwd;
 
 	ft_strlcpy(path, getcwd(path, MAX_PATH), MAX_PATH);
-	if (cmd[1][1] && (getcwd(path, MAX_PATH)[0] == FOWARD_SLAH \
+	if (cmd[1][1] && (getcwd(path, MAX_PATH)[0] == FORWARD_SLAH \
 		&& getcwd(path, MAX_PATH)[1]))
-		ft_strlcat(path, FOWARD_SLAH_STR, MAX_PATH);
+		ft_strlcat(path, FORWARD_SLAH_ST, MAX_PATH);
 	ft_strlcat(path, cmd[1], MAX_PATH);
 	if (chdir(path) != 0)
 		return (printf("bash: cd: %s: No such file or directory\n", cmd[1]), 0);
@@ -159,7 +159,7 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 		status = case_go_home(minishell->env);
 	else if (ft_strncmp(cmd[1], BACK_CD, 2) == 0)
 		status = case_go_back(minishell->env);
-	else if (cmd[1][0] == FOWARD_SLAH)
+	else if (cmd[1][0] == FORWARD_SLAH)
 		status = case_absolute_path(minishell->env, cmd);
 	else
 		status = case_relative_path(minishell->env, cmd, path);

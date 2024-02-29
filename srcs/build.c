@@ -80,7 +80,7 @@ t_list	*add_command(t_minishell *minishell, int index)
 		return (NULL);
 	}
 	ft_lstadd_back(&minishell->commands, cmd_node);
-    minishell->cmd_count++;
+	minishell->cmd_count++;
 	return (cmd_node);
 }
 

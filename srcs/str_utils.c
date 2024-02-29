@@ -43,11 +43,11 @@ void	remove_quotes(char *token)
 		{
 			quote = token[offset];
 			ft_memmove(&token[offset], &token[offset + 1],
-				ft_strlen(&token[offset + 1]) + 1);
+					ft_strlen(&token[offset + 1]) + 1);
 			while (token[offset] != quote)
 				offset++;
 			ft_memmove(&token[offset], &token[offset + 1],
-				ft_strlen(&token[offset + 1]) + 1);
+					ft_strlen(&token[offset + 1]) + 1);
 		}
 		else
 			offset++;

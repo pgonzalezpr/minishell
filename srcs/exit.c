@@ -42,7 +42,7 @@ void	del_command(t_command *command)
 
 void	clean_minishell(t_minishell *minishell)
 {
-    int status;
+	int	status;
 
 	if (minishell->env)
 		free_env(minishell->env);
@@ -56,7 +56,7 @@ void	clean_minishell(t_minishell *minishell)
 		free_pipe_arr(minishell->pipes, minishell->cmd_count - 1);
 	if (minishell->here_doc_pipes)
 		free_pipe_arr(minishell->here_doc_pipes, minishell->cmd_count);
-    status = minishell->last_exit_code;
+	status = minishell->last_exit_code;
 	ft_memset(minishell, 0, sizeof(t_minishell));
-    minishell->last_exit_code = status;
+	minishell->last_exit_code = status;
 }
