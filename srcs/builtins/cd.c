@@ -31,7 +31,7 @@ static void	case_relative_path(char **cmd, char *path, char *cwd)
 	}
 	*/
 	ft_strlcpy(path, cwd, sizeof(path));
-	ft_strlcat(path, (const char *)FOWARD_SLAH, sizeof(path));
+	ft_strlcat(path, (const char *)FORWARD_SLASH, sizeof(path));
 	ft_strlcat(path, cmd[1], sizeof(path));
 	if (chdir(cwd) != 0)
 		perror(RED MSG_CD_FAILS DEF_COLOR);
@@ -91,7 +91,7 @@ void	builtin_cd(t_minishell *minishell, char **cmd)
 	}
 	else if (ft_strncmp(cmd[1], BACK_CD, 2) == 0)
 		case_go_back(minishell->cwd);
-	else if (cmd[1][0] == FOWARD_SLAH)
+	else if (cmd[1][0] == FORWARD_SLASH)
 		case_absolute_path(cmd, path, minishell->cwd);
 	else
 		case_relative_path(cmd, path, minishell->cwd);

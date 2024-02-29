@@ -16,57 +16,45 @@ void	free_pipe_arr(int **arr, size_t size)
 	free(arr);
 }
 
-void	free_tokens(t_token_node *tokens)
+void	del_str(char *str)
 {
-	t_token_node	*current;
-	t_token_node	*next;
-
-	if (!tokens)
-		return ;
-	current = tokens;
-	while (current)
-	{
-		next = current->next;
-		if (current->token)
-			free(current->token);
-		free(current);
-		current = next;
-	}
+	if (str)
+		free(str);
 }
 
-void	free_cmd_node(t_command_node *node)
+void	del_redir(t_redirection *redir)
 {
-	if (node)
+	if (!redir)
 		return ;
+	if (redir->name)
+		free(redir->name);
+	free(redir);
 }
 
-void	free_pipeline(t_command_node *pipeline)
+void	del_command(t_command *command)
 {
-	t_command_node	*current;
-	t_command_node	*next;
-
-	if (!pipeline)
+	if (!command)
 		return ;
-	current = pipeline;
-	while (current)
-	{
-		next = current->next;
-		free_cmd_node(current);
-		current = next;
-	}
+	ft_lstclear(&command->args, (void (*)(void *))del_str);
+	ft_lstclear(&command->redirections, (void (*)(void *))del_redir);
+	free(command);
 }
 
 void	clean_minishell(t_minishell *minishell)
 {
+    int status;
+
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
 	if (minishell->tokens)
-		free_tokens(minishell->tokens);
-	if (minishell->pipeline)
-		free_pipeline(minishell->pipeline);
+		ft_lstclear(&minishell->tokens, (void (*)(void *))del_str);
+	if (minishell->commands)
+		ft_lstclear(&minishell->commands, (void (*)(void *))del_command);
 	if (minishell->pipes)
 		free_pipe_arr(minishell->pipes, minishell->cmd_count - 1);
 	if (minishell->here_doc_pipes)
 		free_pipe_arr(minishell->here_doc_pipes, minishell->cmd_count);
+    status = minishell->last_exit_code;
 	ft_memset(minishell, 0, sizeof(t_minishell));
+    minishell->last_exit_code = status;
 }

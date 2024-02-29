@@ -111,5 +111,6 @@ char	*expand_token(char *token, t_minishell *minishell)
 			return (NULL);
 		}
 	}
+	remove_quotes(buffer);
 	return (buffer);
 }

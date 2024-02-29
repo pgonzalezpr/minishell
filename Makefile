@@ -5,7 +5,7 @@ SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
 		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     			\
 		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/init.c					\
 		./srcs/utils.c ./srcs/tokenize.c ./srcs/utils_env.c ./srcs/expand.c				\
-		./srcs/str_utils.c
+		./srcs/str_utils.c ./srcs/print.c
 
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
@@ -49,7 +49,7 @@ ${NAME}: ${OBJS} ${LIBFT_DIR}/libft.a $(INCLUDE) Makefile
 	@echo "\n$(RED) Created $(NAME) ✓ $(DEF_COLOR)\n"
 
 $(LIBFT_DIR)/libft.a:
-	@make -C $(LIBFT_DIR)
+	@make bonus -C $(LIBFT_DIR)
 
 -include ${DEPS}
 

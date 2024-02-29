@@ -85,7 +85,7 @@ int	get_cpy_env(t_minishell *minishell, char **matrix_ori)
 */
 int	get_pos_var_env(char **env, char *searched_var)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	if (!env || !searched_var)

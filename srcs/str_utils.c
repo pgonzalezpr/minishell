@@ -16,9 +16,19 @@ char	*substring(char *start, char *end)
 
 int	ft_strequals(char *s1, char *s2)
 {
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	return (ft_strncmp(s1, s2, ft_strlen(s1)) == 0);
+	return ((ft_strlen(s1) == ft_strlen(s2)) && ft_strncmp(s1, s2,
+			ft_strlen(s1)) == 0);
+}
+
+int	is_redirection(char *str)
+{
+	return (ft_strequals(str, IN_RED) || ft_strequals(str, OUT_RED)
+		|| ft_strequals(str, HERE_DOC) || ft_strequals(str, OUT_RED_APP));
+}
+
+int	is_operator(char *str)
+{
+	return (ft_strequals(str, PIPE) || is_redirection(str));
 }
 
 void	remove_quotes(char *token)

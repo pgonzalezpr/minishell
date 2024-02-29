@@ -1,42 +1,16 @@
 #include "../include/minishell.h"
 
-t_token_node	*get_token_node(char *token)
-{
-	t_token_node	*token_node;
-
-	if (!token)
-		return (NULL);
-	token_node = malloc(sizeof(t_token_node));
-	if (!token_node)
-	{
-		printf("%s\n", MALLOC_ERR_MSG);
-		return (NULL);
-	}
-	token_node->token = token;
-	token_node->next = NULL;
-	return (token_node);
-}
-
 int	add_token(char *token, t_minishell *minishell)
 {
-	t_token_node	*token_node;
-	t_token_node	*current;
+	t_list	*new;
 
-	token_node = get_token_node(token);
-	if (!token_node)
+	new = ft_lstnew(token);
+	if (!new)
 	{
-		free(token);
+		printf("%s", MALLOC_ERR_MSG);
 		return (-1);
 	}
-	if (minishell->tokens == NULL)
-		minishell->tokens = token_node;
-	else
-	{
-		current = minishell->tokens;
-		while (current->next)
-			current = current->next;
-		current->next = token_node;
-	}
+	ft_lstadd_back(&minishell->tokens, new);
 	return (1);
 }
 
@@ -54,7 +28,7 @@ char	*get_token_end(char *start)
 			current = ft_strchr(current + 1, *current);
 			if (!current)
 			{
-				printf("%s\n", UNCLOSED_QUOTE_MSG);
+				printf("%s", UNCLOSED_QUOTE_MSG);
 				break ;
 			}
 		}
@@ -63,27 +37,7 @@ char	*get_token_end(char *start)
 	return (current);
 }
 
-int	process_tokens(t_minishell *minishell)
-{
-	t_token_node	*current;
-	char			*expanded_token;
-
-	current = minishell->tokens;
-	while (current)
-	{
-		expanded_token = expand_token(current->token, minishell);
-		if (!expanded_token)
-			return (-1);
-		remove_quotes(expanded_token);
-		free(current->token);
-		current->token = expanded_token;
-		printf("%s\n", current->token);
-		current = current->next;
-	}
-	return (1);
-}
-
-int	tokenize_cmd_line(t_minishell *minishell)
+int	tokenize_cmdline(t_minishell *minishell)
 {
 	char	*start;
 	char	*end;
@@ -106,5 +60,44 @@ int	tokenize_cmd_line(t_minishell *minishell)
 			return (-1);
 		start = end;
 	}
+	return (1);
+}
+
+void	*ft_token_lstmap(t_list *lst, t_minishell *minishell)
+{
+	t_list	*lstnew;
+	t_list	*current;
+	t_list	*node;
+
+	current = lst;
+	lstnew = NULL;
+	while (current)
+	{
+		node = ft_lstnew(expand_token(current->content, minishell));
+		if (!node || !node->content)
+		{
+			ft_lstclear(&lstnew, (void (*)(void *))del_str);
+			return (NULL);
+		}
+		ft_lstadd_back(&lstnew, node);
+		current = current->next;
+	}
+	return (lstnew);
+}
+
+int	process_tokens(t_minishell *minishell)
+{
+	t_list	*new_tokens;
+
+	if (!minishell->tokens)
+		return (1);
+	new_tokens = ft_token_lstmap(minishell->tokens, minishell);
+	if (!new_tokens)
+	{
+		printf("%s", MALLOC_ERR_MSG);
+		return (-1);
+	}
+	ft_lstclear(&minishell->tokens, (void (*)(void *))del_str);
+	minishell->tokens = new_tokens;
 	return (1);
 }
