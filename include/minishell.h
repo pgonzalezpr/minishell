@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 04:49:06 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:10:43 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 /* STRUCTS */
 
+typedef struct s_env			t_env;
+
 typedef struct s_command
 {
 	t_list	*args;
@@ -38,6 +40,13 @@ typedef struct s_redirection
 	int		code;
 	char	*name;
 }			t_redirection;
+
+typedef struct s_env
+{
+	char						*key;
+	char						*value;
+	t_env						*next;
+}								t_env;
 
 typedef struct s_minishell
 {
@@ -62,6 +71,9 @@ typedef struct s_minishell
 # define SUCCESS 0
 # define POS_NOT_FOUNDED -4
 # define EXIT_CMD_NOT_FOUND 127
+# define SUCCESS					1
+# define ERROR						-1
+# define POS_NOT_FOUNDED			-4
 
 /* REDIRECTIONS CODES */
 # define IN_RED_CODE 1
@@ -83,42 +95,54 @@ typedef struct s_minishell
 # define EQUAL '='
 # define DOLLAR_SIGN '$'
 # define BACK_CD ".."
-# define FORWARD_SLASH 47
+# define FOWARD_SLAH_ST "/"
+# define FORWARD_SLAH 47
 
 /* BUILT INS (COMMANDS) */
-# define EXIT_COMMAND_NOT_FOUND 127
-# define EXIT_BUILTIN "exit"
-# define EXIT_BUILTIN_2 "'exit'"
-# define EXIT_BUILTIN_3 "\"exit\""
-# define ECHO_BUILTIN "echo"
-# define ECHO_BUILTIN_2 "'echo'"
-# define ECHO_BUILTIN_3 "\"echo\""
-# define CD_BUILTIN "cd"
-# define CD_BUILTIN_2 "'cd'"
-# define CD_BUILTIN_3 "\"cd\""
-# define PWD_BUILTIN "pwd"
-# define PWD_BUILTIN_2 "'pwd'"
-# define PWD_BUILTIN_3 "\"pwd\""
-# define EXP_BUILTIN "export"
-# define EXP_BUILTIN_2 "'export'"
-# define EXP_BUILTIN_3 "\"export\""
-# define UNSET_BUILTIN "unset"
-# define UNSET_BUILTIN_2 "'unset'"
-# define UNSET_BUILTIN_3 "\"unset\""
-# define ENV_BUILTIN "env"
-# define ENV_BUILTIN_2 "'env'"
-# define ENV_BUILTIN_3 "\"env\""
-# define FLAG_N "-n"
+# define EXIT_COMMAND_NOT_FOUND 	127
+# define EXIT_CMD					"exit"
+# define EXIT_CMD_2 				"'exit'"
+# define EXIT_CMD_3					"\"exit\""
+# define ECHO_CMD					"echo"
+# define ECHO_CMD_2					"'echo'"
+# define ECHO_CMD_3					"\"echo\""
+# define CD_CMD						"cd"
+# define CD_CMD_2					"'cd'"
+# define CD_CMD_3					"\"cd\""
+# define PWD_CMD					"pwd"
+# define PWD_CMD_2					"'pwd'"
+# define PWD_CMD_3					"\"pwd\""
+# define EXP_CMD					"export"
+# define EXP_CMD_2 					"'export'"
+# define EXP_CMD_3					"\"export\""
+# define UNSET_CMD					"unset"
+# define UNSET_CMD_2 				"'unset'"
+# define UNSET_CMD_3				"\"unset\""
+# define ENV_CMD					"env"
+# define ENV_CMD_2 					"'env'"
+# define ENV_CMD_3					"\"env\""
+# define VAR_OLDPWD					"OLDPWD"
+# define VAR_PWD					"PWD"
+# define VAR_HOME					"HOME"
+# define VAR_OLDPWD_WITH_EQUAL		"OLDPWD="
+# define VAR_PWD_WITH_EQUAL			"PWD="
+# define FLAG_N						"-n"
+# define MODE_EXPORT				'X'
+# define MODE_ENV					'E'
+# define MAX_PATH					4200
 
 /* ERROR MESSAGES */
-# define ERROR_MALLOC "Malloc Fails\n"
-# define MSG_CD_MISSING_ARGS "cd: missing argument\n"
-# define MSG_CD_FAILS "cd fails!\n"
-# define MSG_MORE_THAN_TWO_ARGS_CD "cd more than two args\n"
-# define MSG_GET_CWD "cd: get_cwd fails\n"
-# define MALLOC_ERR_MSG "Allocation error\n"
-# define UNCLOSED_QUOTE_MSG "Error. Unclosed quote\n"
-# define SYNTAX_ERR_MSG "Syntax Error\n"
+# define ERROR_MALLOC				"Malloc Fails\n"
+# define MSG_CD_MISSING_ARGS		"cd: missing argument\n"
+# define MSG_CD_FAILS				"cd fails!\n"
+# define MSG_MORE_THAN_TWO_ARGS_CD 	"cd more than two args\n"
+# define MSG_GET_CWD				"cd: get_cwd fails\n"
+# define MALLOC_ERR_MSG             "Allocation error\n"
+# define UNCLOSED_QUOTE_MSG         "Error. Unclosed quote"
+# define MSG_COMMAND_NOT_FOUND		": command not found\n"
+# define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
+# define MSG_PWD_UNSET				"minishell: cd does not work \
+if PWD is unset\n"
 
 /* PROTOTYPES */
 int			tokenize_cmdline(t_minishell *minishell);
@@ -141,26 +165,47 @@ void		exit_minishell(t_minishell *minishell, char *msg, int status);
 void		free_pipe_arr(int **arr, size_t size);
 
 /* BUILT-INS */
-void		select_builtin(t_minishell *minishell);
-void		builtin_export(t_minishell *minishell);
-void		builtin_cd(t_minishell *minishell, char **cmd);
-void		builtin_unset(t_minishell *minishell, char **cmd);
-int			builtin_env(t_minishell *minishell);
-int			builtin_pwd(char **cwd);
-int			builtin_echo(char **cmd, char **env);
+int		select_builtin(t_minishell *minishell);
 
-/* INIT */
-int			init_env(char **env, t_minishell *minishell);
+/* PWD.C */
+int		builtin_pwd(void);
 
-/* UTILS */
-int			get_total_commands(char *cmd_line);
-int			get_len_matrix(char **matrix);
-void		free_matrix(char **mat, int i);
+/* EXPORT.C */
+int		builtin_export(t_minishell *minishell, char **cmd);
 
-/* UTILS_ENV */
-int			get_cpy_env(t_minishell *minishell, char **matrix_ori);
-int			are_equal_variables(char *variable_1, char *variable_2);
-int			get_len_variable(char *variable);
-int			get_pos_var_env(char **env, char *searched_var);
+/* UNSET.C */
+int		builtin_unset(t_minishell *minishell, char **cmd);
+
+/* CD.C */
+int		builtin_cd(t_minishell *minishell, char **cmd);
+
+/* ENV.C */
+int		builtin_env(t_minishell *minishell);
+
+/* ECHO.C */
+int		builtin_echo(t_env *env, char **cmd);
+
+/* INIT.C */
+int		init_env(t_minishell *minishell, char **env);
+
+/* UTILS.C */
+int		get_total_commands(char *cmd_line);
+int		get_len_matrix(char **matrix);
+int		ft_strcmp(char *s1, char *s2);
+void	free_matrix(char **mat, int i);
+
+/* UTILS_ENV.C */
+void	print_env(t_env *env, char mode);
+void	free_env(t_env *env);
+t_env	*get_var_env(t_env *env, char *content);
+int		get_len_env(t_env *env);
+t_env	*get_new_node_env(char *key, char *value);
+
+/* UTILS_ENV 2.C */
+t_env	*get_last_node_env(t_env *env);
+void	add_back_to_env(t_env **env, t_env *new);
+int		set_node_content(char *content, t_env **node);
+int		get_len_key_var(char *key);
+int		del_node_env(t_env **env, t_env *node);
 
 #endif

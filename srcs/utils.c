@@ -14,17 +14,6 @@
 
 /*
 * PRE: -
-* POST: Libera la memoria de la matrix.
-*/
-void	free_matrix(char **mat, int i)
-{
-	while (i-- > 0)
-		free(mat[i]);
-	free(mat);
-}
-
-/*
-* PRE: -
 * POST: Devuelve la longitud de la matrix
 */
 int	get_len_matrix(char **matrix)
@@ -35,6 +24,17 @@ int	get_len_matrix(char **matrix)
 	while (matrix[size])
 		size++;
 	return (size);
+}
+
+/*
+* PRE: -
+* POST: Libera la memoria de la matrix.
+*/
+void	free_matrix(char **mat, int i)
+{
+	while (i-- > 0)
+		free(mat[i]);
+	free(mat);
 }
 
 /*
@@ -61,4 +61,19 @@ int	get_total_commands(char *cmd_line)
 			in_command = 0;
 	}
 	return (total);
+}
+
+/*
+* PRE: -
+* POST: Devuelve 0 si son iguales s1 y s2, negativo si s2 > s1 
+*		y positivo en caso contrario.
+*/
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

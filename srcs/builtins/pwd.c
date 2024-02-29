@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 05:05:37 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 23:56:12 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 /*
 * PRE: minishell != NULL
-* POST: Muestra en terminal el cwd (Current Working Directory).
+* POST: Muestra en terminal el cwd (Current Working Directory),
+*		Devolviendo el status de la operacion.
 */
-int	builtin_pwd(char **cwd)
+int	builtin_pwd(void)
 {
-	(*cwd) = getcwd(NULL, 0);
-	if (!(*cwd) || !cwd)
-		return (EXIT_FAILURE);
-	printf("%s\n", (*cwd));
+	char	path[MAX_PATH];
+
+	printf("%s\n", getcwd(path, sizeof(path)));
 	return (SUCCESS);
 }

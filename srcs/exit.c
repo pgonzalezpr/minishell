@@ -44,6 +44,8 @@ void	clean_minishell(t_minishell *minishell)
 {
     int status;
 
+	if (minishell->env)
+		free_env(minishell->env);
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
 	if (minishell->tokens)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/14 04:33:15 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/29 16:25:02 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_memset(&minishell, 0, sizeof(minishell));
-	if (init_env(env, &minishell) != SUCCESS)
-		return (EXIT_FAILURE);
+	if (init_env(&minishell, env) != SUCCESS)
+		return (clean_minishell(&minishell), EXIT_FAILURE);
 	while (1)
 	{
 		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);

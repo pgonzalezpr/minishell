@@ -5,7 +5,9 @@ SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
 		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     			\
 		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/init.c					\
 		./srcs/utils.c ./srcs/tokenize.c ./srcs/utils_env.c ./srcs/expand.c				\
-		./srcs/str_utils.c ./srcs/print.c
+		./srcs/str_utils.c ./srcs/print.c												\
+		./srcs/str_utils.c ./srcs/builtins/init_env.c  ./srcs/builtins/utils_env_2.c 	\
+		./srcs/builtins/utils_env.c
 
 INCLUDE = ./libft/libft.h ./include/minishell.h
 

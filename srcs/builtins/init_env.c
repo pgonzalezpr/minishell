@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 21:42:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/12 02:51:26 by brayan           ###   ########.fr       */
+/*   Updated: 2024/02/25 06:10:43 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 * PRE: -
 * POST: inicializa el env.
 */
-int	init_env(char **env, t_minishell *minishell)
+int	init_env(t_minishell *minishell, char **env)
 {
-	return (get_cpy_env(minishell, env));
+	t_env	*tmp;
+
+	while (*env)
+	{
+		tmp = get_new_node_env(NULL, NULL);
+		if (!tmp)
+			return (ERROR);
+		if (set_node_content(*env, &tmp) != SUCCESS)
+			return (ERROR);
+		add_back_to_env(&minishell->env, tmp);
+		env++;
+	}
+	return (SUCCESS);
 }
