@@ -63,8 +63,8 @@ int	main(int argc, char **argv, char **env)
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
 		add_history(minishell.cmd_line);
 		if (tokenize_cmdline(&minishell) == -1 || check_syntax(&minishell) == -1
-																																																																																																																																																																																													|| process_tokens(&minishell) == -1 || build_pipeline(&minishell)
-            == -1)
+			|| process_tokens(&minishell) == -1
+			|| build_pipeline(&minishell) == -1)
 		{
 			clean_minishell(&minishell);
 			continue ;
