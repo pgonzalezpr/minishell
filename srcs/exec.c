@@ -63,7 +63,7 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 	argv = build_str_arr_from_lst(cmd->args);
 	if (!argv)
 		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
-	apply_redirections(cmd->redirections, cmd->index, minishell);
+    apply_redirections(cmd->redirections, cmd->index, minishell);
 	close_pipes(minishell);
 	check_builtin(argv, minishell);
 	path = build_cmd_path(argv[0], minishell);
@@ -101,7 +101,7 @@ int	exec_pipeline(t_minishell *minishell)
 
 	if (init_pipes(minishell) == -1 || exec_here_docs(minishell) == -1)
 		return (-1);
-	curr = minishell->commands;
+    curr = minishell->commands;
 	p_id = 0;
 	status = EXIT_SUCCESS;
 	while (curr)
