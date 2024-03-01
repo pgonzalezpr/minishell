@@ -34,7 +34,7 @@ void	print_cmd(t_command *cmd)
 
 void	print_minishell(t_minishell *minishell)
 {
-	t_list *curr;
+	t_list	*curr;
 
 	printf("Tokens: \n");
 	print_str_list(minishell->tokens);

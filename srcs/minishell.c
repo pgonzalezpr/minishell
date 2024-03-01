@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_memset(&minishell, 0, sizeof(minishell));
+	minishell.envp = env;
 	if (init_env(&minishell, env) != SUCCESS)
 		return (clean_minishell(&minishell), EXIT_FAILURE);
 	while (1)
@@ -62,13 +63,12 @@ int	main(int argc, char **argv, char **env)
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
 		add_history(minishell.cmd_line);
 		if (tokenize_cmdline(&minishell) == -1 || check_syntax(&minishell) == -1
-			|| process_tokens(&minishell) == -1 || build_pipeline(&minishell) ==
-			-1)
+																																																																																																																																																																																													|| process_tokens(&minishell) == -1 || build_pipeline(&minishell)
+            == -1)
 		{
 			clean_minishell(&minishell);
 			continue ;
 		}
-		//print_minishell(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
 	}

@@ -41,23 +41,25 @@ char	**build_str_arr_from_lst(t_list *lst)
 	return (arr);
 }
 
-int	exec_builtin(char *builtin, char **args, t_minishell *minishell)
+int	exec_builtin(char **argv, t_minishell *minishell)
 {
-	int	val;
+	int		val;
+	char	*builtin;
 
 	val = 1;
+	builtin = argv[0];
 	if (ft_strequals(builtin, ECHO_CMD))
-		val = builtin_echo(minishell->env, args);
+		val = builtin_echo(minishell->env, argv);
 	if (ft_strequals(builtin, CD_CMD))
-		val = builtin_cd(minishell, args);
+		val = builtin_cd(minishell, argv);
 	if (ft_strequals(builtin, ENV_CMD))
 		val = builtin_env(minishell);
 	if (ft_strequals(builtin, EXP_CMD))
-		val = builtin_export(minishell, args);
+		val = builtin_export(minishell, argv);
 	if (ft_strequals(builtin, PWD_CMD))
 		val = builtin_pwd();
 	if (ft_strequals(builtin, UNSET_CMD))
-		val = builtin_unset(minishell, args);
+		val = builtin_unset(minishell, argv);
 	return (val);
 }
 
@@ -68,13 +70,13 @@ int	is_builtin(char *name)
 		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD));
 }
 
-void	check_builtin(char *name, char **argv, t_minishell *minishell)
+void	check_builtin(char **argv, t_minishell *minishell)
 {
-	int val;
+	int	val;
 
-	if (is_builtin(name))
+	if (is_builtin(argv[0]))
 	{
-		val = exec_builtin(name, argv, minishell);
+		val = exec_builtin(argv, minishell);
 		free_str_arr(argv);
 		if (val == -1)
 			exit_minishell(minishell, NULL, EXIT_FAILURE);

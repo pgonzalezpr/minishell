@@ -15,6 +15,7 @@
 
 /* INCLUDES */
 # include "../libft/libft.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -52,12 +53,13 @@ typedef struct s_minishell
 {
 	char				*cmd_line;
 	char				*cwd;
+	char				**envp;
 	t_env				*env;
 	t_list				*tokens;
 	t_list				*commands;
 	int					cmd_count;
 	int					**pipes;
-	int					**here_doc_pipes;
+	int					**hd_pipes;
 	int					last_exit_code;
 
 }						t_minishell;
@@ -144,6 +146,8 @@ typedef struct s_minishell
 # define MSG_PWD_UNSET "minishell: cd does not work \
 if PWD is unset\n"
 # define FORK_ERR_MSG "Fork error\n"
+# define REDIR_ERR_MSG "Redirection error\n"
+# define EXEC_ERR_MSG "Execve error\n"
 
 /* PROTOTYPES */
 int						tokenize_cmdline(t_minishell *minishell);
@@ -156,17 +160,21 @@ int						is_redirection(char *str);
 int						is_operator(char *str);
 char					*expand_token(char *token, t_minishell *minishell);
 int						build_pipeline(t_minishell *minishell);
-void					check_builtin(char *name, char **argv,
+void					check_builtin(char **argv, t_minishell *minishell);
+void					apply_redirections(t_list *redirs, int index,
 							t_minishell *minishell);
 void					print_minishell(t_minishell *minishell);
+int						init_pipes(t_minishell *minishell);
+void					close_pipes(t_minishell *minishell);
+void					free_pipe_arr(int **arr, size_t size);
 int						exec_pipeline(t_minishell *minishell);
+char					*build_cmd_path(char *cmd_name, t_minishell *minishell);
 char					**build_str_arr_from_lst(t_list *lst);
 void					clean_minishell(t_minishell *minishell);
 void					free_str_arr(char **arr);
 void					del_str(char *str);
 void					exit_minishell(t_minishell *minishell, char *msg,
 							int status);
-void					free_pipe_arr(int **arr, size_t size);
 
 /* BUILT-INS */
 int						select_builtin(t_minishell *minishell);

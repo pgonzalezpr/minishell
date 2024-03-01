@@ -3,9 +3,9 @@ NAME = minishell
 SRCS = ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
 		./srcs/exit.c ./srcs/builtins/builtins.c ./srcs/builtins/echo.c 				\
 		./srcs/builtins/env.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c     			\
-		./srcs/builtins/unset.c ./srcs/builtins/export.c								\
-		./srcs/utils.c ./srcs/tokenize.c ./srcs/expand.c								\
-		./srcs/str_utils.c ./srcs/print.c ./srcs/check_builtin.c						\
+		./srcs/builtins/unset.c ./srcs/builtins/export.c ./srcs/pipes.c					\
+		./srcs/utils.c ./srcs/tokenize.c ./srcs/expand.c ./srcs/exec_utils.c			\
+		./srcs/str_utils.c ./srcs/print.c ./srcs/check_builtin.c ./srcs/path.c			\
 		./srcs/builtins/init_env.c  ./srcs/builtins/utils_env_2.c 						\
 		./srcs/builtins/utils_env.c
 

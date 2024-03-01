@@ -1,21 +1,5 @@
 #include "../include/minishell.h"
 
-void	free_pipe_arr(int **arr, size_t size)
-{
-	size_t	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		if (arr[i])
-			free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 void	del_str(char *str)
 {
 	if (str)
@@ -42,7 +26,8 @@ void	del_command(t_command *command)
 
 void	clean_minishell(t_minishell *minishell)
 {
-	int	status;
+	int		status;
+	char	**envp;
 
 	if (minishell->env)
 		free_env(minishell->env);
@@ -54,9 +39,11 @@ void	clean_minishell(t_minishell *minishell)
 		ft_lstclear(&minishell->commands, (void (*)(void *))del_command);
 	if (minishell->pipes)
 		free_pipe_arr(minishell->pipes, minishell->cmd_count - 1);
-	if (minishell->here_doc_pipes)
-		free_pipe_arr(minishell->here_doc_pipes, minishell->cmd_count);
+	if (minishell->hd_pipes)
+		free_pipe_arr(minishell->hd_pipes, minishell->cmd_count);
 	status = minishell->last_exit_code;
+	envp = minishell->envp;
 	ft_memset(minishell, 0, sizeof(t_minishell));
 	minishell->last_exit_code = status;
+	minishell->envp = envp;
 }
