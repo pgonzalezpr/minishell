@@ -70,16 +70,28 @@ int	is_builtin(char *name)
 		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD));
 }
 
-void	check_builtin(char **argv, t_minishell *minishell)
+int	check_builtin(t_minishell *minishell)
 {
-	int	val;
+	char		**argv;
+	t_command	*cmd;
 
+	if (minishell->cmd_count != 1)
+		return (-1);
+	cmd = minishell->commands->content;
+	argv = build_str_arr_from_lst(cmd->args);
+	if (!argv)
+	{
+		printf("%s", MALLOC_ERR_MSG);
+		return (1);
+	}
 	if (is_builtin(argv[0]))
 	{
-		val = exec_builtin(argv, minishell);
+		if (exec_builtin(argv, minishell) == -1)
+			minishell->last_exit_code = EXIT_FAILURE;
+		minishell->last_exit_code = EXIT_SUCCESS;
 		free_str_arr(argv);
-		if (val == -1)
-			exit_minishell(minishell, NULL, EXIT_FAILURE);
-		exit_minishell(minishell, NULL, EXIT_SUCCESS);
+		return (1);
 	}
+	free_str_arr(argv);
+	return (-1);
 }

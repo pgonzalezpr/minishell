@@ -65,7 +65,6 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
 	apply_redirections(cmd->redirections, cmd->index, minishell);
 	close_pipes(minishell);
-	check_builtin(argv, minishell);
 	path = build_cmd_path(argv[0], minishell);
 	if (!path)
 	{
@@ -101,6 +100,8 @@ int	exec_pipeline(t_minishell *minishell)
 
 	if (init_pipes(minishell) == -1 || exec_here_docs(minishell) == -1)
 		return (-1);
+	if (check_builtin(minishell) == 1)
+		return (1);
 	curr = minishell->commands;
 	p_id = 0;
 	status = EXIT_SUCCESS;
@@ -114,8 +115,6 @@ int	exec_pipeline(t_minishell *minishell)
 	if (WIFEXITED(status))
 		minishell->last_exit_code = WEXITSTATUS(status);
 	while (wait(NULL) > 0)
-	{
 		continue ;
-	}
 	return (1);
 }

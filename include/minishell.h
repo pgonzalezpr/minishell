@@ -160,7 +160,7 @@ int						is_redirection(char *str);
 int						is_operator(char *str);
 char					*expand_token(char *token, t_minishell *minishell);
 int						build_pipeline(t_minishell *minishell);
-void					check_builtin(char **argv, t_minishell *minishell);
+int check_builtin(t_minishell *minishell);
 void					apply_redirections(t_list *redirs, int index,
 							t_minishell *minishell);
 void					print_minishell(t_minishell *minishell);
