@@ -29,11 +29,9 @@ int	check_syntax(t_minishell *minishell)
 	curr = minishell->tokens;
 	while (curr)
 	{
-		if ((is_operator(curr->content) && !curr->next)
-			|| (is_redirection(curr->content)
-				&& is_redirection(curr->next->content))
-			|| (ft_strequals(curr->content, PIPE) && (!prev
-					|| ft_strequals(curr->next->content, PIPE))))
+		if ((is_operator(curr->content) && (!curr->next
+					|| is_operator(curr->next->content)))
+			|| (ft_strequals(curr->content, PIPE) && !prev))
 		{
 			printf("%s", SYNTAX_ERR_MSG);
 			return (-1);
@@ -63,13 +61,13 @@ int	main(int argc, char **argv, char **env)
 			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
 		add_history(minishell.cmd_line);
 		if (tokenize_cmdline(&minishell) == -1 || check_syntax(&minishell) == -1
-			|| process_tokens(&minishell) == -1
-			|| build_pipeline(&minishell) == -1)
+			|| process_tokens(&minishell) == -1 || build_pipeline(&minishell) ==
+			-1)
 		{
 			clean_minishell(&minishell);
 			continue ;
 		}
-        //print_minishell(&minishell);
+		print_minishell(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
 	}

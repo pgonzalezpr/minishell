@@ -24,7 +24,7 @@ char	**build_str_arr_from_lst(t_list *lst)
 	arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-    arr[ft_lstsize(lst)] = NULL;
+	arr[ft_lstsize(lst)] = NULL;
 	curr = lst;
 	idx = 0;
 	while (curr)
