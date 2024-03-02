@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 			clean_minishell(&minishell);
 			continue ;
 		}
-		print_minishell(&minishell);
+		//print_minishell(&minishell);
 		exec_pipeline(&minishell);
 		clean_minishell(&minishell);
 	}
