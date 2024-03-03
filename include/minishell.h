@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/29 16:10:43 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:41:47 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_minishell
 	int					**pipes;
 	int					**hd_pipes;
 	int					last_exit_code;
-
 }						t_minishell;
 
 /* COLORS */
@@ -160,7 +159,7 @@ int						is_redirection(char *str);
 int						is_operator(char *str);
 char					*expand_token(char *token, t_minishell *minishell);
 int						build_pipeline(t_minishell *minishell);
-int check_builtin(t_minishell *minishell);
+int						check_builtin(t_minishell *minishell);
 void					apply_redirections(t_list *redirs, int index,
 							t_minishell *minishell);
 void					print_minishell(t_minishell *minishell);

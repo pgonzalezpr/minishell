@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/29 16:25:02 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:50:54 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,29 @@ int	check_syntax(t_minishell *minishell)
 	return (1);
 }
 
+static void	run_minishell(t_minishell *minishell)
+{
+	while (1)
+	{
+		minishell->cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
+		if (!minishell->cmd_line)
+			continue ;
+		if (ft_strequals(minishell->cmd_line, "EXIT"))
+			exit_minishell(minishell, NULL, EXIT_SUCCESS);
+		add_history(minishell->cmd_line);
+		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
+			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
+			== -1)
+		{
+			clean_minishell(minishell);
+			continue ;
+		}
+		//print_minishell(minishell);
+		exec_pipeline(minishell);
+		clean_minishell(minishell);
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell	minishell;
@@ -52,23 +75,5 @@ int	main(int argc, char **argv, char **env)
 	minishell.envp = env;
 	if (init_env(&minishell, env) != SUCCESS)
 		return (clean_minishell(&minishell), EXIT_FAILURE);
-	while (1)
-	{
-		minishell.cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
-		if (!minishell.cmd_line)
-			continue ;
-		if (ft_strequals(minishell.cmd_line, "EXIT"))
-			exit_minishell(&minishell, NULL, EXIT_SUCCESS);
-		add_history(minishell.cmd_line);
-		if (tokenize_cmdline(&minishell) == -1 || check_syntax(&minishell) == -1
-			|| process_tokens(&minishell) == -1 || build_pipeline(&minishell) ==
-			-1)
-		{
-			clean_minishell(&minishell);
-			continue ;
-		}
-		//print_minishell(&minishell);
-		exec_pipeline(&minishell);
-		clean_minishell(&minishell);
-	}
+	run_minishell(&minishell);
 }
