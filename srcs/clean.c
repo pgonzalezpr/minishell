@@ -24,13 +24,11 @@ void	del_command(t_command *command)
 	free(command);
 }
 
-void	clean_minishell(t_minishell *minishell)
+void	clean_minishell(t_minishell *minishell, int clean_mode)
 {
-	int		status;
 	char	**envp;
+	int		status;
 
-	if (minishell->env)
-		free_env(minishell->env);
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
 	if (minishell->tokens)
@@ -41,8 +39,11 @@ void	clean_minishell(t_minishell *minishell)
 		free_pipe_arr(minishell->pipes, minishell->cmd_count - 1);
 	if (minishell->hd_pipes)
 		free_pipe_arr(minishell->hd_pipes, minishell->cmd_count);
+	if (clean_mode == CLEAN_ENV)
+		free_env(minishell->envp, get_len_env(minishell->envp));
+	else
+		envp = minishell->envp;
 	status = minishell->last_exit_code;
-	envp = minishell->envp;
 	ft_memset(minishell, 0, sizeof(t_minishell));
 	minishell->last_exit_code = status;
 	minishell->envp = envp;

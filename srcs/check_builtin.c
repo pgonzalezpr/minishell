@@ -49,25 +49,28 @@ int	exec_builtin(char **argv, t_minishell *minishell)
 	val = 1;
 	builtin = argv[0];
 	if (ft_strequals(builtin, ECHO_CMD))
-		val = builtin_echo(minishell->env, argv);
-	if (ft_strequals(builtin, CD_CMD))
-		val = builtin_cd(minishell, argv);
-	if (ft_strequals(builtin, ENV_CMD))
+		val = builtin_echo(minishell->envp, argv);
+	else if (ft_strequals(builtin, CD_CMD))
+		val = 10; //= builtin_cd(minishell, argv);
+	else if (ft_strequals(builtin, ENV_CMD))
 		val = builtin_env(minishell);
-	if (ft_strequals(builtin, EXP_CMD))
+	else if (ft_strequals(builtin, EXP_CMD))
 		val = builtin_export(minishell, argv);
-	if (ft_strequals(builtin, PWD_CMD))
+	else if (ft_strequals(builtin, PWD_CMD))
 		val = builtin_pwd();
-	if (ft_strequals(builtin, UNSET_CMD))
+	else if (ft_strequals(builtin, UNSET_CMD))
 		val = builtin_unset(minishell, argv);
+	else
+		val = builtin_exit(minishell);
 	return (val);
 }
 
 int	is_builtin(char *name)
 {
 	return (ft_strequals(name, ECHO_CMD) || ft_strequals(name, CD_CMD)
-		|| ft_strequals(name, ENV_CMD) | (ft_strequals(name, EXP_CMD))
-		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD));
+		|| ft_strequals(name, ENV_CMD) || (ft_strequals(name, EXP_CMD))
+		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD)
+		|| ft_strequals(name, EXIT_CMD));
 }
 
 int	check_builtin(t_minishell *minishell)

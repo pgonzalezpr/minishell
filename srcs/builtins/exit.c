@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 21:42:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 06:10:43 by brayan           ###   ########.fr       */
+/*   Created: 2024/03/03 18:42:17 by brayan            #+#    #+#             */
+/*   Updated: 2024/03/03 18:49:16 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,12 @@
 
 /*
 * PRE: -
-* POST: inicializa el env.
+* POST: Ejecuta el exit builtin
 */
-int	init_env(t_minishell *minishell, char **env)
+int	builtin_exit(t_minishell *minishell)
 {
-	t_env	*tmp;
-
-	while (*env)
-	{
-		tmp = get_new_node_env(NULL, NULL);
-		if (!tmp)
-			return (ERROR);
-		if (set_node_content(*env, &tmp) != SUCCESS)
-			return (ERROR);
-		add_back_to_env(&minishell->env, tmp);
-		env++;
-	}
+	rl_clear_history();
+	clear_history();
+	exit_minishell(minishell, MSG_EXIT, CLEAN_ENV);
 	return (SUCCESS);
 }

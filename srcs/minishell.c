@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/03 16:50:54 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/03 22:21:54 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_minishell(t_minishell *minishell, char *msg, int status)
 {
-	clean_minishell(minishell);
+	clean_minishell(minishell, CLEAN_ENV);
 	if (msg)
 		printf("%s\n", msg);
 	exit(status);
@@ -56,12 +56,12 @@ static void	run_minishell(t_minishell *minishell)
 			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
 			== -1)
 		{
-			clean_minishell(minishell);
+			clean_minishell(minishell, NOT_CLEAN_ENV);
 			continue ;
 		}
 		//print_minishell(minishell);
 		exec_pipeline(minishell);
-		clean_minishell(minishell);
+		clean_minishell(minishell, NOT_CLEAN_ENV);
 	}
 }
 
@@ -72,8 +72,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_memset(&minishell, 0, sizeof(minishell));
-	minishell.envp = env;
-	if (init_env(&minishell, env) != SUCCESS)
-		return (clean_minishell(&minishell), EXIT_FAILURE);
+	if (get_cpy_env(&minishell.envp, env, get_len_env(env), IGNORE) != SUCCESS)
+		return (clean_minishell(&minishell, NOT_CLEAN_ENV), EXIT_FAILURE);
 	run_minishell(&minishell);
 }

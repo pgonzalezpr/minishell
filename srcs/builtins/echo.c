@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 23:54:42 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/03 23:40:28 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ static char	*get_filter_key(const char *key_var, int *total_simbols_filtered)
 * POST: Imprimira el valor de la variable de entorno por consola,
 *		Si la misma existe
 */
-static int	print_dollar_case(char **cmd, t_env *env, int i, int j)
+static int	print_dollar_case(char **cmd, char **env, int i, int j)
 {
-	t_env	*node;
 	int		total_simbols_filtered;
+	int		pos_var_env;
 	char	*searched_name;
 
 	searched_name = get_filter_key(cmd[i], &total_simbols_filtered);
@@ -84,9 +84,10 @@ static int	print_dollar_case(char **cmd, t_env *env, int i, int j)
 		cmd[i][ft_strlen(cmd[i]) - 1] == DOUBLE_QUOTE) || \
 		(cmd[i][0] == DOLLAR_SIGN && total_simbols_filtered == 1)))
 	{
-		node = get_var_env(env, searched_name);
-		if (node)
-			printf("%s", node->value);
+		printf("SEACHED NAME: %s", searched_name);
+		pos_var_env = get_pos_var_env(env, searched_name);
+		if (pos_var_env != POS_NOT_FOUNDED)
+			printf("%s", env[pos_var_env]);
 	}
 	free(searched_name);
 	return (SUCCESS);
@@ -97,7 +98,7 @@ static int	print_dollar_case(char **cmd, t_env *env, int i, int j)
 * POST: Imprimira un caracter por la terminal, 
 *		devolviendo el estado de la operacion.
 */	
-static int	print_case(char **cmd, t_env *env, int i)
+static int	print_case(char **cmd, char **env, int i)
 {
 	int		j;
 
@@ -127,7 +128,7 @@ static int	print_case(char **cmd, t_env *env, int i)
 * POST: Mostrara un mensaje por el standar output, y devolvera
 *		el estado de la operacion (SUCCESS o ERROR)
 */
-int	builtin_echo(t_env *env, char **cmd)
+int	builtin_echo(char **env, char **cmd)
 {
 	int	i;
 	int	status;

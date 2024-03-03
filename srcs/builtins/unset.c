@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 23:56:30 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/03 23:50:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,27 @@ static int	is_valid_key_format(char *var)
 */
 int	builtin_unset(t_minishell *minishell, char **cmd)
 {
-	t_env	*tmp;
+	char	**new_env;
+	int		pos_var_env;
+	int		len_env;
+	int		status;
 
-	while (*cmd)
+	if (minishell->envp)
+		len_env = get_len_env(minishell->envp);
+	while (*cmd && minishell->envp)
 	{
 		if (is_valid_key_format(*cmd))
 		{
-			tmp = get_var_env(minishell->env, *cmd);
-			if (tmp)
+			pos_var_env = get_pos_var_env(minishell->envp, *cmd);
+			if (pos_var_env != POS_NOT_FOUNDED)
 			{
-				if (del_node_env(&minishell->env, tmp) != SUCCESS)
+				printf("pos var: %i, value env[%i] = %s\n", pos_var_env, pos_var_env, minishell->envp[pos_var_env]);
+				status = get_cpy_env(&new_env, minishell->envp, \
+				--len_env, pos_var_env);
+				if (status == ERROR)
 					return (ERROR);
+				free_env(minishell->envp, len_env + 1);
+				minishell->envp = new_env;
 			}
 		}
 		cmd++;
