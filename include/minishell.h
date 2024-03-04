@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 05:50:44 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 20:07:17 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,15 @@ typedef struct s_minishell
 /* ERROR MESSAGES */
 # define MSG_EXIT "exit\n"
 # define ERROR_MALLOC "Malloc Fails\n"
-# define MSG_CD_MISSING_ARGS "cd: missing argument\n"
-# define MSG_CD_FAILS "cd fails!\n"
+# define MSG_CD_MISSING_ARGS "minishell: cd: missing argument\n"
 # define SYNTAX_ERR_MSG "Syntax Error\n"
-# define MSG_MORE_THAN_TWO_ARGS_CD "cd more than two args\n"
-# define MSG_GET_CWD "cd: getcwd fails\n"
+# define MSG_MORE_THAN_TWO_ARGS_CD "minishell: cd: more than two args\n"
+# define MSG_GET_CWD "minishell: cd: getcwd fails\n"
 # define MALLOC_ERR_MSG "Allocation error\n"
 # define UNCLOSED_QUOTE_MSG "Error. Unclosed quote"
 # define MSG_COMMAND_NOT_FOUND ": command not found\n"
-# define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
-# define MSG_PWD_UNSET "minishell: cd does not work correct\
-if PWD is unset\n"
-# define MSG_OLDPWD_UNSET "minishell: cd does not work correct\
-if OLDPWD is unset\n"
-# define MSG_HOME_UNSET "minishell: cd without args does not \
-work correct if HOME is unset\n"
+# define MSG_MORE_THAN_TWO_ARGS_ENV "minishell: env: more than two args\n"
+# define MSG_HOME_UNSET "minishell: cd: HOME not set\n"
 # define FORK_ERR_MSG "Fork error\n"
 # define REDIR_ERR_MSG "Redirection error\n"
 # define EXEC_ERR_MSG "Execve error\n"
@@ -199,9 +193,6 @@ int						get_len_key_var(char *key);
 char					*get_new_var(char *key, char *value);
 
 /* CD_UTILS.C */
-int						update_cd_vars(char ***env, int pos_var_oldpwd, \
-							int pos_var_pwd, char *new_value_pwd);
-int						check_vars_cd(char ***env, int *pos_var_pwd, \
-							int *pos_var_oldpwd);
+int						update_cd_vars(char ***env, char *new_value_pwd);
 
 #endif

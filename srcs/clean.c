@@ -29,6 +29,7 @@ void	clean_minishell(t_minishell *minishell, int clean_mode)
 	char	**envp;
 	int		status;
 
+	envp = NULL;
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
 	if (minishell->tokens)
