@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 00:14:19 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 00:44:26 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_env(char **env, char mode)
 	while (*env)
 	{
 		if (mode == MODE_EXPORT)
-			printf("declare -x ");
+			printf(MSG_DECLARE);
 		if (mode == MODE_EXPORT || mode == MODE_ENV)
 			printf("%s", *env);
 		printf("\n");
@@ -81,9 +81,10 @@ int	get_len_env(char **env)
 
 /*
 * PRE: -
-* POST: Devuelve una copia del env indicando el total que
-*		vamos a copiar. Si pos_not_copy == EMPTY
-*		
+* POST: Copia env_original en env_cpy hasta lo que indique total_cpy
+		, Si pos_not_copy == IGNORE, copiara todo el contenido de 
+*		env_original en env_cpy, si es otro valor que este dentro de 
+*		las posiciones del env_original, lo ignorara y no lo copiara.
 */
 int	get_cpy_env(char ***env_cpy, char **env_original,
 int total_cpy, int pos_not_cpy)

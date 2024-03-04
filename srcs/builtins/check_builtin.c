@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	free_str_arr(char **arr)
 {
@@ -51,7 +51,7 @@ int	exec_builtin(char **argv, t_minishell *minishell)
 	if (ft_strequals(builtin, ECHO_CMD))
 		val = builtin_echo(minishell->envp, argv);
 	else if (ft_strequals(builtin, CD_CMD))
-		val = 10; //= builtin_cd(minishell, argv);
+		val = builtin_cd(minishell, argv);
 	else if (ft_strequals(builtin, ENV_CMD))
 		val = builtin_env(minishell);
 	else if (ft_strequals(builtin, EXP_CMD))
@@ -78,23 +78,23 @@ int	check_builtin(t_minishell *minishell)
 	char		**argv;
 	t_command	*cmd;
 
-	if (minishell->cmd_count != 1)
-		return (-1);
+	if (minishell->cmd_count != SUCCESS)
+		return (ERROR);
 	cmd = minishell->commands->content;
 	argv = build_str_arr_from_lst(cmd->args);
 	if (!argv)
 	{
 		printf("%s", MALLOC_ERR_MSG);
-		return (1);
+		return (SUCCESS);
 	}
 	if (is_builtin(argv[0]))
 	{
-		if (exec_builtin(argv, minishell) == -1)
+		if (exec_builtin(argv, minishell) == ERROR)
 			minishell->last_exit_code = EXIT_FAILURE;
 		minishell->last_exit_code = EXIT_SUCCESS;
 		free_str_arr(argv);
-		return (1);
+		return (SUCCESS);
 	}
 	free_str_arr(argv);
-	return (-1);
+	return (ERROR);
 }

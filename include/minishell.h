@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/03 22:46:52 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:18:28 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,10 @@ typedef struct s_minishell
 # define VAR_OLDPWD "OLDPWD"
 # define VAR_PWD "PWD"
 # define VAR_HOME "HOME"
+# define MSG_DECLARE "declare -x "
 # define VAR_OLDPWD_WITH_EQUAL "OLDPWD="
 # define VAR_PWD_WITH_EQUAL "PWD="
+# define VAR_PATH_WITH_EQUAL "PATH="
 # define FLAG_N "-n"
 # define MODE_EXPORT 	'X'
 # define MODE_ENV 		'E'
@@ -190,5 +192,12 @@ void					print_env(char **env, char mode);
 
 /* UTILS_ENV 2.C */
 int						get_len_key_var(char *key);
+char					*get_new_var(char *key, char *value);
+
+/* CD_UTILS.C */
+int						update_cd_vars(char ***env, int pos_var_oldpwd, \
+							int pos_var_pwd, char *new_value_pwd);
+int						check_vars_cd(char ***env, int *pos_var_pwd, \
+							int *pos_var_oldpwd);
 
 #endif

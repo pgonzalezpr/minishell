@@ -6,16 +6,16 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/03 21:55:14 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:18:18 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
- * PRE: -
- * POST: Devuelve la longitud de la clave del env.
- */
+/* 
+* PRE: -
+* POST: Devuelve la longitud de la clave del env.
+*/
 int	get_len_key_var(char *key)
 {
 	int	len;
@@ -27,4 +27,35 @@ int	get_len_key_var(char *key)
 		key++;
 	}
 	return (len);
+}
+
+/* 
+* PRE: -
+* POST: Devuelve una nueva variable con el key y value recibidos,
+*		por parametros.
+*/
+char	*get_new_var(char *key, char *value)
+{
+	int		i;
+	char	*new_var;
+
+	if (!value || !key)
+		return (NULL);
+	new_var = (char *)malloc(ft_strlen(key) + ft_strlen(value) + 2);
+	if (!new_var)
+		return (NULL);
+	i = 0;
+	while (*key)
+	{
+		new_var[i++] = *key;
+		key++;
+	}
+	new_var[i++] = EQUAL;
+	while (*value)
+	{
+		new_var[i++] = *value;
+		value++;
+	}
+	new_var[i++] = NULL_STR;
+	return (new_var);
 }

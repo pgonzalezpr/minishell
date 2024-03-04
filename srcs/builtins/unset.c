@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/03 23:50:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 00:39:58 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	builtin_unset(t_minishell *minishell, char **cmd)
 			pos_var_env = get_pos_var_env(minishell->envp, *cmd);
 			if (pos_var_env != POS_NOT_FOUNDED)
 			{
-				printf("pos var: %i, value env[%i] = %s\n", pos_var_env, pos_var_env, minishell->envp[pos_var_env]);
 				status = get_cpy_env(&new_env, minishell->envp, \
 				--len_env, pos_var_env);
 				if (status == ERROR)

@@ -44,7 +44,7 @@ char	**get_paths(char **envp)
 	cmd_paths = NULL;
 	while (*envp)
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		if (ft_strncmp(*envp, VAR_PATH_WITH_EQUAL, 5) == 0)
 		{
 			cmd_paths = ft_split(*envp + 5, ':');
 			if (!cmd_paths)
