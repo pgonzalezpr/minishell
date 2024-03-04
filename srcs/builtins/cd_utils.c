@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:17:41 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 05:29:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:44:51 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	check_vars_cd(char ***env, int *pos_var_pwd, int *pos_var_oldpwd)
 {
 	*pos_var_pwd = get_pos_var_env(*env, VAR_PWD);
 	if (*pos_var_pwd == POS_NOT_FOUNDED)
-		return (printf(MSG_PWD_UNSET), SUCCESS);
+		return (printf(MSG_PWD_UNSET));
 	*pos_var_oldpwd = get_pos_var_env(*env, VAR_OLDPWD);
 	if (*pos_var_oldpwd == POS_NOT_FOUNDED)
-		return (SUCCESS);
+		return (printf(MSG_OLDPWD_UNSET));
 	return (SUCCESS);
 }
 

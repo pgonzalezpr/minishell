@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 05:18:28 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:50:44 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,12 @@ typedef struct s_minishell
 # define UNCLOSED_QUOTE_MSG "Error. Unclosed quote"
 # define MSG_COMMAND_NOT_FOUND ": command not found\n"
 # define MSG_MORE_THAN_TWO_ARGS_ENV "env: more than two args\n"
-# define MSG_PWD_UNSET "minishell: cd does not work \
+# define MSG_PWD_UNSET "minishell: cd does not work correct\
 if PWD is unset\n"
+# define MSG_OLDPWD_UNSET "minishell: cd does not work correct\
+if OLDPWD is unset\n"
+# define MSG_HOME_UNSET "minishell: cd without args does not \
+work correct if HOME is unset\n"
 # define FORK_ERR_MSG "Fork error\n"
 # define REDIR_ERR_MSG "Redirection error\n"
 # define EXEC_ERR_MSG "Execve error\n"

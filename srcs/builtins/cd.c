@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 05:40:54 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:58:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	case_go_home(char ***env, int idx_pwd, int idx_oldpwd)
 
 	pos_var_home = get_pos_var_env(*env, VAR_HOME);
 	if (pos_var_home == POS_NOT_FOUNDED)
-		return (SUCCESS);
+		return (printf(MSG_HOME_UNSET), SUCCESS);
 	var_home = ft_strchr((*env)[pos_var_home], EQUAL);
 	var_home++;
 	if (chdir (var_home) != 0)

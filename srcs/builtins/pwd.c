@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/02/25 23:56:12 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 05:54:16 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 */
 int	builtin_pwd(void)
 {
-	char	path[MAX_PATH];
+	char	*pwd;
 
-	printf("%s\n", getcwd(path, sizeof(path)));
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (ERROR);
+	printf("%s\n", pwd);
+	free(pwd);
 	return (SUCCESS);
 }
