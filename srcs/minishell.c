@@ -49,8 +49,6 @@ static void	run_minishell(t_minishell *minishell)
 		minishell->cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
 		if (!minishell->cmd_line)
 			continue ;
-		if (ft_strequals(minishell->cmd_line, "EXIT"))
-			exit_minishell(minishell, NULL, EXIT_SUCCESS);
 		add_history(minishell->cmd_line);
 		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
 			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
