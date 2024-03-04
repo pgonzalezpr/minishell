@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 20:41:20 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:38:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 	}
 	if (!cmd[1])
 		status = case_go_home(&minishell->envp);
-	else if (ft_strcmp(cmd[1], BACK_CD) == 0)
+	else if (ft_strequals(cmd[1], BACK_CD))
 		status = case_go_back(&minishell->envp);
 	else if (cmd[1][0] == FORWARD_SLAH)
 		status = case_absolute_path(&minishell->envp, cmd[1]);

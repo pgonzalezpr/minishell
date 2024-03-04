@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 00:44:26 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/04 23:36:00 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,35 @@
 
 /*
 * PRE: -
-* POST: Devolvera la variable del env que tenga el
-*		content == key || content == value segun el parametro
-*		de busqueda que corresponda, en caso de que no la encuentre, 
+* POST: Devolvera la 
+*		content == key, en caso de que no la encuentre, 
 *		devolvera NULL
 */
-int	get_pos_var_env(char **env, char *content)
+char	*get_value_var_env(char **env, char *key)
 {
-	int		len_key_var;
-	int		pos_var;
+	int		len_key_var_env;
 	char	*key_env;
-	char	*value_env;
+	char	*value;
 
-	pos_var = 0;
-	while (env[pos_var])
+	if (!key || !env || !*env)
+		return (NULL);
+	while (*env)
 	{
-		len_key_var = get_len_key_var(content);
-		key_env = ft_substr(env[pos_var], 0, len_key_var);
+		len_key_var_env = get_len_key_var(*env);
+		key_env = ft_substr(*env, 0, len_key_var_env);
 		if (!key_env)
-			return (POS_NOT_FOUNDED);
-		value_env = ft_substr(env[pos_var], len_key_var + 1, \
-		ft_strlen(env[pos_var]) - len_key_var);
-		if (!value_env)
-			return (free(key_env), POS_NOT_FOUNDED);
-		if (ft_strcmp(key_env, content) == 0
-			|| ft_strcmp(value_env, content) == 0)
-			return (free(key_env), free(value_env), pos_var);
+			return (NULL);
+		if (ft_strequals(key, key_env))
+		{
+			value = ft_strchr(*env, EQUAL);
+			if (!value)
+				return (free(key_env), NULL);
+			return (free(key_env), ++value);
+		}
 		free(key_env);
-		free(value_env);
-		pos_var++;
+		env++;
 	}
-	return (POS_NOT_FOUNDED);
+	return (NULL);
 }
 
 /*

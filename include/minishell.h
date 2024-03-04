@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 20:07:17 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:25:01 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,19 +178,19 @@ int						builtin_exit(t_minishell *minishell);
 
 /* UTILS.C */
 int						get_total_commands(char *cmd_line);
-int						ft_strcmp(char *s1, char *s2);
 
 /* UTILS_ENV.C */
 int						get_cpy_env(char ***env_cpy, char **env_original,
 							int total_cpy, int pos_not_copy);
 int						get_len_env(char **env);
 void					free_env(char **env, int size);
-int						get_pos_var_env(char **env, char *content);
+char					*get_value_var_env(char **env, char *key);
 void					print_env(char **env, char mode);
 
 /* UTILS_ENV 2.C */
 int						get_len_key_var(char *key);
 char					*get_new_var(char *key, char *value);
+int						get_pos_var_env(char **env, char *key);
 
 /* CD_UTILS.C */
 int						update_cd_vars(char ***env, char *new_value_pwd);

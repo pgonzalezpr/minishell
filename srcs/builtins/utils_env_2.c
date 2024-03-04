@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 19:22:22 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:56:11 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,33 @@ char	*get_new_var(char *key, char *value)
 	}
 	new_var[i++] = NULL_STR;
 	return (new_var);
+}
+
+/*
+* PRE: -
+* POST: Devolvera la 
+*		content == key, en caso de que no la encuentre, 
+*		devolvera NULL
+*/
+int	get_pos_var_env(char **env, char *key)
+{
+	int		len_key_var_env;
+	int		i;
+	char	*key_env;
+
+	if (!key || !env || !*env)
+		return (POS_NOT_FOUNDED);
+	i = 0;
+	while (env[i])
+	{
+		len_key_var_env = get_len_key_var(env[i]);
+		key_env = ft_substr(env[i], 0, len_key_var_env);
+		if (!key_env)
+			return (POS_NOT_FOUNDED);
+		if (ft_strequals(key_env, key))
+			return (free(key_env), i);
+		free(key_env);
+		i++;
+	}
+	return (POS_NOT_FOUNDED);
 }
