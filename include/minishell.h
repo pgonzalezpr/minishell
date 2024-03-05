@@ -118,7 +118,7 @@ typedef struct s_minishell
 # define MSG_TOO_MANY_ARGS 			"minishell: cd: too many arguments\n"
 # define MSG_GET_CWD 				"minishell: cd: getcwd fails\n"
 # define MALLOC_ERR_MSG 			"Allocation error\n"
-# define UNCLOSED_QUOTE_MSG 		"Error. Unclosed quote"
+# define UNCLOSED_QUOTE_MSG 		"Error. Unclosed quote\n"
 # define MSG_COMMAND_NOT_FOUND 		": command not found\n"
 # define MSG_MORE_THAN_TWO_ARGS_ENV "minishell: env: more than two args\n"
 # define MSG_HOME_UNSET 			"minishell: cd: HOME not set\n"
