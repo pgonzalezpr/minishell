@@ -20,6 +20,6 @@ int	builtin_exit(t_minishell *minishell)
 {
 	rl_clear_history();
 	clear_history();
-	exit_minishell(minishell, MSG_EXIT, CLEAN_ENV);
+	exit_minishell(minishell, NULL, CLEAN_ENV);
 	return (SUCCESS);
 }
