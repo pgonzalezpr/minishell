@@ -7,7 +7,7 @@ features of Bash, users will be able to interact with their computer systems thr
 a familiar and powerful interface.
 
 ### Usage
-1) Compile the code
+1) Compile
    ```makefile
    make
    ```
