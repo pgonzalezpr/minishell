@@ -14,7 +14,7 @@
 
 /*
 * PRE: -
-* POST: Actualiza el valor de las variables de entorno OLDPWD y PWD.
+* POST: Remueve el ultimo / del path enviado por parametro.
 */
 void	remove_foward_slash(char path[MAX_PATH])
 {
