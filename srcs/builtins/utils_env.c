@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:36:00 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:25:50 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ char	*get_value_var_env(char **env, char *key)
 			return (NULL);
 		if (ft_strequals(key, key_env))
 		{
+			free(key_env);
 			value = ft_strchr(*env, EQUAL);
 			if (!value)
-				return (free(key_env), NULL);
-			return (free(key_env), ++value);
+				return (NULL);
+			return (value + 1);
 		}
 		free(key_env);
 		env++;

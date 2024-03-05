@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:33:35 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 22:14:42 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:33:11 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	get_total_commands(char *cmd_line)
 	int	in_command;
 	int	i;
 
+	if (!cmd_line)
+		return (0);
 	i = -1;
 	total = 0;
 	in_command = 0;
