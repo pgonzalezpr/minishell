@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 02:09:52 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:28:37 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_minishell
 # define ERROR_MALLOC "Malloc Fails\n"
 # define MSG_CD_MISSING_ARGS "minishell: cd: missing argument\n"
 # define SYNTAX_ERR_MSG "Syntax Error\n"
-# define MSG_MORE_THAN_TWO_ARGS_CD "minishell: cd: more than two args\n"
+# define MSG_TOO_MANY_ARGS "minishell: cd: too many arguments\n"
 # define MSG_GET_CWD "minishell: cd: getcwd fails\n"
 # define MALLOC_ERR_MSG "Allocation error\n"
 # define UNCLOSED_QUOTE_MSG "Error. Unclosed quote"
