@@ -42,11 +42,59 @@ int	check_syntax(t_minishell *minishell)
 	return (1);
 }
 
+char    *build_msg(t_minishell *minishell)
+{
+    char    *cwd;
+    char    *home_var;
+    char    msg[MAX_PATH];
+
+    cwd = getcwd(NULL, 0);
+    ft_memset(msg, 0, MAX_PATH);
+    if (!cwd)
+        return (NULL);
+    home_var = ft_strdup(get_value_var_env(minishell->envp, VAR_HOME));
+    if (!home_var)
+        return (cwd);
+    if (ft_strncmp(cwd, home_var, ft_strlen(home_var)) == 0)
+    {
+        msg[0] = '~';
+        ft_strlcpy(msg + 1, cwd + ft_strlen(home_var), MAX_PATH - 1);
+        free(cwd);
+        free(home_var);
+        return (ft_strdup(msg));
+    }
+    return (free(home_var), cwd);
+}
+
+char    *build_prompt(t_minishell *minishell)
+{
+    char    prompt[MAX_PATH];
+    char    *msg;
+
+    ft_memset(prompt, 0, MAX_PATH);
+    msg = build_msg(minishell);
+    if (!msg)
+        return (NULL);
+    ft_strlcpy(prompt, GREEN, MAX_PATH);
+    ft_strlcpy(prompt + ft_strlen(prompt), msg,
+               MAX_PATH - ft_strlen(prompt));
+    ft_strlcpy(prompt + ft_strlen(prompt), DEF_COLOR,
+               MAX_PATH - ft_strlen(prompt));
+    prompt[ft_strlen(prompt)] = SPACE;
+    return (free(msg), ft_strdup(prompt));
+}
+
 static void	run_minishell(t_minishell *minishell)
 {
+    char    *prompt;
+
 	while (1)
 	{
-		minishell->cmd_line = readline(GREEN "minishell$ " DEF_COLOR);
+        prompt = build_prompt(minishell);
+        if (!prompt)
+            exit_minishell(minishell, PROMPT_ERR_MSG, EXIT_FAILURE);
+		minishell->cmd_line = readline(prompt);
+        free(prompt);
 		if (!minishell->cmd_line)
 			continue ;
 		add_history(minishell->cmd_line);

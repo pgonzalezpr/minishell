@@ -89,7 +89,7 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 {
 	int		status;
 
-	print_vars_cd(minishell->envp, minishell->cwd);
+	//print_vars_cd(minishell->envp, minishell->cwd);
 	status = SUCCESS;
 	if (!cmd || !*cmd)
 		return (ERROR);
@@ -103,6 +103,6 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 		status = case_absolute_path(&minishell->envp, cmd[1]);
 	else
 		status = case_relative_path(&minishell->envp, cmd);
-	print_vars_cd(minishell->envp, minishell->cwd);
+	//print_vars_cd(minishell->envp, minishell->cwd);
 	return (status);
 }
