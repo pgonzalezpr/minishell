@@ -6,11 +6,24 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:17:41 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 02:08:44 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 20:05:30 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/*
+* PRE: -
+* POST: Actualiza el valor de las variables de entorno OLDPWD y PWD.
+*/
+void	remove_foward_slash(char path[MAX_PATH])
+{
+	int	len_path;
+
+	len_path = ft_strlen(path);
+	if (path[len_path - 1] && path[len_path - 1] == FORWARD_SLAH)
+		path[len_path - 1] = NULL_STR;
+}
 
 /*
 * PRE: -

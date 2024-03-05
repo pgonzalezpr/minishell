@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 02:28:49 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 20:03:07 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	case_relative_path(char ***env, char **cmd)
 	if (chdir(path) != 0)
 		return (printf("minishell: cd: %s: No such file or directory\n", \
 					cmd[1]), 1);
+	remove_foward_slash(path);
 	return (update_cd_vars(env, path));
 }
 
@@ -42,6 +43,7 @@ static int	case_relative_path(char ***env, char **cmd)
 */
 static int	case_absolute_path(char ***env, char *path)
 {
+	remove_foward_slash(path);
 	if (chdir(path) != 0)
 		return (printf("bash: cd: %s: No such file or directory\n", path), 1);
 	return (update_cd_vars(env, path));

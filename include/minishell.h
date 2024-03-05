@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 19:25:42 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 20:02:09 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,74 +60,72 @@ typedef struct s_minishell
 # define DEF_COLOR "\033[0;39m"
 
 /* STATUS */
-# define POS_NOT_FOUNDED -4
-# define EXIT_CMD_NOT_FOUND 127
-# define SUCCESS 1
-# define ERROR -1
-# define POS_NOT_FOUNDED -4
-# define IGNORE			 -15
-# define CLEAN_ENV		 -10
-# define NOT_CLEAN_ENV	 -11
+# define POS_NOT_FOUNDED 			-4
+# define EXIT_CMD_NOT_FOUND 		127
+# define SUCCESS 					1
+# define ERROR 						-1
+# define POS_NOT_FOUNDED 			-4
+# define IGNORE			 			-15
+# define CLEAN_ENV		 			-10
+# define NOT_CLEAN_ENV	 			-11
 
 /* REDIRECTIONS CODES */
-# define IN_RED_CODE 1
-# define OUT_RED_CODE 2
-# define HERE_DOC_CODE 3
-# define OUT_RED_APP_CODE 4
+# define IN_RED_CODE 				1
+# define OUT_RED_CODE 				2
+# define HERE_DOC_CODE 				3
+# define OUT_RED_APP_CODE 			4
 
 /* SPECIAL SYMBOLS */
-# define DOUBLE_QUOTE 34
-# define SINGLE_QUOTE 39
-# define NULL_STR '\0'
-# define PIPE "|"
-# define IN_RED "<"
-# define OUT_RED ">"
-# define HERE_DOC "<<"
-# define OUT_RED_APP ">>"
-# define EMPTY ' '
-# define LINE_BREAK '\n'
-# define EQUAL '='
-# define DOLLAR_SIGN '$'
-# define BACK_CD ".."
-# define FORWARD_SLAH_ST "/"
-# define FORWARD_SLAH 47
+# define DOUBLE_QUOTE 				34
+# define SINGLE_QUOTE 				39
+# define NULL_STR 					'\0'
+# define PIPE 						"|"
+# define IN_RED 					"<"
+# define OUT_RED 					">"
+# define HERE_DOC 					"<<"
+# define OUT_RED_APP 				">>"
+# define EMPTY 						' '
+# define LINE_BREAK 				'\n'
+# define EQUAL 						'='
+# define DOLLAR_SIGN 				'$'
+# define BACK_CD 					".."
+# define FORWARD_SLAH_ST 			"/"
+# define FORWARD_SLAH 				47
 
 /* BUILT INS (COMMANDS) */
-# define EXIT_COMMAND_NOT_FOUND 127
-# define EXIT_CMD "exit"
-# define ECHO_CMD "echo"
-# define CD_CMD "cd"
-# define PWD_CMD "pwd"
-# define EXP_CMD "export"
-# define UNSET_CMD "unset"
-# define ENV_CMD "env"
-# define VAR_OLDPWD "OLDPWD"
-# define VAR_PWD "PWD"
-# define VAR_HOME "HOME"
-# define MSG_DECLARE "declare -x "
-# define VAR_OLDPWD_WITH_EQUAL "OLDPWD="
-# define VAR_PWD_WITH_EQUAL "PWD="
-# define VAR_PATH_WITH_EQUAL "PATH="
-# define FLAG_N "-n"
-# define MODE_EXPORT 	'X'
-# define MODE_ENV 		'E'
+# define EXIT_COMMAND_NOT_FOUND 	127
+# define EXIT_CMD 					"exit"
+# define ECHO_CMD 					"echo"
+# define CD_CMD 					"cd"
+# define PWD_CMD 					"pwd"
+# define EXP_CMD 					"export"
+# define UNSET_CMD 					"unset"
+# define ENV_CMD 					"env"
+# define VAR_OLDPWD 				"OLDPWD"
+# define VAR_PWD 					"PWD"
+# define VAR_HOME 					"HOME"
+# define MSG_DECLARE 				"declare -x "
+# define VAR_PATH_WITH_EQUAL 		"PATH="
+# define FLAG_N 					"-n"
+# define MODE_EXPORT 				'X'
+# define MODE_ENV 					'E'
 
 /* ERROR MESSAGES */
-# define MSG_EXIT "exit\n"
-# define ERROR_MALLOC "Malloc Fails\n"
-# define MSG_CD_MISSING_ARGS "minishell: cd: missing argument\n"
-# define SYNTAX_ERR_MSG "Syntax Error\n"
-# define MSG_TOO_MANY_ARGS "minishell: cd: too many arguments\n"
-# define MSG_GET_CWD "minishell: cd: getcwd fails\n"
-# define MALLOC_ERR_MSG "Allocation error\n"
-# define UNCLOSED_QUOTE_MSG "Error. Unclosed quote"
-# define MSG_COMMAND_NOT_FOUND ": command not found\n"
+# define MSG_EXIT 					"exit\n"
+# define ERROR_MALLOC 				"Malloc Fails\n"
+# define MSG_CD_MISSING_ARGS 		"minishell: cd: missing argument\n"
+# define SYNTAX_ERR_MSG 			"Syntax Error\n"
+# define MSG_TOO_MANY_ARGS 			"minishell: cd: too many arguments\n"
+# define MSG_GET_CWD 				"minishell: cd: getcwd fails\n"
+# define MALLOC_ERR_MSG 			"Allocation error\n"
+# define UNCLOSED_QUOTE_MSG 		"Error. Unclosed quote"
+# define MSG_COMMAND_NOT_FOUND 		": command not found\n"
 # define MSG_MORE_THAN_TWO_ARGS_ENV "minishell: env: more than two args\n"
-# define MSG_HOME_UNSET "minishell: cd: HOME not set\n"
-# define FORK_ERR_MSG "Fork error\n"
-# define REDIR_ERR_MSG "Redirection error\n"
-# define EXEC_ERR_MSG "Execve error\n"
-# define PROMPT_ERR_MSG "Error builing prompt\n"
+# define MSG_HOME_UNSET 			"minishell: cd: HOME not set\n"
+# define FORK_ERR_MSG 				"Fork error\n"
+# define REDIR_ERR_MSG 				"Redirection error\n"
+# define EXEC_ERR_MSG 				"Execve error\n"
+# define PROMPT_ERR_MSG 			"Error builing prompt\n"
 
 /* PROTOTYPES */
 int						tokenize_cmdline(t_minishell *minishell);
@@ -174,6 +172,7 @@ char					*get_new_var(char *key, char *value);
 int						get_pos_var_env(char **env, char *key);
 int						update_cd_vars(char ***env, char *new_value_pwd);
 char					*build_prompt(t_minishell *minishell);
+void					remove_foward_slash(char path[MAX_PATH]);
 
 // LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
 void					print_vars_cd(char **env, char *cwd);
