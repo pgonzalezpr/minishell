@@ -20,6 +20,8 @@ void	remove_foward_slash(char path[MAX_PATH])
 {
 	int	len_path;
 
+	if (!path)
+		return ;
 	len_path = ft_strlen(path);
 	if (path[len_path - 1] && path[len_path - 1] == FORWARD_SLAH)
 		path[len_path - 1] = NULL_STR;
