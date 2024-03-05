@@ -58,7 +58,7 @@ static int	case_go_back(char ***env)
 {
 	char	cwd[MAX_PATH];
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	if (!getcwd(cwd, MAX_PATH))
 		return (ERROR);
 	if (chdir(BACK_CD) != 0)
 		return (printf("bash: cd: %s: No such file or directory\n", cwd), 1);
