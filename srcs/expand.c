@@ -60,7 +60,7 @@ char	*get_var_value(char *var_name, t_minishell *minishell)
 		}
 		return (var_value);
 	}
-	var_value = getenv(var_name);
+	var_value = get_value_var_env(minishell->envp, var_name);
 	if (!var_value)
 		var_value = "";
 	return (ft_strdup(var_value));
