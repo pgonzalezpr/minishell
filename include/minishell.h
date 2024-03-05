@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 19:04:14 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 19:25:42 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int						get_len_key_var(char *key);
 char					*get_new_var(char *key, char *value);
 int						get_pos_var_env(char **env, char *key);
 int						update_cd_vars(char ***env, char *new_value_pwd);
+char					*build_prompt(t_minishell *minishell);
 
 // LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
 void					print_vars_cd(char **env, char *cwd);
