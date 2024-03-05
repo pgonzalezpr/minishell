@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:38:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:11:08 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,14 @@ static int	case_go_back(char ***env)
 */
 static int	case_go_home(char ***env)
 {
-	int		pos_var_home;
-	char	*var_home;	
+	char	*path_home;	
 
-	pos_var_home = get_pos_var_env(*env, VAR_HOME);
-	if (pos_var_home == POS_NOT_FOUNDED)
+	path_home = get_value_var_env(*env, VAR_HOME);
+	if (!path_home)
 		return (printf(MSG_HOME_UNSET), SUCCESS);
-	var_home = ft_strchr((*env)[pos_var_home], EQUAL);
-	var_home++;
-	if (chdir (var_home) != 0)
+	if (chdir (path_home) != 0)
 		return (SUCCESS);
-	return (update_cd_vars(env, var_home));
+	return (update_cd_vars(env, path_home));
 }
 
 /*
@@ -92,13 +89,12 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 {
 	int		status;
 
+	print_vars_cd(minishell->envp, minishell->cwd);
+	status = SUCCESS;
 	if (!cmd || !*cmd)
 		return (ERROR);
 	if (get_total_commands(minishell->cmd_line) > 2)
-	{
-		printf(RED MSG_MORE_THAN_TWO_ARGS_CD DEF_COLOR);
-		return (SUCCESS);
-	}
+		return (printf(MSG_MORE_THAN_TWO_ARGS_CD), status);
 	if (!cmd[1])
 		status = case_go_home(&minishell->envp);
 	else if (ft_strequals(cmd[1], BACK_CD))
@@ -107,5 +103,6 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 		status = case_absolute_path(&minishell->envp, cmd[1]);
 	else
 		status = case_relative_path(&minishell->envp, cmd);
+	print_vars_cd(minishell->envp, minishell->cwd);
 	return (status);
 }

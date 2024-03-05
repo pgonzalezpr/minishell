@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:06:19 by bsaiago-          #+#    #+#             */
-/*   Updated: 2024/03/04 19:13:30 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/05 01:39:57 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	exec_builtin(char **argv, t_minishell *minishell)
+{
+	int		val;
+	char	*builtin;
+
+	val = 1;
+	builtin = argv[0];
+	if (ft_strequals(builtin, ECHO_CMD))
+		val = builtin_echo(minishell->envp, argv);
+	else if (ft_strequals(builtin, CD_CMD))
+		val = builtin_cd(minishell, argv);
+	else if (ft_strequals(builtin, ENV_CMD))
+		val = builtin_env(minishell);
+	else if (ft_strequals(builtin, EXP_CMD))
+		val = builtin_export(minishell, argv);
+	else if (ft_strequals(builtin, PWD_CMD))
+		val = builtin_pwd();
+	else if (ft_strequals(builtin, UNSET_CMD))
+		val = builtin_unset(minishell, argv);
+	else
+		val = builtin_exit(minishell);
+	return (val);
+}
+
+static int	is_builtin(char *name)
+{
+	return (ft_strequals(name, ECHO_CMD) || ft_strequals(name, CD_CMD)
+		|| ft_strequals(name, ENV_CMD) || (ft_strequals(name, EXP_CMD))
+		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD)
+		|| ft_strequals(name, EXIT_CMD));
+}
 
 void	free_str_arr(char **arr)
 {
@@ -51,38 +83,6 @@ char	**build_str_arr_from_lst(t_list *lst)
 		curr = curr->next;
 	}
 	return (arr);
-}
-
-int	exec_builtin(char **argv, t_minishell *minishell)
-{
-	int		val;
-	char	*builtin;
-
-	val = 1;
-	builtin = argv[0];
-	if (ft_strequals(builtin, ECHO_CMD))
-		val = builtin_echo(minishell->envp, argv);
-	else if (ft_strequals(builtin, CD_CMD))
-		val = builtin_cd(minishell, argv);
-	else if (ft_strequals(builtin, ENV_CMD))
-		val = builtin_env(minishell);
-	else if (ft_strequals(builtin, EXP_CMD))
-		val = builtin_export(minishell, argv);
-	else if (ft_strequals(builtin, PWD_CMD))
-		val = builtin_pwd();
-	else if (ft_strequals(builtin, UNSET_CMD))
-		val = builtin_unset(minishell, argv);
-	else
-		val = builtin_exit(minishell);
-	return (val);
-}
-
-int	is_builtin(char *name)
-{
-	return (ft_strequals(name, ECHO_CMD) || ft_strequals(name, CD_CMD)
-		|| ft_strequals(name, ENV_CMD) || (ft_strequals(name, EXP_CMD))
-		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD)
-		|| ft_strequals(name, EXIT_CMD));
 }
 
 int	check_builtin(t_minishell *minishell)

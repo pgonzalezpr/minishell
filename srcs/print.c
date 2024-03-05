@@ -46,3 +46,16 @@ void	print_minishell(t_minishell *minishell)
 		curr = curr->next;
 	}
 }
+
+/*
+* PRE: -
+* POST: Imprime las variables de entorno que controla CD. (SOLO PARA DEBUGGEAR).
+*/
+void	print_vars_cd(char **env, char *cwd)
+{
+	printf("ANTES OLDPWD: %s\n", get_value_var_env(env, VAR_OLDPWD));
+	printf("ANTES PWD: %s\n", get_value_var_env(env, VAR_PWD));
+	printf("ANTES HOME: %s\n", get_value_var_env(env, VAR_HOME));
+	printf("ANTES MINISHEL CWD: %s\n", cwd);
+	printf("-------------------------------------------\n");
+}

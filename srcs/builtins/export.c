@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:53:08 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:07:17 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ static int	is_valid_var_format(char *var)
 	return (status);
 }
 
+/*
+* PRE: -
+* POST: Gestiona el caso en el que la variable no existe, redimensionando
+*		el env existente para agregar la nueva variable, liberando el viejo env.
+*/
 static char	**case_var_not_exist(char **env, char *new_var, int len_env)
 {
 	char	**new_env;
@@ -58,6 +63,12 @@ static char	**case_var_not_exist(char **env, char *new_var, int len_env)
 	return (new_env);
 }
 
+/*
+* PRE: -
+* POST: Gestiona el caso en el que la variable existe, liberando
+*		la pos del env en la que esta la var vieja, y agregando
+*		en esa posicion la new var, sin reedimensionar el env.
+*/
 static char	**case_var_exist(char **env, char *new_var,
 	int pos_var_env, int len_env)
 {

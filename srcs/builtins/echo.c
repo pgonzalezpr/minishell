@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/03 23:40:28 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:16:06 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static int	print_dollar_case(char **cmd, char **env, int i, int j)
 		cmd[i][ft_strlen(cmd[i]) - 1] == DOUBLE_QUOTE) || \
 		(cmd[i][0] == DOLLAR_SIGN && total_simbols_filtered == 1)))
 	{
-		printf("SEACHED NAME: %s", searched_name);
 		pos_var_env = get_pos_var_env(env, searched_name);
 		if (pos_var_env != POS_NOT_FOUNDED)
 			printf("%s", env[pos_var_env]);

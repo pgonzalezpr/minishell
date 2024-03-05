@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:25:01 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:09:52 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-/* STRUCTS */
+# define MAX_PATH 4200
 
+/* STRUCTS */
 typedef struct s_command
 {
 	t_list				*args;
@@ -42,15 +43,15 @@ typedef struct s_redirection
 
 typedef struct s_minishell
 {
-	char				*cmd_line;
 	char				*cwd;
+	char				*cmd_line;
 	char				**envp;
 	t_list				*tokens;
 	t_list				*commands;
 	int					cmd_count;
+	int					last_exit_code;
 	int					**pipes;
 	int					**hd_pipes;
-	int					last_exit_code;
 }						t_minishell;
 
 /* COLORS */
@@ -110,7 +111,6 @@ typedef struct s_minishell
 # define FLAG_N "-n"
 # define MODE_EXPORT 	'X'
 # define MODE_ENV 		'E'
-# define MAX_PATH 4200
 
 /* ERROR MESSAGES */
 # define MSG_EXIT "exit\n"
@@ -144,55 +144,36 @@ void					apply_redirections(t_list *redirs, int index,
 							t_minishell *minishell);
 void					print_minishell(t_minishell *minishell);
 int						init_pipes(t_minishell *minishell);
+char					**build_str_arr_from_lst(t_list *lst);
+void					free_str_arr(char **arr);
 void					close_pipes(t_minishell *minishell);
 void					free_pipe_arr(int **arr, size_t size);
 int						exec_pipeline(t_minishell *minishell);
 char					*build_cmd_path(char *cmd_name, t_minishell *minishell);
-char					**build_str_arr_from_lst(t_list *lst);
 void					clean_minishell(t_minishell *minishell, int exit_mode);
-void					free_str_arr(char **arr);
 void					del_str(char *str);
 void					exit_minishell(t_minishell *minishell, char *msg,
 							int status);
-
-/* PWD.C */
 int						builtin_pwd(void);
-
-/* EXPORT.C */
 int						builtin_export(t_minishell *minishell, char **cmd);
-
-/* UNSET.C */
 int						builtin_unset(t_minishell *minishell, char **cmd);
-
-/* CD.C */
 int						builtin_cd(t_minishell *minishell, char **cmd);
-
-/* ENV.C */
 int						builtin_env(t_minishell *minishell);
-
-/* ECHO.C */
 int						builtin_echo(char **env, char **cmd);
-
-/* EXIT.C */
 int						builtin_exit(t_minishell *minishell);
-
-/* UTILS.C */
 int						get_total_commands(char *cmd_line);
-
-/* UTILS_ENV.C */
 int						get_cpy_env(char ***env_cpy, char **env_original,
 							int total_cpy, int pos_not_copy);
 int						get_len_env(char **env);
 void					free_env(char **env, int size);
 char					*get_value_var_env(char **env, char *key);
 void					print_env(char **env, char mode);
-
-/* UTILS_ENV 2.C */
 int						get_len_key_var(char *key);
 char					*get_new_var(char *key, char *value);
 int						get_pos_var_env(char **env, char *key);
-
-/* CD_UTILS.C */
 int						update_cd_vars(char ***env, char *new_value_pwd);
+
+// LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
+void					print_vars_cd(char **env, char *cwd);
 
 #endif
