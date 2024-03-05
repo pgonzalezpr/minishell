@@ -127,6 +127,7 @@ typedef struct s_minishell
 # define FORK_ERR_MSG "Fork error\n"
 # define REDIR_ERR_MSG "Redirection error\n"
 # define EXEC_ERR_MSG "Execve error\n"
+# define PROMPT_ERR_MSG "Error builing prompt\n"
 
 /* PROTOTYPES */
 int						tokenize_cmdline(t_minishell *minishell);
