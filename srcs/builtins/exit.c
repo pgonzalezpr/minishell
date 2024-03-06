@@ -21,6 +21,6 @@ int	builtin_exit(t_minishell *minishell, char **args)
 	rl_clear_history();
 	clear_history();
 	free_str_arr(args);
-	exit_minishell(minishell, NULL, CLEAN_ENV);
+	exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	return (SUCCESS);
 }
