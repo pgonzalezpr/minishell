@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:56:11 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/05 23:04:32 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,12 @@ int	get_pos_var_env(char **env, char *key)
 		i++;
 	}
 	return (POS_NOT_FOUNDED);
+}
+
+void	print_var_value(char **env, char *var)
+{
+	char	*var_env;
+	if (!var || !env || !*env)
+		return ;
+	(void) var_env;
 }

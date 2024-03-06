@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 20:02:09 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/06 00:38:48 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ typedef struct s_minishell
 # define VAR_HOME 					"HOME"
 # define MSG_DECLARE 				"declare -x "
 # define VAR_PATH_WITH_EQUAL 		"PATH="
-# define FLAG_N 					"-n"
+# define FLAG_N 					'n'
+# define FLAG_SYMBOL				'-'
 # define MODE_EXPORT 				'X'
 # define MODE_ENV 					'E'
 
