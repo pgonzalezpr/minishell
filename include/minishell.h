@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/06 00:38:48 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/06 04:33:24 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+# include <sys/types.h>
 
 # define MAX_PATH 4200
 
@@ -127,6 +129,8 @@ typedef struct s_minishell
 # define REDIR_ERR_MSG 				"Redirection error\n"
 # define EXEC_ERR_MSG 				"Execve error\n"
 # define PROMPT_ERR_MSG 			"Error builing prompt\n"
+# define MSG_ERROR_SIGNAL			"Error configuring signal\n"
+# define MSG_ERROR_CPY_ENV			"Error get_cpy_env fails\n"
 
 /* PROTOTYPES */
 int						tokenize_cmdline(t_minishell *minishell);
@@ -178,4 +182,9 @@ void					remove_foward_slash(char path[MAX_PATH]);
 // LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
 void					print_vars_cd(char **env, char *cwd);
 
+//	MANEJO DE SIGNALS
+void					signal_handler(int signal);
+int						configure_handle_signals(int nb_signal \
+						, void (*handler)(int));
+int						protect_handle_signals_configure(void);
 #endif

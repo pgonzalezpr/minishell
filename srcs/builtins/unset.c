@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/04 23:50:23 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/06 01:22:26 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ static int	is_valid_key_format(char *var)
 {
 	if (!var)
 		return (0);
-	while (*var)
-	{
-		if (*var == EQUAL)
-			return (0);
+	while (*var && *var != EQUAL)
 		var++;
-	}
-	return (1);
+	return (*var == NULL_STR);
 }
 
 /*
