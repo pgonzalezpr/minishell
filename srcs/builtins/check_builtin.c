@@ -68,7 +68,7 @@ char	**build_str_arr_from_lst(t_list *lst)
 	arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-    ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
+	ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
 	curr = lst;
 	idx = 0;
 	while (curr)
@@ -103,8 +103,8 @@ int	check_builtin(t_minishell *minishell)
 	{
 		if (exec_builtin(argv, minishell) == ERROR)
 			minishell->last_exit_code = EXIT_FAILURE;
-        else
-		    minishell->last_exit_code = EXIT_SUCCESS;
+		else
+			minishell->last_exit_code = EXIT_SUCCESS;
 		free_str_arr(argv);
 		return (SUCCESS);
 	}

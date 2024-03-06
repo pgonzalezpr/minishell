@@ -92,7 +92,8 @@ int	get_pos_var_env(char **env, char *key)
 void	print_var_value(char **env, char *var)
 {
 	char	*var_env;
+
 	if (!var || !env || !*env)
 		return ;
-	(void) var_env;
+	(void)var_env;
 }
