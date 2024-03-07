@@ -72,6 +72,8 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 		exit_minishell(minishell, NULL, EXIT_CMD_NOT_FOUND);
 	}
 	execve(path, argv, minishell->envp);
+	free_str_arr(argv);
+	free(path);
 	exit_minishell(minishell, EXEC_ERR_MSG, EXIT_FAILURE);
 }
 

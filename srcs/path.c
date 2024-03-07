@@ -23,7 +23,7 @@ char	*get_bin_path(char *cmd, char **paths)
 	if (!cmd || !paths)
 		return (NULL);
 	if (access(cmd, X_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	while (*paths)
 	{
 		path = build_path(cmd, *paths);
