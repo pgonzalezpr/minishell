@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/06 04:33:24 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/07 03:09:39 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_minishell
 
 /* STATUS */
 # define POS_NOT_FOUNDED 			-4
+# define INVALID_KEY				-5
 # define EXIT_CMD_NOT_FOUND 		127
 # define SUCCESS 					1
 # define ERROR 						-1
@@ -90,6 +91,7 @@ typedef struct s_minishell
 # define LINE_BREAK 				'\n'
 # define EQUAL 						'='
 # define DOLLAR_SIGN 				'$'
+# define UNDERSCORE					'_'
 # define BACK_CD 					".."
 # define FORWARD_SLAH_ST 			"/"
 # define FORWARD_SLAH 				47
@@ -114,17 +116,19 @@ typedef struct s_minishell
 # define MODE_ENV 					'E'
 
 /* ERROR MESSAGES */
+# define MSG_TOO_MANY_ARGS_ENV		"minishell: env: too many arguments\n"
+# define MSG_TOO_MANY_ARGS_PWD		"minishell: pwd: too many arguments\n"
+# define MSG_TOO_MANY_ARGS_MINI		"minishell: too many arguments\n"
+# define MSG_HOME_UNSET 			"minishell: cd: HOME not set\n"
+# define MSG_CD_MISSING_ARGS 		"minishell: cd: missing argument\n"
+# define MSG_TOO_MANY_ARGS_CD 		"minishell: cd: too many arguments\n"
+# define MSG_GET_CWD 				"minishell: cd: getcwd fails\n"
+# define MSG_COMMAND_NOT_FOUND 		": command not found\n"
 # define MSG_EXIT 					"exit\n"
 # define ERROR_MALLOC 				"Malloc Fails\n"
-# define MSG_CD_MISSING_ARGS 		"minishell: cd: missing argument\n"
 # define SYNTAX_ERR_MSG 			"Syntax Error\n"
-# define MSG_TOO_MANY_ARGS 			"minishell: cd: too many arguments\n"
-# define MSG_GET_CWD 				"minishell: cd: getcwd fails\n"
 # define MALLOC_ERR_MSG 			"Allocation error\n"
 # define UNCLOSED_QUOTE_MSG 		"Error. Unclosed quote\n"
-# define MSG_COMMAND_NOT_FOUND 		": command not found\n"
-# define MSG_MORE_THAN_TWO_ARGS_ENV "minishell: env: more than two args\n"
-# define MSG_HOME_UNSET 			"minishell: cd: HOME not set\n"
 # define FORK_ERR_MSG 				"Fork error\n"
 # define REDIR_ERR_MSG 				"Redirection error\n"
 # define EXEC_ERR_MSG 				"Execve error\n"
@@ -158,7 +162,7 @@ void					clean_minishell(t_minishell *minishell, int exit_mode);
 void					del_str(char *str);
 void					exit_minishell(t_minishell *minishell, char *msg,
 							int status);
-int						builtin_pwd(void);
+int						builtin_pwd(int total_commands);
 int						builtin_export(t_minishell *minishell, char **cmd);
 int						builtin_unset(t_minishell *minishell, char **cmd);
 int						builtin_cd(t_minishell *minishell, char **cmd);
@@ -178,6 +182,7 @@ int						get_pos_var_env(char **env, char *key);
 int						update_cd_vars(char ***env, char *new_value_pwd);
 char					*build_prompt(t_minishell *minishell);
 void					remove_foward_slash(char path[MAX_PATH]);
+int						is_valid_key_format(char *key);
 
 // LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
 void					print_vars_cd(char **env, char *cwd);

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 23:04:32 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/07 01:47:23 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,23 @@ int	get_pos_var_env(char **env, char *key)
 	return (POS_NOT_FOUNDED);
 }
 
-void	print_var_value(char **env, char *var)
+/*
+* PRE: var != NULL
+* POST: Devuelve true si el key es valido
+*		key, KEY, KEY___KEY, KEY_key, __key_key, key1_
+*/
+int	is_valid_key_format(char *key)
 {
-	char	*var_env;
-
-	if (!var || !env || !*env)
-		return ;
-	(void)var_env;
+	if (!key || (!ft_isalpha(key[0]) && key[0] != UNDERSCORE))
+		return (0);
+	if (!ft_isalpha(*key))
+		return (0);
+	key++;
+	while (*key)
+	{
+		if (!ft_isalnum(*key) && *key != UNDERSCORE)
+			return (0);
+		key++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:06:19 by bsaiago-          #+#    #+#             */
-/*   Updated: 2024/03/05 19:04:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/07 02:40:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	exec_builtin(char **argv, t_minishell *minishell)
 	else if (ft_strequals(builtin, EXP_CMD))
 		val = builtin_export(minishell, argv);
 	else if (ft_strequals(builtin, PWD_CMD))
-		val = builtin_pwd();
+		val = builtin_pwd(get_total_commands(minishell->cmd_line));
 	else if (ft_strequals(builtin, UNSET_CMD))
 		val = builtin_unset(minishell, argv);
 	else

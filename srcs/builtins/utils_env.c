@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/05 18:25:50 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/07 02:14:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,22 @@ char	*get_value_var_env(char **env, char *key)
 */
 void	print_env(char **env, char mode)
 {
+	int		i;
+
 	while (*env)
 	{
+		i = 0;
 		if (mode == MODE_EXPORT)
 			printf(MSG_DECLARE);
-		if (mode == MODE_EXPORT || mode == MODE_ENV)
-			printf("%s", *env);
-		printf("\n");
+		while ((*env)[i] && (*env)[i] != EQUAL)
+		{
+			printf("%c", (*env)[i]);
+			i++;
+		}
+		if (mode == MODE_ENV)
+			printf("%s\n", &((*env)[i]));
+		else
+			printf("=\"%s\"\n", &((*env)[++i]));
 		env++;
 	}
 }

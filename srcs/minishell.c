@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/06 05:30:50 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/07 02:24:59 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	main(int argc, char **argv, char **env)
 {
 	t_minishell	minishell;
 
-	(void)argc;
+	if (argc > 1)
+		return (printf(MSG_TOO_MANY_ARGS_MINI), EXIT_FAILURE);
 	(void)argv;
-
 	ft_memset(&minishell, 0, sizeof(minishell));
 	minishell.cwd = getcwd(NULL, 0);
 	if (!minishell.cwd)
