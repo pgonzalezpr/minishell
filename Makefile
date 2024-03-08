@@ -16,7 +16,7 @@ LIBFT_DIR = libft
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD -g
 
 DEL_LINE =		\033[2K
 ITALIC =		\033[3m

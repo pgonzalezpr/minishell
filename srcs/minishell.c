@@ -28,7 +28,7 @@ static int	run_minishell(t_minishell *minishell)
 		minishell->cmd_line = readline(prompt);
 		free(prompt);
 		if (!minishell->cmd_line)
-			continue ;
+			exit_minishell(minishell, NULL, EXIT_SUCCESS);
 		add_history(minishell->cmd_line);
 		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
 			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
