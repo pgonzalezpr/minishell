@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/08 04:55:08 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 02:12:12 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <termios.h>
+# include <termio.h>
 # include <sys/types.h>
 
 /* GLOBAL VARIABLE */
@@ -47,7 +48,6 @@ typedef struct s_redirection
 
 typedef struct s_minishell
 {
-	char				*cwd;
 	char				*cmd_line;
 	char				**envp;
 	t_list				*tokens;
@@ -66,15 +66,17 @@ typedef struct s_minishell
 # define DEF_COLOR "\033[0;39m"
 
 /* STATUS */
-# define POS_NOT_FOUNDED 			-4
-# define INVALID_KEY				-5
-# define EXIT_CMD_NOT_FOUND 		127
-# define SUCCESS 					1
-# define ERROR 						-1
-# define POS_NOT_FOUNDED 			-4
-# define IGNORE			 			-15
-# define CLEAN_ENV		 			-10
-# define NOT_CLEAN_ENV	 			-11
+# define POS_NOT_FOUNDED 						-4
+# define INVALID_KEY							-5
+# define EXIT_CMD_NOT_FOUND 					127
+# define SUCCESS 								1
+# define ERROR 									-1
+# define POS_NOT_FOUNDED 						-4
+# define IGNORE			 						-15
+# define CLEAN_ENV		 						-10
+# define NOT_CLEAN_ENV	 						-11
+# define EXIT_CHILD_WAS_INTERRUPTED_BY_SIGQUIT	131
+# define EXIT_CHILD_WAS_INTERRUPTED_BY_SIGINT	130
 
 /* REDIRECTIONS CODES */
 # define IN_RED_CODE 				1
@@ -119,8 +121,12 @@ typedef struct s_minishell
 # define FLAG_SYMBOL				'-'
 # define MODE_EXPORT 				'X'
 # define MODE_ENV 					'E'
+# define MODE_INTERATIVE			-1
+# define MODE_NO_INTERACTIVE		-2			
 
 /* ERROR MESSAGES */
+# define MSG_SIGNAL_ERROR			"Signal fails\n"
+# define MSG_TOO_MANY_ARGS_EXIT		"minishell: exit: too many arguments\n"
 # define MSG_TOO_MANY_ARGS_ENV		"minishell: env: too many arguments\n"
 # define MSG_TOO_MANY_ARGS_PWD		"minishell: pwd: too many arguments\n"
 # define MSG_TOO_MANY_ARGS_MINI		"minishell: too many arguments\n"
@@ -196,4 +202,7 @@ void					print_vars_cd(char **env, char *cwd);
 
 //	MANEJO DE SIGNALS
 int						init_signal(int nb_signal, void (*handler)(int));
+int						exec_signals(int mode);
+void					handle_exit_status(int *last_exit_code, int status);
+
 #endif

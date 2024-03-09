@@ -90,7 +90,11 @@ pid_t	create_child(t_command *cmd, t_minishell *minishell)
 	else if (p_id > 0)
 		return (p_id);
 	else
+	{
+		if (exec_signals(MODE_NO_INTERACTIVE) == ERROR)
+			return (ERROR);
 		exec_cmd(cmd, minishell);
+	}
 	return (0);
 }
 
@@ -100,8 +104,8 @@ int	exec_pipeline(t_minishell *minishell)
 	t_list	*curr;
 	pid_t	p_id;
 
-	//if (init_signal(SIGQUIT, handle_ctrl_slash) == ERROR)
-	//	return (-1);
+	if (init_signal(SIGINT, SIG_IGN) == ERROR)
+		return (ERROR);
 	if (init_pipes(minishell) == -1 || exec_here_docs(minishell) == -1)
 		return (-1);
 	if (check_builtin(minishell) == 1)
@@ -115,11 +119,8 @@ int	exec_pipeline(t_minishell *minishell)
 		curr = curr->next;
 	}
 	close_pipes(minishell);
-	//waitpid(p_id, &g_exit_status, 0);
-	//handle_exit_status(&minishell->last_exit_code);
 	waitpid(p_id, &status, 0);
-	if (WIFEXITED(status))
-		minishell->last_exit_code = WEXITSTATUS(status);
+	handle_exit_status(&minishell->last_exit_code, status);
 	while (wait(NULL) > 0)
 		continue ;
 	return (1);

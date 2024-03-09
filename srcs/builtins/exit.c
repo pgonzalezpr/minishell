@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:42:17 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/07 00:46:22 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 03:20:35 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,26 @@
 
 /*
 * PRE: -
-* POST: Print exit message.
+* POST: Chequea si la salida es un arg numerico
 */
-static void	print_exit_message(char **args)
+static int	is_numeric_exit_status(char *args)
 {
-	int	i;
-
-	if (!args || !*args)
-		return ;
-	args++;
-	printf("%s\n", EXIT_CMD);
-	while (*args)
-	{
-		i = 0;
-		while (ft_isdigit((*args)[i]))
-			i++;
-		if ((*args)[i] != NULL_STR)
-		{
-			printf("minishell: exit: %s numeric argument required\n", *args);
-			return ;
-		}
+	if (!args)
+		return (0);
+	while (ft_isdigit((*args)) && (*args))
 		args++;
-	}
+	return (*args == NULL_STR);
+}
+
+static void	exec_exit(t_minishell *minishell, char **args, int exit)
+{
+	printf("%s\n", EXIT_CMD);
+	if (exit == 255)
+		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+	rl_clear_history();
+	clear_history();
+	free_str_arr(args);
+	exit_minishell(minishell, NULL, exit);
 }
 
 /*
@@ -44,10 +42,13 @@ static void	print_exit_message(char **args)
 */
 int	builtin_exit(t_minishell *minishell, char **args)
 {
-	print_exit_message(args);
-	rl_clear_history();
-	clear_history();
-	free_str_arr(args);
-	exit_minishell(minishell, NULL, EXIT_SUCCESS);
+	if (!args[1])
+		exec_exit(minishell, args, EXIT_SUCCESS);
+	else if (args[2])
+		printf(MSG_TOO_MANY_ARGS_EXIT);
+	else if (!is_numeric_exit_status(args[1]))
+		exec_exit(minishell, args, 255);
+	else
+		exec_exit(minishell, args, ft_atoi(args[1]));
 	return (SUCCESS);
 }

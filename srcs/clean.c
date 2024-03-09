@@ -32,8 +32,6 @@ void	clean_minishell(t_minishell *minishell, int clean_mode)
 	envp = NULL;
 	if (minishell->cmd_line)
 		free(minishell->cmd_line);
-	if (minishell->cwd)
-		free(minishell->cwd);
 	if (minishell->tokens)
 		ft_lstclear(&minishell->tokens, (void (*)(void *))del_str);
 	if (minishell->commands)
