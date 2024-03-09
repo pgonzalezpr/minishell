@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/07 03:44:29 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 07:14:12 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ static int	check_var_format(char *var)
 	if (!key)
 		return (0);
 	if (!is_valid_key_format(key))
+	{
+		printf("minishell: export: '%s': not a valid identifier\n", var);
 		return (free(key), INVALID_KEY);
+	}
 	free(key);
 	value = ft_strchr(var, EQUAL);
-	if (!value || (value && *value != EQUAL))
+	if (!value)
 		return (0);
 	return (1);
 }
@@ -118,18 +121,16 @@ int	builtin_export(t_minishell *minishell, char **cmd)
 	cmd++;
 	while (*cmd)
 	{
-		if (check_var_format(*cmd) == INVALID_KEY)
+		if (check_var_format(*cmd) == 1)
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", *cmd);
-			break ;
+			key_var_cmd = ft_substr(*cmd, 0, get_len_key_var(*cmd));
+			if (!key_var_cmd)
+				return (ERROR);
+			pos_var_env = get_pos_var_env(minishell->envp, key_var_cmd);
+			if (overwrite_env(minishell, *cmd, pos_var_env) != SUCCESS)
+				return (free(key_var_cmd), ERROR);
+			free(key_var_cmd);
 		}
-		key_var_cmd = ft_substr(*cmd, 0, get_len_key_var(*cmd));
-		if (!key_var_cmd)
-			return (ERROR);
-		pos_var_env = get_pos_var_env(minishell->envp, key_var_cmd);
-		if (overwrite_env(minishell, *cmd, pos_var_env) != SUCCESS)
-			return (free(key_var_cmd), ERROR);
-		free(key_var_cmd);
 		cmd++;
 	}
 	return (SUCCESS);

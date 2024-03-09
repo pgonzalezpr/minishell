@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/07 03:57:06 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 04:59:34 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,8 @@ int	builtin_unset(t_minishell *minishell, char **cmd)
 
 	if (minishell->envp)
 		len_env = get_len_env(minishell->envp);
-	i = 0;
 	while (cmd[++i] && minishell->envp)
 	{
-		if (!is_valid_key_format(cmd[i]))
-			return (printf("minishell: unset: `%s': \
-			not a valid identifier\n", cmd[i]), SUCCESS);
 		idx = get_pos_var_env(minishell->envp, cmd[i]);
 		if (idx != POS_NOT_FOUNDED)
 		{

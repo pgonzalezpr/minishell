@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:17:41 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/08 04:42:23 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 06:12:36 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	update_cd_vars(char ***env, char *new_value_pwd)
 	{
 		old_value_pwd = get_value_var_env(*env, VAR_PWD);
 		if (!old_value_pwd)
-			return (ERROR);
+			return (SUCCESS);
 	}
 	if (pos_var_oldpwd != POS_NOT_FOUNDED)
 	{

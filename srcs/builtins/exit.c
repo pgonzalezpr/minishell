@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:42:17 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 03:20:35 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/09 03:23:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static int	is_numeric_exit_status(char *args)
 	return (*args == NULL_STR);
 }
 
+/*
+* PRE: -
+* POST: Ejecuta el proceso de salida.
+*/
 static void	exec_exit(t_minishell *minishell, char **args, int exit)
 {
 	printf("%s\n", EXIT_CMD);
