@@ -9,15 +9,15 @@ int	redir_output(int code, char *name)
 		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else
 		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0664);
-    if (fd == -1)
+	if (fd == -1)
 	{
 		perror(name);
 		return (-1);
 	}
-    if (dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
-    close(fd);
-    return (1);
+	close(fd);
+	return (1);
 }
 
 int	redir_input(char *name)

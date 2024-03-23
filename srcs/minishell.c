@@ -47,7 +47,7 @@ static int	run_minishell(t_minishell *minishell)
 		add_history(minishell->cmd_line);
 		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
 			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
-			== -1)
+            == -1)
 		{
 			clean_minishell(minishell, NOT_CLEAN_ENV);
 			continue ;

@@ -173,8 +173,9 @@ void		clean_minishell(t_minishell *minishell, int exit_mode);
 void		del_str(char *str);
 int			is_numeric(char *str);
 void		exit_minishell(t_minishell *minishell, char *msg, int status);
-int         is_builtin(char *name);
-void exec_builtin(t_command *cmd, char **argv, t_minishell *minishell, int exit_process);
+int			is_builtin(char *name);
+void		exec_builtin(t_command *cmd, char **argv, t_minishell *minishell,
+				int exit_process);
 int			builtin_pwd(int total_commands);
 int			builtin_export(t_minishell *minishell, char **cmd);
 int			builtin_unset(t_minishell *minishell, char **cmd);

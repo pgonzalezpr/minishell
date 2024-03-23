@@ -43,8 +43,8 @@ int	exec_here_docs(t_minishell *minishell)
 		while (redir_ptr)
 		{
 			redir = (t_redirection *)redir_ptr->content;
-			if (redir->code == HERE_DOC_CODE
-				&& here_doc(cmd->index, redir->name, minishell) == -1)
+			if (redir->code == HERE_DOC_CODE && here_doc(cmd->index,
+					redir->name, minishell) == -1)
 			{
 				if (here_doc(cmd->index, redir->name, minishell) == -1)
 					return (-1);
@@ -64,10 +64,14 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 	argv = build_str_arr_from_lst(cmd->args);
 	if (!argv)
 		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
-    if (is_builtin(argv[0]))
-        exec_builtin(cmd, argv, minishell, 1);
-    apply_redirections(cmd->redirections, cmd->index, minishell);
+	if (is_builtin(argv[0]))
+		exec_builtin(cmd, argv, minishell, 1);
+	apply_redirections(cmd->redirections, cmd->index, minishell);
 	close_pipes(minishell);
+	if (!argv[0])
+	{
+		exit_minishell(minishell, NULL, EXIT_SUCCESS);
+	}
 	path = build_cmd_path(argv[0], minishell);
 	if (!path)
 	{

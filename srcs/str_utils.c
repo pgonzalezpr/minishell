@@ -7,7 +7,7 @@ char	*substring(char *start, char *end)
 	str = malloc((end - start + 1) * sizeof(char));
 	if (!str)
 	{
-		printf("%s\n", MALLOC_ERR_MSG);
+		ft_dprintf(STDERR_FILENO, "%s\n", MALLOC_ERR_MSG);
 		return (NULL);
 	}
 	ft_strlcpy(str, start, end - start + 1);
@@ -43,11 +43,11 @@ void	remove_quotes(char *token)
 		{
 			quote = token[offset];
 			ft_memmove(&token[offset], &token[offset + 1],
-				ft_strlen(&token[offset + 1]) + 1);
+             ft_strlen(&token[offset + 1]) + 1);
 			while (token[offset] != quote)
 				offset++;
 			ft_memmove(&token[offset], &token[offset + 1],
-				ft_strlen(&token[offset + 1]) + 1);
+			ft_strlen(&token[offset + 1]) + 1);
 		}
 		else
 			offset++;
@@ -56,41 +56,41 @@ void	remove_quotes(char *token)
 
 void	free_str_arr(char **arr)
 {
-    int	idx;
+	int	idx;
 
-    if (!arr)
-        return ;
-    idx = 0;
-    while (arr[idx])
-    {
-        free(arr[idx]);
-        idx++;
-    }
-    free(arr);
+	if (!arr)
+		return ;
+	idx = 0;
+	while (arr[idx])
+	{
+		free(arr[idx]);
+		idx++;
+	}
+	free(arr);
 }
 
 char	**build_str_arr_from_lst(t_list *lst)
 {
-    char	**arr;
-    t_list	*curr;
-    int		idx;
+	char	**arr;
+	t_list	*curr;
+	int		idx;
 
-    arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
-    if (!arr)
-        return (NULL);
-    ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
-    curr = lst;
-    idx = 0;
-    while (curr)
-    {
-        arr[idx] = ft_strdup(curr->content);
-        if (!arr[idx])
-        {
-            free_str_arr(arr);
-            break ;
-        }
-        idx++;
-        curr = curr->next;
-    }
-    return (arr);
+	arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
+	curr = lst;
+	idx = 0;
+	while (curr)
+	{
+		arr[idx] = ft_strdup(curr->content);
+		if (!arr[idx])
+		{
+			free_str_arr(arr);
+			break ;
+		}
+		idx++;
+		curr = curr->next;
+	}
+	return (arr);
 }

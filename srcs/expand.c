@@ -54,7 +54,7 @@ char	*get_var_value(char *var_name, t_minishell *minishell)
 			var_value = ft_itoa(minishell->last_exit_code);
 		if (!var_value)
 		{
-			printf("%s\n", MALLOC_ERR_MSG);
+			ft_dprintf(STDERR_FILENO, "%s\n", MALLOC_ERR_MSG);
 			free(var_name);
 			return (NULL);
 		}

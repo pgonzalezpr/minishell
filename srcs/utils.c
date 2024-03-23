@@ -20,6 +20,18 @@ void	exit_minishell(t_minishell *minishell, char *msg, int status)
 	exit(status);
 }
 
+int	check_token(t_list *curr, t_list *prev)
+{
+	if (is_operator(curr->content) && !curr->next)
+		return (1);
+	if (ft_strequals(curr->content, PIPE) && (!prev
+			|| is_operator(prev->content)))
+		return (1);
+	if (is_redirection(curr->content) && prev && is_redirection(prev->content))
+		return (1);
+	return (0);
+}
+
 int	check_syntax(t_minishell *minishell)
 {
 	t_list	*prev;
@@ -31,13 +43,7 @@ int	check_syntax(t_minishell *minishell)
 	err = 0;
 	while (curr)
 	{
-		if (is_operator(curr->content) && !curr->next)
-			err = 1;
-		if (ft_strequals(curr->content, PIPE) && (!prev
-				|| ft_strequals(curr->next->content, PIPE)))
-			err = 1;
-		if (is_redirection(curr->content) && is_operator(curr->next->content))
-			err = 1;
+		err = check_token(curr, prev);
 		if (err)
 		{
 			ft_dprintf(STDERR_FILENO, "%s", SYNTAX_ERR_MSG);
