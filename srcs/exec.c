@@ -64,12 +64,14 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 	argv = build_str_arr_from_lst(cmd->args);
 	if (!argv)
 		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
-	apply_redirections(cmd->redirections, cmd->index, minishell);
+    if (is_builtin(argv[0]))
+        exec_builtin(cmd, argv, minishell, 1);
+    apply_redirections(cmd->redirections, cmd->index, minishell);
 	close_pipes(minishell);
 	path = build_cmd_path(argv[0], minishell);
 	if (!path)
 	{
-		printf("%s: command not found\n", argv[0]);
+		ft_dprintf(STDERR_FILENO, "%s: command not found\n", argv[0]);
 		exit_minishell(minishell, NULL, EXIT_CMD_NOT_FOUND);
 	}
 	execve(path, argv, minishell->envp);
@@ -85,7 +87,7 @@ pid_t	create_child(t_command *cmd, t_minishell *minishell)
 	p_id = fork();
 	if (p_id < 0)
 	{
-		printf("%s", FORK_ERR_MSG);
+		ft_dprintf(STDERR_FILENO, "%s", FORK_ERR_MSG);
 		return (0);
 	}
 	else if (p_id > 0)

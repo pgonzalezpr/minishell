@@ -16,7 +16,7 @@ void	exit_minishell(t_minishell *minishell, char *msg, int status)
 {
 	clean_minishell(minishell, CLEAN_ENV);
 	if (msg)
-		printf("%s\n", msg);
+		ft_dprintf(STDERR_FILENO, "%s\n", msg);
 	exit(status);
 }
 

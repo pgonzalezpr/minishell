@@ -53,3 +53,44 @@ void	remove_quotes(char *token)
 			offset++;
 	}
 }
+
+void	free_str_arr(char **arr)
+{
+    int	idx;
+
+    if (!arr)
+        return ;
+    idx = 0;
+    while (arr[idx])
+    {
+        free(arr[idx]);
+        idx++;
+    }
+    free(arr);
+}
+
+char	**build_str_arr_from_lst(t_list *lst)
+{
+    char	**arr;
+    t_list	*curr;
+    int		idx;
+
+    arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
+    if (!arr)
+        return (NULL);
+    ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
+    curr = lst;
+    idx = 0;
+    while (curr)
+    {
+        arr[idx] = ft_strdup(curr->content);
+        if (!arr[idx])
+        {
+            free_str_arr(arr);
+            break ;
+        }
+        idx++;
+        curr = curr->next;
+    }
+    return (arr);
+}

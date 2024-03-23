@@ -12,77 +12,60 @@
 
 #include "../../include/minishell.h"
 
-static int	exec_builtin(char **argv, t_minishell *minishell)
+int map_builtin(char **argv, t_minishell *minishell)
 {
-	int		val;
-	char	*builtin;
+    char	*builtin;
+    int     val;
 
-	val = 1;
-	builtin = argv[0];
-	if (ft_strequals(builtin, ECHO_CMD))
-		val = builtin_echo(minishell->envp, argv);
-	else if (ft_strequals(builtin, CD_CMD))
-		val = builtin_cd(minishell, argv);
-	else if (ft_strequals(builtin, ENV_CMD))
-		val = builtin_env(minishell);
-	else if (ft_strequals(builtin, EXP_CMD))
-		val = builtin_export(minishell, argv);
-	else if (ft_strequals(builtin, PWD_CMD))
-		val = builtin_pwd(get_total_commands(minishell->cmd_line));
-	else if (ft_strequals(builtin, UNSET_CMD))
-		val = builtin_unset(minishell, argv);
-	else
-		val = builtin_exit(minishell, argv);
-	return (val);
+    val = 1;
+    builtin = argv[0];
+    if (ft_strequals(builtin, ECHO_CMD))
+        val = builtin_echo(minishell->envp, argv);
+    else if (ft_strequals(builtin, CD_CMD))
+        val = builtin_cd(minishell, argv);
+    else if (ft_strequals(builtin, ENV_CMD))
+        val = builtin_env(minishell);
+    else if (ft_strequals(builtin, EXP_CMD))
+        val = builtin_export(minishell, argv);
+    else if (ft_strequals(builtin, PWD_CMD))
+        val = builtin_pwd(get_total_commands(minishell->cmd_line));
+    else if (ft_strequals(builtin, UNSET_CMD))
+        val = builtin_unset(minishell, argv);
+    else
+        val = builtin_exit(minishell, argv);
+    return (val);
 }
 
-static int	is_builtin(char *name)
+void exec_builtin(t_command *cmd, char **argv, t_minishell *minishell,
+                  int exit_process)
+{
+	int		val;
+    int     old_stdin;
+    int     old_stdout;
+
+    old_stdin = dup(STDIN_FILENO);
+    old_stdout = dup(STDOUT_FILENO);
+    apply_redirections(cmd->redirections, cmd->index, minishell);
+    val = map_builtin(argv, minishell);
+    dup2(old_stdin, STDIN_FILENO);
+    close(old_stdin);
+    dup2(old_stdout, STDOUT_FILENO);
+    close(old_stdout);
+    if (val == SUCCESS)
+        val = EXIT_SUCCESS;
+    else
+        val = EXIT_FAILURE;
+    if (exit_process)
+        exit_minishell(minishell, NULL, val);
+    minishell->last_exit_code = val;
+}
+
+int is_builtin(char *name)
 {
 	return (ft_strequals(name, ECHO_CMD) || ft_strequals(name, CD_CMD)
 		|| ft_strequals(name, ENV_CMD) || (ft_strequals(name, EXP_CMD))
 		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD)
 		|| ft_strequals(name, EXIT_CMD));
-}
-
-void	free_str_arr(char **arr)
-{
-	int	idx;
-
-	if (!arr)
-		return ;
-	idx = 0;
-	while (arr[idx])
-	{
-		free(arr[idx]);
-		idx++;
-	}
-	free(arr);
-}
-
-char	**build_str_arr_from_lst(t_list *lst)
-{
-	char	**arr;
-	t_list	*curr;
-	int		idx;
-
-	arr = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
-	if (!arr)
-		return (NULL);
-	ft_memset(arr, 0, (ft_lstsize(lst) + 1) * sizeof(char *));
-	curr = lst;
-	idx = 0;
-	while (curr)
-	{
-		arr[idx] = ft_strdup(curr->content);
-		if (!arr[idx])
-		{
-			free_str_arr(arr);
-			break ;
-		}
-		idx++;
-		curr = curr->next;
-	}
-	return (arr);
 }
 
 int	check_builtin(t_minishell *minishell)
@@ -97,17 +80,15 @@ int	check_builtin(t_minishell *minishell)
 	if (!argv)
 	{
 		printf("%s", MALLOC_ERR_MSG);
+        minishell->last_exit_code = EXIT_FAILURE;
 		return (SUCCESS);
 	}
-	if (is_builtin(argv[0]))
-	{
-		if (exec_builtin(argv, minishell) == ERROR)
-			minishell->last_exit_code = EXIT_FAILURE;
-		else
-			minishell->last_exit_code = EXIT_SUCCESS;
-		free_str_arr(argv);
-		return (SUCCESS);
-	}
-	free_str_arr(argv);
-	return (ERROR);
+    if (!is_builtin(argv[0]))
+    {
+        free_str_arr(argv);
+        return (ERROR);
+    }
+    exec_builtin(cmd, argv, minishell, 0);
+    free_str_arr(argv);
+    return (SUCCESS);
 }
