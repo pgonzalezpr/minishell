@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 04:59:34 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 18:36:50 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	builtin_unset(t_minishell *minishell, char **cmd)
 	int		len_env;
 	int		status;
 
+	i = 0;
 	if (minishell->envp)
 		len_env = get_len_env(minishell->envp);
 	while (cmd[++i] && minishell->envp)
