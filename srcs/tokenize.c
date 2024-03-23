@@ -7,7 +7,7 @@ int	add_token(char *token, t_minishell *minishell)
 	new = ft_lstnew(token);
 	if (!new)
 	{
-		printf("%s", MALLOC_ERR_MSG);
+		ft_dprintf(STDERR_FILENO, "%s", MALLOC_ERR_MSG);
 		return (-1);
 	}
 	ft_lstadd_back(&minishell->tokens, new);
@@ -28,7 +28,7 @@ char	*get_token_end(char *start)
 			current = ft_strchr(current + 1, *current);
 			if (!current)
 			{
-				printf("%s", UNCLOSED_QUOTE_MSG);
+				ft_dprintf(STDERR_FILENO, "%s", UNCLOSED_QUOTE_MSG);
 				break ;
 			}
 		}
@@ -94,7 +94,7 @@ int	process_tokens(t_minishell *minishell)
 	new_tokens = ft_token_lstmap(minishell->tokens, minishell);
 	if (!new_tokens)
 	{
-		printf("%s", MALLOC_ERR_MSG);
+		ft_dprintf(STDERR_FILENO, "%s", MALLOC_ERR_MSG);
 		return (-1);
 	}
 	ft_lstclear(&minishell->tokens, (void (*)(void *))del_str);
