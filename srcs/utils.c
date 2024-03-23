@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 22:33:35 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/08 03:20:15 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 18:38:05 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*build_prompt(t_minishell *minishell)
 	ft_strlcpy(prompt, GREEN, MAX);
 	ft_strlcpy(prompt + ft_strlen(prompt), msg, MAX - ft_strlen(prompt));
 	ft_strlcpy(prompt + ft_strlen(prompt), DEF_COLOR, MAX - ft_strlen(prompt));
-	prompt[ft_strlen(prompt)] = SPACE;
+	prompt[ft_strlen(prompt)] = EMPTY;
 	return (free(msg), ft_strdup(prompt));
 }
 

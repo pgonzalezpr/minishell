@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 02:12:12 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 18:45:14 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,15 @@
 
 /* INCLUDES */
 # include "../libft/libft.h"
+# include "../include/readline/history.h"
+# include "../include/readline/readline.h"
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <termio.h>
 # include <termios.h>
 # include <unistd.h>
 
@@ -120,7 +119,7 @@ typedef struct s_minishell
 # define FLAG_SYMBOL '-'
 # define MODE_EXPORT 'X'
 # define MODE_ENV 'E'
-# define MODE_INTERATIVE -1
+# define MODE_INTERACTIVE -1
 # define MODE_NO_INTERACTIVE -2
 # define MINISHELL_PATH "./minishell"
 

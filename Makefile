@@ -13,6 +13,7 @@ SRCS =  ./srcs/minishell.c ./srcs/build.c ./srcs/exec.c									\
 INCLUDE = ./libft/libft.h ./include/minishell.h
 
 LIBFT_DIR = libft
+READLINE_DIR = include/readline
 
 CC = gcc
 RM = rm -f
@@ -48,11 +49,16 @@ DEPS = $(addsuffix .d, $(basename $(SRCS)))
 all: ${NAME}
 
 ${NAME}: ${OBJS} ${LIBFT_DIR}/libft.a $(INCLUDE) Makefile
-	@${CC} ${OBJS} -L${LIBFT_DIR} -lft -lreadline -o ${NAME}
+	@${CC} ${OBJS} -L${LIBFT_DIR} -L$(READLINE_DIR)  -lreadline -lhistory  -ltermcap -lft \
+	$(READLINE_DIR)/libreadline.a $(READLINE_DIR)/libhistory.a -o ${NAME}
 	@echo "\n$(RED) Created $(NAME) ✓ $(DEF_COLOR)\n"
 
 $(LIBFT_DIR)/libft.a:
 	@make bonus -C $(LIBFT_DIR)
+
+$(READLINE_DIR)/libreadline.a $(READLINE_DIR)/libhistory.a:
+	@./configure
+	@make -C $(READLINE_PATH) > /dev/null
 
 -include ${DEPS}
 
