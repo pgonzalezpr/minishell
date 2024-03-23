@@ -6,7 +6,7 @@
 /*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 18:45:14 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/23 20:01:26 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,6 @@ int			builtin_cd(t_minishell *minishell, char **cmd);
 int			builtin_env(t_minishell *minishell);
 int			builtin_echo(char **env, char **cmd);
 int			builtin_exit(t_minishell *minishell, char **args);
-int			get_total_commands(char *cmd_line);
 int			get_cpy_env(char ***env_cpy, char **env_original, int total_cpy,
 				int pos_not_copy);
 int			get_len_env(char **env);

@@ -6,7 +6,7 @@
 /*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 18:58:20 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:47:30 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			//rl_replace_line("", 1);
-			rl_on_new_line();
-			rl_redisplay();
-			write(2, "exit\n", 6);
+			rl_replace_line("exit\n", 0);
+			//rl_redisplay();
+			//rl_on_new_line();
+			//rl_redisplay();
+			//write(2, "exit\n", 6);
 		}
 		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 		free(prompt);
