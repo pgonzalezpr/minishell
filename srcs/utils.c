@@ -24,16 +24,23 @@ int	check_syntax(t_minishell *minishell)
 {
 	t_list	*prev;
 	t_list	*curr;
+	int		err;
 
 	prev = NULL;
 	curr = minishell->tokens;
+	err = 0;
 	while (curr)
 	{
-		if ((is_operator(curr->content) && (!curr->next
-					|| is_operator(curr->next->content)))
-			|| (ft_strequals(curr->content, PIPE) && !prev))
+		if (is_operator(curr->content) && !curr->next)
+			err = 1;
+		if (ft_strequals(curr->content, PIPE) && (!prev
+				|| ft_strequals(curr->next->content, PIPE)))
+			err = 1;
+		if (is_redirection(curr->content) && is_operator(curr->next->content))
+			err = 1;
+		if (err)
 		{
-			printf("%s", SYNTAX_ERR_MSG);
+			ft_dprintf(STDERR_FILENO, "%s", SYNTAX_ERR_MSG);
 			return (-1);
 		}
 		prev = curr;
@@ -76,10 +83,8 @@ char	*build_prompt(t_minishell *minishell)
 	if (!msg)
 		return (NULL);
 	ft_strlcpy(prompt, GREEN, MAX);
-	ft_strlcpy(prompt + ft_strlen(prompt), msg,
-		MAX - ft_strlen(prompt));
-	ft_strlcpy(prompt + ft_strlen(prompt), DEF_COLOR,
-		MAX - ft_strlen(prompt));
+	ft_strlcpy(prompt + ft_strlen(prompt), msg, MAX - ft_strlen(prompt));
+	ft_strlcpy(prompt + ft_strlen(prompt), DEF_COLOR, MAX - ft_strlen(prompt));
 	prompt[ft_strlen(prompt)] = SPACE;
 	return (free(msg), ft_strdup(prompt));
 }

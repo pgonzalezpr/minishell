@@ -16,7 +16,8 @@ int	here_doc(int index, char *delimiter, t_minishell *minishell)
 		if (ft_strequals(input, delimiter))
 			break ;
 		if (write(minishell->hd_pipes[index][1], input, ft_strlen(input)) == -1
-			|| write(minishell->hd_pipes[index][1], "\n", 1) == -1)
+			||
+			write(minishell->hd_pipes[index][1], "\n", 1) == -1)
 		{
 			free(input);
 			return (-1);
@@ -42,8 +43,8 @@ int	exec_here_docs(t_minishell *minishell)
 		while (redir_ptr)
 		{
 			redir = (t_redirection *)redir_ptr->content;
-			if (redir->code == HERE_DOC_CODE && here_doc(cmd->index,
-					redir->name, minishell) == -1)
+			if (redir->code == HERE_DOC_CODE
+				&& here_doc(cmd->index, redir->name, minishell) == -1)
 			{
 				if (here_doc(cmd->index, redir->name, minishell) == -1)
 					return (-1);

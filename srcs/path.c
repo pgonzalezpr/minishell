@@ -1,5 +1,19 @@
 #include "../include/minishell.h"
 
+int	is_numeric(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 char	*build_path(char *cmd, char *dir)
 {
 	char	*path;

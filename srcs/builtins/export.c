@@ -13,10 +13,10 @@
 #include "../../include/minishell.h"
 
 /*
-* PRE: var != NULL
-* POST: Devuelve true si la variable cumple el formato
-*		key=value || key= || key====value 
-*/
+ * PRE: var != NULL
+ * POST: Devuelve true si la variable cumple el formato
+ *		key=value || key= || key====value
+ */
 static int	check_var_format(char *var)
 {
 	char	*key;
@@ -40,10 +40,11 @@ static int	check_var_format(char *var)
 }
 
 /*
-* PRE: -
-* POST: Gestiona el caso en el que la variable no existe, redimensionando
-*		el env existente para agregar la nueva variable, liberando el viejo env.
-*/
+ * PRE: -
+ * POST: Gestiona el caso en el que la variable no existe, redimensionando
+ *		el env existente para agregar la nueva variable, liberando el
+ *viejo env.
+ */
 static char	**case_var_not_exist(char **env, char *new_var, int len_env)
 {
 	char	**new_env;
@@ -60,13 +61,13 @@ static char	**case_var_not_exist(char **env, char *new_var, int len_env)
 }
 
 /*
-* PRE: -
-* POST: Gestiona el caso en el que la variable existe, liberando
-*		la pos del env en la que esta la var vieja, y agregando
-*		en esa posicion la new var, sin reedimensionar el env.
-*/
-static char	**case_var_exist(char **env, char *new_var,
-	int pos_var_env, int len_env)
+ * PRE: -
+ * POST: Gestiona el caso en el que la variable existe, liberando
+ *		la pos del env en la que esta la var vieja, y agregando
+ *		en esa posicion la new var, sin reedimensionar el env.
+ */
+static char	**case_var_exist(char **env, char *new_var, int pos_var_env,
+		int len_env)
 {
 	char	**new_env;
 	int		status;
@@ -82,12 +83,12 @@ static char	**case_var_exist(char **env, char *new_var,
 }
 
 /*
-* PRE: env != NULL cmd != NULL
-* POST: Si el node_env no existe lo agrega al env, en caso de que
-*		exista sobreescribe el value.
-*/
+ * PRE: env != NULL cmd != NULL
+ * POST: Si el node_env no existe lo agrega al env, en caso de que
+ *		exista sobreescribe el value.
+ */
 static int	overwrite_env(t_minishell *minishell, char *new_var,
-	int pos_var_env)
+		int pos_var_env)
 {
 	int		len_env;
 	char	**old_env;
@@ -107,10 +108,10 @@ static int	overwrite_env(t_minishell *minishell, char *new_var,
 }
 
 /*
-* PRE: minishell != NULL && cmd != NULL
-* POST: Ejecuta el builtin export de la minishell.
-*		Devolviendo el status de la operacion.
-*/
+ * PRE: minishell != NULL && cmd != NULL
+ * POST: Ejecuta el builtin export de la minishell.
+ *		Devolviendo el status de la operacion.
+ */
 int	builtin_export(t_minishell *minishell, char **cmd)
 {
 	int		pos_var_env;

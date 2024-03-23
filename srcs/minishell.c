@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+int			g_exit_status;
 
 static int	run_minishell(t_minishell *minishell)
 {

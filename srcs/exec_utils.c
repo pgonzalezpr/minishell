@@ -1,4 +1,5 @@
 #include "../include/minishell.h"
+#include <stdlib.h>
 
 int	redir_output(int code, char *name)
 {
