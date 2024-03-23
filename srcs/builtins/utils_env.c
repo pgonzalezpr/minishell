@@ -62,10 +62,7 @@ void	print_env(char **env, char mode)
 		{
 			printf(MSG_DECLARE);
 			while ((*env)[i] && (*env)[i] != EQUAL)
-			{
-				printf("%c", (*env)[i]);
-				i++;
-			}
+				printf("%c", (*env)[i++]);
 			if ((*env)[i] == EQUAL)
 				printf("=%c%s%c", DOUBLE_QUOTE, ((*env) + i + 1), \
 					DOUBLE_QUOTE);
