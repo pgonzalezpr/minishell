@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 06:06:13 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 19:47:30 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int			g_exit_status;
+int	g_exit_status;
+
+static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
+{
+	if (!minishell->cmd_line)
+	{
+		if (isatty(STDIN_FILENO))
+		{
+			rl_replace_line("exit\n", 0);
+			//rl_redisplay();
+			//rl_on_new_line();
+			//rl_redisplay();
+			//write(2, "exit\n", 6);
+		}
+		exit_minishell(minishell, NULL, EXIT_SUCCESS);
+		free(prompt);
+	}
+	else
+		free(prompt);
+}
 
 static int	run_minishell(t_minishell *minishell)
 {
@@ -20,15 +39,12 @@ static int	run_minishell(t_minishell *minishell)
 
 	while (1)
 	{
-		if (exec_signals(IGNORE) == ERROR)
-			exit_minishell(minishell, MSG_SIGNAL_ERROR, EXIT_FAILURE);
+		exec_signals(MODE_INTERACTIVE);
 		prompt = build_prompt(minishell);
 		if (!prompt)
 			exit_minishell(minishell, PROMPT_ERR_MSG, EXIT_FAILURE);
 		minishell->cmd_line = readline(prompt);
-		free(prompt);
-		if (!minishell->cmd_line)
-			exit_minishell(minishell, NULL, EXIT_SUCCESS);
+		check_empty_cmd_line_case(minishell, prompt);
 		add_history(minishell->cmd_line);
 		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
 			|| process_tokens(minishell) == -1 || build_pipeline(minishell) ==

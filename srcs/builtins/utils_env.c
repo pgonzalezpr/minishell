@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/07 02:14:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 21:39:17 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,17 @@ void	print_env(char **env, char mode)
 	{
 		i = 0;
 		if (mode == MODE_EXPORT)
-			printf(MSG_DECLARE);
-		while ((*env)[i] && (*env)[i] != EQUAL)
 		{
-			printf("%c", (*env)[i]);
-			i++;
+			printf(MSG_DECLARE);
+			while ((*env)[i] && (*env)[i] != EQUAL)
+				printf("%c", (*env)[i++]);
+			if ((*env)[i] == EQUAL)
+				printf("=%c%s%c", DOUBLE_QUOTE, ((*env) + i + 1), \
+					DOUBLE_QUOTE);
+			printf("\n");
 		}
-		if (mode == MODE_ENV)
-			printf("%s\n", &((*env)[i]));
-		else
-			printf("=\"%s\"\n", &((*env)[++i]));
+		else if (ft_strchr(*env, EQUAL))
+			printf("%s\n", *env);
 		env++;
 	}
 }

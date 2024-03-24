@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 07:14:12 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/23 21:34:30 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 static int	check_var_format(char *var)
 {
 	char	*key;
-	char	*value;
 
 	if (!var)
 		return (0);
@@ -33,9 +32,6 @@ static int	check_var_format(char *var)
 		return (free(key), INVALID_KEY);
 	}
 	free(key);
-	value = ft_strchr(var, EQUAL);
-	if (!value)
-		return (0);
 	return (1);
 }
 
