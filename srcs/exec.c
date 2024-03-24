@@ -73,7 +73,7 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	}
 	path = build_cmd_path(argv[0], minishell);
-	if (!path)
+	if (!*argv[0] || !path)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: command not found\n", argv[0]);
 		exit_minishell(minishell, NULL, EXIT_CMD_NOT_FOUND);

@@ -19,9 +19,11 @@ char	*get_token_end(char *start)
 	char	*current;
 
 	current = start;
-	if (*current == '|')
-		return (current + 1);
-	while (*current && *current != ' ' && *current != '|')
+	if (is_metachar(*current))
+	{
+		return (current + get_operator_len(current));
+	}
+	while (*current && *current != ' ' && !is_metachar(*current))
 	{
 		if (*current == '"' || *current == '\'')
 		{

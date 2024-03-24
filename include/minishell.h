@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 /* INCLUDES */
-# include "../libft/libft.h"
 # include "../include/readline/history.h"
 # include "../include/readline/readline.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <signal.h>
 # include <stdio.h>
@@ -156,6 +156,8 @@ char		*substring(char *start, char *end);
 int			ft_strequals(char *s1, char *s2);
 int			is_redirection(char *str);
 int			is_operator(char *str);
+int			is_metachar(char c);
+int			get_operator_len(char *start);
 char		*expand_token(char *token, t_minishell *minishell);
 int			build_pipeline(t_minishell *minishell);
 int			check_builtin(t_minishell *minishell);
