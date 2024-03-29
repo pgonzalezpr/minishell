@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 19:47:30 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:47:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	run_minishell(t_minishell *minishell)
 	while (1)
 	{
 		exec_signals(MODE_INTERACTIVE);
+		//printf("D ---> exit: %i\n", minishell->last_exit_code);
 		prompt = build_prompt(minishell);
 		if (!prompt)
 			exit_minishell(minishell, PROMPT_ERR_MSG, EXIT_FAILURE);

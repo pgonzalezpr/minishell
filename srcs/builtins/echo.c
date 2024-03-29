@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 16:18:04 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 17:14:09 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 static int	is_valid_flag_n(char *flag)
 {
 	if (!flag || (flag && flag[0] == FLAG_SYMBOL && !flag[1])
-		|| (flag && flag[0] == '0' && !flag[1]))
+		|| (flag && flag[0] == '0' && !flag[1]) \
+		|| (flag && flag[0] != FLAG_SYMBOL))
 		return (0);
 	flag++;
 	while (*flag && *flag == FLAG_N)
@@ -69,15 +70,21 @@ static void	print_cmd(char **cmd, char **env, int i)
 */
 int	builtin_echo(char **env, char **cmd)
 {
+	int	flag;
 	int	i;
 
-	i = 0;
+	i = 1;
+	flag = 0;
 	if (!cmd[1])
 		printf("%c", LINE_BREAK);
-	else if (is_valid_flag_n(cmd[1]))
-		i = 1;
-	print_cmd(cmd, env, i);
-	if (i != 1)
+	while (is_valid_flag_n(cmd[i]) && cmd[i])
+	{
+		flag = 1;
+		i++;
+	}
+	printf("%i\n", i);
+	print_cmd(cmd, env, i - 1);
+	if (!flag)
 		printf("%c", LINE_BREAK);
 	return (SUCCESS);
 }
