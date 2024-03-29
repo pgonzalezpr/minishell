@@ -200,11 +200,6 @@ int			is_valid_key_format(char *key);
 void		remove_foward_slash(char path[MAX]);
 int			check_access_to_path(char *path);
 int			update_cd_vars(char ***env, char *new_value_pwd);
-
-// LA USO PARA DEBUGGEAR Y VER QUE LAS VARS DE CD SE ACTUALIZAN.
-void		print_vars_cd(char **env, char *cwd);
-
-//	MANEJO DE SIGNALS
 int			init_signal(int nb_signal, void (*handler)(int));
 int			exec_signals(int mode);
 void		handle_exit_status(int *last_exit_code, int status);
