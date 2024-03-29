@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:17:41 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 06:12:36 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 17:51:15 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	check_access_to_path(char *path)
 	if (!path)
 		return (ERROR);
 	if (access(path, F_OK) == ERROR)
-		return (printf(MSG_CD_NO_SUCH_FILE), ERROR);
+		return (ft_putstr_fd(MSG_CD_NO_SUCH_FILE, STDERR_FILENO), ERROR);
 	if (access(path, X_OK) == ERROR)
-		return (printf(MSG_CD_PERMISSION_DENIED), ERROR);
+		return (ft_putstr_fd(MSG_CD_PERMISSION_DENIED, 2), ERROR);
 	return (SUCCESS);
 }
 

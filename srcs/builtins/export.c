@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:30:57 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 21:34:30 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:40:00 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static int	check_var_format(char *var)
 		return (0);
 	if (!is_valid_key_format(key))
 	{
-		printf("minishell: export: '%s': not a valid identifier\n", var);
+		ft_putstr_fd("minishell: export: '", STDERR_FILENO);
+		ft_putstr_fd(var, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		return (free(key), INVALID_KEY);
 	}
 	free(key);

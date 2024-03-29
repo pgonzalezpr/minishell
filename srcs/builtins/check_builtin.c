@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:06:19 by bsaiago-          #+#    #+#             */
-/*   Updated: 2024/03/23 20:18:10 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:44:01 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_builtin(t_minishell *minishell)
 	argv = build_str_arr_from_lst(cmd->args);
 	if (!argv)
 	{
-		printf("%s", MALLOC_ERR_MSG);
+		ft_putstr_fd(MALLOC_ERR_MSG, STDERR_FILENO);
 		minishell->last_exit_code = EXIT_FAILURE;
 		return (SUCCESS);
 	}

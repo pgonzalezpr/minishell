@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 03:32:21 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 17:33:11 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	builtin_pwd(int total_commands)
 	if (total_commands == 1)
 	{
 		if (!getcwd(cwd, MAX))
-			return (printf(MSG_GET_CWD), ERROR);
+			return (ft_putstr_fd(MSG_GET_CWD, STDERR_FILENO), ERROR);
 		printf("%s\n", cwd);
 	}
 	else
-		printf(MSG_TOO_MANY_ARGS_PWD);
+		ft_putstr_fd(MSG_TOO_MANY_ARGS_PWD, STDERR_FILENO);
 	return (SUCCESS);
 }

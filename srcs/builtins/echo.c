@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 17:14:09 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 18:07:37 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	builtin_echo(char **env, char **cmd)
 		flag = 1;
 		i++;
 	}
-	printf("%i\n", i);
 	print_cmd(cmd, env, i - 1);
 	if (!flag)
 		printf("%c", LINE_BREAK);

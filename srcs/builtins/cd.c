@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 20:03:14 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:59:01 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	case_relative_path(char ***env, char **cmd)
 
 	cwd = getcwd(path, MAX);
 	if (!cwd)
-		return (printf(RED MSG_GET_CWD DEF_COLOR), SUCCESS);
+		return (ft_putstr_fd(MSG_GET_CWD, STDERR_FILENO), SUCCESS);
 	ft_strlcpy(path, cwd, MAX);
 	if (cmd[1][1] && (cwd[0] == FORWARD_SLAH && cwd[1]))
 		ft_strlcat(path, FORWARD_SLAH_ST, MAX);
@@ -32,8 +32,12 @@ static int	case_relative_path(char ***env, char **cmd)
 	if (check_access_to_path(path) == ERROR)
 		return (SUCCESS);
 	if (chdir(path) != 0)
-		return (printf("minishell: cd: %s: No such file or directory\n", \
-					cmd[1]), 1);
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(cmd[1], STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
+	}
 	remove_foward_slash(path);
 	return (update_cd_vars(env, getcwd(path, MAX)));
 }
@@ -49,7 +53,12 @@ static int	case_absolute_path(char ***env, char *path)
 	if (check_access_to_path(path) == ERROR)
 		return (SUCCESS);
 	if (chdir(path) != 0)
-		return (printf("bash: cd: %s: No such file or directory\n", path), 1);
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
+	}
 	return (update_cd_vars(env, getcwd(path, MAX)));
 }
 
@@ -65,7 +74,12 @@ static int	case_go_back(char ***env)
 	if (check_access_to_path(BACK_CD) == ERROR)
 		return (SUCCESS);
 	if (chdir(BACK_CD) != 0)
-		return (printf("bash: cd: %s: No such file or directory\n", cwd), 1);
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(cwd, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
+	}
 	if (!getcwd(cwd, MAX))
 		return (ERROR);
 	return (update_cd_vars(env, cwd));
@@ -81,7 +95,7 @@ static int	case_go_home(char ***env)
 
 	path_home = get_value_var_env(*env, VAR_HOME);
 	if (!path_home)
-		return (printf(MSG_HOME_UNSET), SUCCESS);
+		return (ft_putstr_fd(MSG_HOME_UNSET, STDERR_FILENO), SUCCESS);
 	if (check_access_to_path(path_home) == ERROR)
 		return (SUCCESS);
 	if (chdir (path_home) != 0)
@@ -99,12 +113,12 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 {
 	int		status;
 
-	//print_vars_cd(minishell->envp, minishell->cwd);
+	print_vars_cd(minishell->envp, getcwd(NULL, 0));
 	status = SUCCESS;
 	if (!cmd || !*cmd)
 		return (ERROR);
 	if (minishell->cmd_count > 2)
-		return (printf(MSG_TOO_MANY_ARGS_CD), status);
+		return (ft_putstr_fd(MSG_TOO_MANY_ARGS_CD, STDERR_FILENO), status);
 	if (!cmd[1])
 		status = case_go_home(&minishell->envp);
 	else if (ft_strequals(cmd[1], BACK_CD) && cmd[1][1])
@@ -113,6 +127,6 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 		status = case_absolute_path(&minishell->envp, cmd[1]);
 	else if (cmd[1][0] != CURRENT_DIRECTORY)
 		status = case_relative_path(&minishell->envp, cmd);
-	//print_vars_cd(minishell->envp, minishell->cwd);
+	print_vars_cd(minishell->envp, getcwd(NULL, 0));
 	return (status);
 }

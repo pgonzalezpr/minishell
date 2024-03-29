@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:32:06 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 20:00:38 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:41:41 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	builtin_env(t_minishell *minishell)
 	if (minishell->cmd_count == 1)
 		print_env(minishell->envp, MODE_ENV);
 	else
-		printf(MSG_TOO_MANY_ARGS_ENV);
+		ft_putstr_fd(MSG_TOO_MANY_ARGS_ENV, STDERR_FILENO);
 	return (SUCCESS);
 }

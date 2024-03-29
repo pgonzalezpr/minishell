@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 16:47:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 18:02:37 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
 	if (!minishell->cmd_line)
 	{
 		if (isatty(STDIN_FILENO))
-		{
-			rl_replace_line("exit\n", 0);
-			//rl_redisplay();
-			//rl_on_new_line();
-			//rl_redisplay();
-			//write(2, "exit\n", 6);
-		}
-		exit_minishell(minishell, NULL, EXIT_SUCCESS);
+			write(2, "exit\n", 6);
 		free(prompt);
+		exit_minishell(minishell, NULL, EXIT_SUCCESS);
 	}
 	else
 		free(prompt);
