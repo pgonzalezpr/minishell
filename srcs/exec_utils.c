@@ -28,10 +28,10 @@ int	redir_input(char *name)
 	if (fd == -1)
 	{
 		perror(name);
-		return (-1);
+		return (ERROR);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (-1);
+		return (ERROR);
 	close(fd);
 	return (1);
 }
@@ -47,22 +47,23 @@ int	apply_redir(t_redirection *redir, int index, t_minishell *minishell)
 	return (1);
 }
 
-void	apply_redirections(t_list *redirs, int index, t_minishell *minishell)
+int	apply_redirections(t_list *redirs, int index, t_minishell *minishell)
 {
 	if (index > 0)
 	{
 		if (dup2(minishell->pipes[index - 1][0], STDIN_FILENO) == -1)
-			exit_minishell(minishell, REDIR_ERR_MSG, EXIT_FAILURE);
+			return (ERROR);
 	}
 	if (index < minishell->cmd_count - 1)
 	{
 		if (dup2(minishell->pipes[index][1], STDOUT_FILENO) == -1)
-			exit_minishell(minishell, REDIR_ERR_MSG, EXIT_FAILURE);
+			return (ERROR);
 	}
 	while (redirs)
 	{
-		if (apply_redir(redirs->content, index, minishell) == -1)
-			exit_minishell(minishell, NULL, EXIT_FAILURE);
+		if (apply_redir(redirs->content, index, minishell) == ERROR)
+			return (ERROR);
 		redirs = redirs->next;
 	}
+	return (SUCCESS);
 }

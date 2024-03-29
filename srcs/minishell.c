@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+int			g_exit_status;
 
 static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
 {
@@ -46,6 +46,7 @@ static int	run_minishell(t_minishell *minishell)
 			-1)
 		{
 			clean_minishell(minishell, NOT_CLEAN_ENV);
+			minishell->last_exit_code = EXIT_ERROR;
 			continue ;
 		}
 		exec_pipeline(minishell);

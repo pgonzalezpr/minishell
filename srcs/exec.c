@@ -66,7 +66,8 @@ void	exec_cmd(t_command *cmd, t_minishell *minishell)
 		exit_minishell(minishell, MALLOC_ERR_MSG, EXIT_FAILURE);
 	if (is_builtin(argv[0]))
 		exec_builtin(cmd, argv, minishell, 1);
-	apply_redirections(cmd->redirections, cmd->index, minishell);
+	if (apply_redirections(cmd->redirections, cmd->index, minishell) == ERROR)
+		exit_minishell(minishell, NULL, EXIT_FAILURE);
 	close_pipes(minishell);
 	if (!argv[0])
 	{

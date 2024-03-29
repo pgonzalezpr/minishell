@@ -12,6 +12,18 @@
 
 #include "../../include/minishell.h"
 
+void    print_str_arr(char **arr)
+{
+    if (!arr)
+        return ;
+    char *cmd = *arr;
+    while (*arr)
+    {
+        printf("cmd: %s, arg: %s\n", cmd, *arr);
+        arr++;
+    }
+}
+
 int	map_builtin(char **argv, t_minishell *minishell)
 {
 	char	*builtin;
@@ -19,7 +31,8 @@ int	map_builtin(char **argv, t_minishell *minishell)
 
 	val = 1;
 	builtin = argv[0];
-	if (ft_strequals(builtin, ECHO_CMD))
+    //print_str_arr(argv);
+    if (ft_strequals(builtin, ECHO_CMD))
 		val = builtin_echo(minishell->envp, argv);
 	else if (ft_strequals(builtin, CD_CMD))
 		val = builtin_cd(minishell, argv);
@@ -45,8 +58,9 @@ void	exec_builtin(t_command *cmd, char **argv, t_minishell *minishell,
 
 	old_stdin = dup(STDIN_FILENO);
 	old_stdout = dup(STDOUT_FILENO);
-	apply_redirections(cmd->redirections, cmd->index, minishell);
-	val = map_builtin(argv, minishell);
+	val = apply_redirections(cmd->redirections, cmd->index, minishell);
+	if (val == SUCCESS)
+		val = map_builtin(argv, minishell);
 	dup2(old_stdin, STDIN_FILENO);
 	close(old_stdin);
 	dup2(old_stdout, STDOUT_FILENO);

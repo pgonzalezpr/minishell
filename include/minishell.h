@@ -67,6 +67,7 @@ typedef struct s_minishell
 # define POS_NOT_FOUNDED -4
 # define INVALID_KEY -5
 # define EXIT_CMD_NOT_FOUND 127
+# define EXIT_ERROR 2
 # define SUCCESS 1
 # define ERROR -1
 # define POS_NOT_FOUNDED -4
@@ -161,8 +162,8 @@ int			get_operator_len(char *start);
 char		*expand_token(char *token, t_minishell *minishell);
 int			build_pipeline(t_minishell *minishell);
 int			check_builtin(t_minishell *minishell);
-void		apply_redirections(t_list *redirs, int index,
-				t_minishell *minishell);
+int apply_redirections(t_list *redirs, int index,
+                       t_minishell *minishell);
 void		print_minishell(t_minishell *minishell);
 int			init_pipes(t_minishell *minishell);
 char		**build_str_arr_from_lst(t_list *lst);
