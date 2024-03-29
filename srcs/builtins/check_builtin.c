@@ -6,22 +6,22 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:06:19 by bsaiago-          #+#    #+#             */
-/*   Updated: 2024/03/29 17:44:01 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 22:46:30 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void    print_str_arr(char **arr)
+int	get_len_argv(char **argv)
 {
-    if (!arr)
-        return ;
-    char *cmd = *arr;
-    while (*arr)
-    {
-        printf("cmd: %s, arg: %s\n", cmd, *arr);
-        arr++;
-    }
+	int	size;
+
+	size = 0;
+	if (!argv && !*argv)
+		return (size);
+	while (argv[size])
+		size++;
+	return (size);
 }
 
 int	map_builtin(char **argv, t_minishell *minishell)
@@ -31,17 +31,16 @@ int	map_builtin(char **argv, t_minishell *minishell)
 
 	val = 1;
 	builtin = argv[0];
-    //print_str_arr(argv);
-    if (ft_strequals(builtin, ECHO_CMD))
+	if (ft_strequals(builtin, ECHO_CMD))
 		val = builtin_echo(minishell->envp, argv);
 	else if (ft_strequals(builtin, CD_CMD))
 		val = builtin_cd(minishell, argv);
 	else if (ft_strequals(builtin, ENV_CMD))
-		val = builtin_env(minishell);
+		val = builtin_env(minishell, get_len_argv(argv));
 	else if (ft_strequals(builtin, EXP_CMD))
 		val = builtin_export(minishell, argv);
 	else if (ft_strequals(builtin, PWD_CMD))
-		val = builtin_pwd(minishell->cmd_count);
+		val = builtin_pwd(get_len_argv(argv));
 	else if (ft_strequals(builtin, UNSET_CMD))
 		val = builtin_unset(minishell, argv);
 	else
@@ -77,9 +76,7 @@ void	exec_builtin(t_command *cmd, char **argv, t_minishell *minishell,
 int	is_builtin(char *name)
 {
 	if (!name)
-	{
 		return (0);
-	}
 	return (ft_strequals(name, ECHO_CMD) || ft_strequals(name, CD_CMD)
 		|| ft_strequals(name, ENV_CMD) || (ft_strequals(name, EXP_CMD))
 		|| ft_strequals(name, PWD_CMD) || ft_strequals(name, UNSET_CMD)

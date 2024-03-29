@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 20:01:26 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:48:45 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_minishell
 # define MSG_ERROR_CPY_ENV "Error get_cpy_env fails\n"
 
 /* PROTOTYPES */
+int			get_len_argv(char **argv);
 int			tokenize_cmdline(t_minishell *minishell);
 int			process_tokens(t_minishell *minishell);
 void		remove_quotes(char *token);
@@ -179,11 +180,11 @@ void		exit_minishell(t_minishell *minishell, char *msg, int status);
 int			is_builtin(char *name);
 void		exec_builtin(t_command *cmd, char **argv, t_minishell *minishell,
 				int exit_process);
-int			builtin_pwd(int total_commands);
+int			builtin_pwd(int total_args);
 int			builtin_export(t_minishell *minishell, char **cmd);
 int			builtin_unset(t_minishell *minishell, char **cmd);
 int			builtin_cd(t_minishell *minishell, char **cmd);
-int			builtin_env(t_minishell *minishell);
+int			builtin_env(t_minishell *minishell, int len);
 int			builtin_echo(char **env, char **cmd);
 int			builtin_exit(t_minishell *minishell, char **args);
 int			get_cpy_env(char ***env_cpy, char **env_original, int total_cpy,

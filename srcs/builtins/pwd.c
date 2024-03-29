@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:38:56 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 17:33:11 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 22:48:23 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 * POST: Muestra en terminal el cwd (Current Working Directory),
 *		Devolviendo el status de la operacion.
 */
-int	builtin_pwd(int total_commands)
+int	builtin_pwd(int total_args)
 {
 	char	cwd[MAX];
 
-	if (total_commands == 1)
+	if (total_args == 1)
 	{
 		if (!getcwd(cwd, MAX))
 			return (ft_putstr_fd(MSG_GET_CWD, STDERR_FILENO), ERROR);

@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 17:59:01 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 22:46:40 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	builtin_cd(t_minishell *minishell, char **cmd)
 	status = SUCCESS;
 	if (!cmd || !*cmd)
 		return (ERROR);
-	if (minishell->cmd_count > 2)
+	if (get_len_argv(cmd) > 2)
 		return (ft_putstr_fd(MSG_TOO_MANY_ARGS_CD, STDERR_FILENO), status);
 	if (!cmd[1])
 		status = case_go_home(&minishell->envp);
