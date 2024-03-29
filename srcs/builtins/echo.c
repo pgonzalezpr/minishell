@@ -6,7 +6,7 @@
 /*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/06 01:18:49 by brayan           ###   ########.fr       */
+/*   Updated: 2024/03/29 16:18:04 by brayan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 */
 static int	is_valid_flag_n(char *flag)
 {
-	if (!flag || (flag && flag[0] == FLAG_SYMBOL && !flag[1]))
+	if (!flag || (flag && flag[0] == FLAG_SYMBOL && !flag[1])
+		|| (flag && flag[0] == '0' && !flag[1]))
 		return (0);
 	flag++;
 	while (*flag && *flag == FLAG_N)
