@@ -34,7 +34,6 @@ static int	run_minishell(t_minishell *minishell)
 	while (1)
 	{
 		exec_signals(MODE_INTERACTIVE);
-		//printf("D ---> exit: %i\n", minishell->last_exit_code);
 		prompt = build_prompt(minishell);
 		if (!prompt)
 			exit_minishell(minishell, PROMPT_ERR_MSG, EXIT_FAILURE);
@@ -42,8 +41,8 @@ static int	run_minishell(t_minishell *minishell)
 		check_empty_cmd_line_case(minishell, prompt);
 		add_history(minishell->cmd_line);
 		if (tokenize_cmdline(minishell) == -1 || check_syntax(minishell) == -1
-			|| process_tokens(minishell) == -1 || build_pipeline(minishell) ==
-			-1)
+			|| process_tokens(minishell) == -1 || build_pipeline(minishell)
+			== -1)
 		{
 			clean_minishell(minishell, NOT_CLEAN_ENV);
 			minishell->last_exit_code = EXIT_ERROR;
