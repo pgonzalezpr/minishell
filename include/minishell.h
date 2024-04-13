@@ -27,9 +27,6 @@
 # include <termios.h>
 # include <unistd.h>
 
-/* GLOBAL VARIABLE */
-extern int	g_exit_status;
-
 /* STRUCTS */
 typedef struct s_command
 {
