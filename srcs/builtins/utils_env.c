@@ -6,18 +6,12 @@
 /*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:26:59 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 21:39:17 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:45:33 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: -
-* POST: Devolvera la 
-*		content == key, en caso de que no la encuentre, 
-*		devolvera NULL
-*/
 char	*get_value_var_env(char **env, char *key)
 {
 	int		len_key_var_env;
@@ -46,11 +40,6 @@ char	*get_value_var_env(char **env, char *key)
 	return (NULL);
 }
 
-/*
-* PRE: env != NULL
-* POST: Imprime por consola las variables de entorno del minishell
-*		segun el modo (MODE_ENV, MODE_EXPORT)
-*/
 void	print_env(char **env, char mode)
 {
 	int		i;
@@ -74,10 +63,6 @@ void	print_env(char **env, char mode)
 	}
 }
 
-/*
-* PRE: env != NULL.
-* POST: Devuelve la longitud del env.
-*/
 int	get_len_env(char **env)
 {
 	int		len;
@@ -88,13 +73,6 @@ int	get_len_env(char **env)
 	return (len);
 }
 
-/*
-* PRE: -
-* POST: Copia env_original en env_cpy hasta lo que indique total_cpy
-		, Si pos_not_copy == IGNORE, copiara todo el contenido de 
-*		env_original en env_cpy, si es otro valor que este dentro de 
-*		las posiciones del env_original, lo ignorara y no lo copiara.
-*/
 int	get_cpy_env(char ***env_cpy, char **env_original,
 int total_cpy, int pos_not_cpy)
 {
@@ -123,10 +101,6 @@ int total_cpy, int pos_not_cpy)
 	return (SUCCESS);
 }
 
-/*
-* PRE: -
-* POST: Libera la memoria del env.
-*/
 void	free_env(char **env, int size)
 {
 	while (size-- > 0)

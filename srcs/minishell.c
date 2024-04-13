@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro-go <pedro-go@student.42barcel>       +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:34:27 by pedro-go          #+#    #+#             */
-/*   Updated: 2024/04/13 15:34:28 by pedro-go         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 05:20:27 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 18:02:37 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:48:38 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int			g_exit_status;
 
 static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
 {
@@ -76,6 +62,5 @@ int	main(int argc, char **argv, char **env)
 	ft_memset(&minishell, 0, sizeof(minishell));
 	if (get_cpy_env(&minishell.envp, env, get_len_env(env), IGNORE) != SUCCESS)
 		exit_minishell(&minishell, MSG_ERROR_CPY_ENV, EXIT_FAILURE);
-	g_exit_status = 0;
 	return (run_minishell(&minishell));
 }

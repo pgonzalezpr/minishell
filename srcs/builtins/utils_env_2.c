@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:14:42 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/09 07:51:57 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:45:10 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/* 
-* PRE: -
-* POST: Devuelve la longitud de la clave del env.
-*/
 int	get_len_key_var(char *key)
 {
 	int	len;
@@ -29,11 +25,6 @@ int	get_len_key_var(char *key)
 	return (len);
 }
 
-/* 
-* PRE: -
-* POST: Devuelve una nueva variable con el key y value recibidos,
-*		por parametros.
-*/
 char	*get_new_var(char *key, char *value)
 {
 	int		i;

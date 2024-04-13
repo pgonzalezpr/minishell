@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:17:41 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 17:51:15 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:43:26 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: -
-* POST: Remueve el ultimo / del path enviado por parametro.
-*/
 void	remove_foward_slash(char path[MAX])
 {
 	int	len_path;
@@ -27,10 +23,6 @@ void	remove_foward_slash(char path[MAX])
 		path[len_path - 1] = NULL_STR;
 }
 
-/*
-* PRE: -
-* POST: Chequea el acceso del comando cd a la ruta path.
-*/
 int	check_access_to_path(char *path)
 {
 	if (!path)
@@ -42,10 +34,6 @@ int	check_access_to_path(char *path)
 	return (SUCCESS);
 }
 
-/*
-* PRE: -
-* POST: Actualiza el valor de las variables de entorno OLDPWD y PWD.
-*/
 int	update_cd_vars(char ***env, char *new_value_pwd)
 {
 	char	*old_value_pwd;

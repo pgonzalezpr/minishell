@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:42:17 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 18:46:25 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:44:23 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: -
-* POST: Chequea si la salida es un arg numerico
-*/
 static int	is_numeric_exit_status(char *args)
 {
 	if (!args)
@@ -25,10 +21,6 @@ static int	is_numeric_exit_status(char *args)
 	return (*args == NULL_STR);
 }
 
-/*
-* PRE: -
-* POST: Ejecuta el proceso de salida.
-*/
 static void	exec_exit(t_minishell *minishell, char **args, int exit, int err)
 {
 	if (exit == 255 && err)
@@ -50,10 +42,6 @@ static void	exec_exit(t_minishell *minishell, char **args, int exit, int err)
 	exit_minishell(minishell, NULL, exit);
 }
 
-/*
-* PRE: -
-* POST: Ejecuta el exit builtin
-*/
 int	builtin_exit(t_minishell *minishell, char **args)
 {
 	if (!args[1])
