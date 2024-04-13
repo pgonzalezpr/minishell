@@ -6,7 +6,7 @@
 /*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/04/13 16:52:22 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:09:55 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 /* INCLUDES */
-# include <readline/readline.h>
-# include <editline/readline.h>
+# include "../include/readline/history.h"
+# include "../include/readline/readline.h"
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <signal.h>
