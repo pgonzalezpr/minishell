@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 05:26:14 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 22:48:45 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 16:52:22 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 /* INCLUDES */
-# include "../include/readline/history.h"
-# include "../include/readline/readline.h"
+# include <readline/readline.h>
+# include <editline/readline.h>
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <signal.h>
