@@ -20,7 +20,6 @@ void	handle_mode_interactive(int nb_signal)
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
-		g_exit_status = 1;
 	}
 }
 
@@ -28,7 +27,6 @@ void	handle_mode_no_interactive(int nb_signal)
 {
 	if (nb_signal == SIGINT)
 	{
-		g_exit_status = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
