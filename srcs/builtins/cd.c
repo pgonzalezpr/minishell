@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:34:18 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 22:46:40 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:43:42 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: -
-* POST: Gestiona el caso para un path de ruta relativa, devolviendo
-*		el estado de la operacion.
-*/
 static int	case_relative_path(char ***env, char **cmd)
 {
 	char	path[MAX];
@@ -42,11 +37,6 @@ static int	case_relative_path(char ***env, char **cmd)
 	return (update_cd_vars(env, getcwd(path, MAX)));
 }
 
-/*
-* PRE: -
-* POST: Gestiona el caso para un path de ruta absoluta,
-*		devolviendo el estado de la operacion.
-*/
 static int	case_absolute_path(char ***env, char *path)
 {
 	remove_foward_slash(path);
@@ -62,11 +52,6 @@ static int	case_absolute_path(char ***env, char *path)
 	return (update_cd_vars(env, getcwd(path, MAX)));
 }
 
-/*
-* PRE: -
-* POST: Gestiona el caso para cd .. y devuelve el estado 
-*		de la operacion
-*/
 static int	case_go_back(char ***env)
 {
 	char	cwd[MAX];
@@ -85,10 +70,6 @@ static int	case_go_back(char ***env)
 	return (update_cd_vars(env, cwd));
 }
 
-/*
-* PRE: -
-* POST: Gestiona el caso para cd sin parametros.
-*/
 static int	case_go_home(char ***env)
 {
 	char	*path_home;	
@@ -103,12 +84,6 @@ static int	case_go_home(char ***env)
 	return (update_cd_vars(env, path_home));
 }
 
-/*
-* PRE: minishell != NULL
-* POST: Maneja el builtin cd controlando todos los casos
-*		(cd, cd .., cd path_relative, cd path_absolute)
-*		Devolviendo el estado de la operacion
-*/
 int	builtin_cd(t_minishell *minishell, char **cmd)
 {
 	int		status;

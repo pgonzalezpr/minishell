@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:40:02 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/23 19:59:14 by bsaiago-         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:44:59 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: minishell != NULL
-* POST: Elimina las variables de entorno recibidas de cmd
-*		en el env de la minishell, devolviendo el status
-*		de la operacion.
-*/
 int	builtin_unset(t_minishell *minishell, char **cmd)
 {
 	char	**new_env;

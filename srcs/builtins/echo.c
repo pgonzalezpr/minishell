@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brayan <brayan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bsaiago- <bsaiago-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:52:30 by brayan            #+#    #+#             */
-/*   Updated: 2024/03/29 18:07:37 by brayan           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:44:05 by bsaiago-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* PRE: -
-* POST: Imprimira un caracter por la terminal, 
-*		devolviendo el estado de la operacion.
-*/
 static int	is_valid_flag_n(char *flag)
 {
 	if (!flag || (flag && flag[0] == FLAG_SYMBOL && !flag[1])
@@ -29,11 +24,6 @@ static int	is_valid_flag_n(char *flag)
 	return (*flag == NULL_STR);
 }
 
-/*
-* PRE: -
-* POST: Imprimira un caracter por la terminal, 
-*		devolviendo el estado de la operacion.
-*/	
 static void	print_cmd(char **cmd, char **env, int i)
 {
 	char	*key;
@@ -63,11 +53,6 @@ static void	print_cmd(char **cmd, char **env, int i)
 	}
 }
 
-/*
-* PRE: cmd != NULL && env != NULL
-* POST: Mostrara un mensaje por el standar output, y devolvera
-*		el estado de la operacion (SUCCESS o ERROR)
-*/
 int	builtin_echo(char **env, char **cmd)
 {
 	int	flag;
