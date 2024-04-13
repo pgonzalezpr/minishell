@@ -6,9 +6,11 @@
 /*   By: pedro-go <pedro-go@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:36:29 by pedro-go          #+#    #+#             */
-/*   Updated: 2024/04/13 15:36:42 by pedro-go         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:18:23 by pedro-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# include "../include/minishell.h"
 
 char	*substring(char *start, char *end)
 {

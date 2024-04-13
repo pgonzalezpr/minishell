@@ -48,9 +48,8 @@ DEPS = $(addsuffix .d, $(basename $(SRCS)))
 
 all: ${NAME}
 
-${NAME}: ${OBJS} ${LIBFT_DIR}/libft.a $(INCLUDE) Makefile
-	@${CC} ${OBJS} -L${LIBFT_DIR} -L$(READLINE_DIR)  -lreadline -lhistory  -ltermcap -lft \
-	$(READLINE_DIR)/libreadline.a $(READLINE_DIR)/libhistory.a -o ${NAME}
+${NAME}: ${OBJS} ${LIBFT_DIR}/libft.a  ${READLINE_DIR}/libreadline.a  ${READLINE_DIR}/libhistory.a $(INCLUDE) Makefile
+	@${CC} ${OBJS} -L${LIBFT_DIR} -L$(READLINE_DIR)  -lreadline -lhistory  -ltermcap -lft ${NAME}
 	@echo "\n$(RED) Created $(NAME) ✓ $(DEF_COLOR)\n"
 
 $(LIBFT_DIR)/libft.a:
@@ -58,7 +57,7 @@ $(LIBFT_DIR)/libft.a:
 
 $(READLINE_DIR)/libreadline.a $(READLINE_DIR)/libhistory.a:
 	@./configure
-	@make -C $(READLINE_PATH) > /dev/null
+	@make -C $(READLINE_DIR)
 
 -include ${DEPS}
 
