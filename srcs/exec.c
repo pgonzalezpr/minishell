@@ -27,16 +27,13 @@ int	here_doc(int index, char *delimiter, t_minishell *minishell)
 			return (-1);
 		if (ft_strequals(input, delimiter))
 			break ;
-		if (write(minishell->hd_pipes[index][1], input, ft_strlen(input)) == -1
-			||
-			write(minishell->hd_pipes[index][1], "\n", 1) == -1)
-		{
-			free(input);
-			return (-1);
-		}
+		write(minishell->hd_pipes[index][1], input, ft_strlen(input));
+		write(minishell->hd_pipes[index][1], "\n", 1);
 		free(input);
 		input = NULL;
 	}
+	if (input)
+		free(input);
 	return (1);
 }
 

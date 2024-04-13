@@ -24,8 +24,6 @@
 
 #include "../include/minishell.h"
 
-int			g_exit_status;
-
 static void	check_empty_cmd_line_case(t_minishell *minishell, char *prompt)
 {
 	if (!minishell->cmd_line)
@@ -76,6 +74,5 @@ int	main(int argc, char **argv, char **env)
 	ft_memset(&minishell, 0, sizeof(minishell));
 	if (get_cpy_env(&minishell.envp, env, get_len_env(env), IGNORE) != SUCCESS)
 		exit_minishell(&minishell, MSG_ERROR_CPY_ENV, EXIT_FAILURE);
-	g_exit_status = 0;
 	return (run_minishell(&minishell));
 }
